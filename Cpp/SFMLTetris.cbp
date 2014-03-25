@@ -45,6 +45,10 @@
 		<Linker>
 			<Add directory="./SFML-2.1/lib" />
 		</Linker>
+		<Unit filename="Application.cpp" />
+		<Unit filename="Application.h" />
+		<Unit filename="fn_time.cpp" />
+		<Unit filename="fn_time.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />
