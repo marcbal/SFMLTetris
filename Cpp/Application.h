@@ -1,6 +1,8 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
+#define FPS_MAX 120
+
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
@@ -16,12 +18,6 @@ class Application
 
         sf::RenderWindow _window;
         sf::ContextSettings _window_setting;
-
-
-        float frame_per_sec; // frame par seconde, relevé en temps réel
-        float frame_time;   // durée d'une frame en seconde (calculé dans le constructeur comme étant l'inverse des FPS)
-        static const int frame_per_sec_max = 120;  // frame par seconde max pour éviter de faire 100 % de processeur constament
-
 
         sf::Clock _app_clock;
 
