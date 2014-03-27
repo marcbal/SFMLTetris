@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
+#include "Evenement.hpp"
 
 using namespace std;
 using namespace sf;
@@ -20,6 +21,8 @@ class Application
         sf::ContextSettings _window_setting;
 
         sf::Clock _app_clock;
+
+        Evenement _event;
 
 
 
