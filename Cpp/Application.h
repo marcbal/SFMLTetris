@@ -2,11 +2,15 @@
 #define APPLICATION_H
 
 #define FPS_MAX 120
+#define WINDOW_WIDTH 960
+#define WINDOW_HEIGHT 540
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
+
 #include "Evenement.hpp"
+#include "Background.h"
 
 using namespace std;
 using namespace sf;
@@ -24,7 +28,7 @@ class Application
 
         Evenement _event;
 
-
+        Background _background;
 
 
 

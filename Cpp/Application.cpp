@@ -1,14 +1,14 @@
 #include "Application.h"
-#include "fn_time.h"
 #include <iostream>
 
 Application::Application() :
-    _window_width(1280),
-    _window_height(720),
-    _window()
+    _window_width(WINDOW_WIDTH),
+    _window_height(WINDOW_HEIGHT),
+    _window(),
+    _background(sf::Vector2i(WINDOW_WIDTH, WINDOW_HEIGHT), 200)
 {
 	_window.setFramerateLimit(FPS_MAX);
-    _window_setting.antialiasingLevel = 8;
+    _window_setting.antialiasingLevel = 4;
     _window.create(VideoMode(_window_width, _window_height), L"SFMLTetris", Style::Default, _window_setting);
 }
 
@@ -58,11 +58,14 @@ void Application::processEvents()
 
 void Application::update()
 {
+    _background.update();
 }
 
 
 void Application::render()
 {
 	_window.clear();
+	_window.draw(_background);
+
 	_window.display();
 }

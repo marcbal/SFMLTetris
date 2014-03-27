@@ -47,10 +47,12 @@
 		</Linker>
 		<Unit filename="Application.cpp" />
 		<Unit filename="Application.h" />
+		<Unit filename="Background.cpp" />
+		<Unit filename="Background.h" />
 		<Unit filename="Evenement.cpp" />
-		<Unit filename="Evenement.hpp" />
-		<Unit filename="fn_time.cpp" />
-		<Unit filename="fn_time.h" />
+		<Unit filename="Evenement.h" />
+		<Unit filename="fn_random.cpp" />
+		<Unit filename="fn_random.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />
