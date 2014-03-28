@@ -1,4 +1,4 @@
-#include "Application.h"
+#include "Application.hpp"
 #include <iostream>
 
 Application::Application() :
@@ -10,6 +10,7 @@ Application::Application() :
 	_window.setFramerateLimit(FPS_MAX);
     _window_setting.antialiasingLevel = 4;
     _window.create(VideoMode(_window_width, _window_height), L"SFMLTetris", Style::Default, _window_setting);
+
 }
 
 Application::~Application(){}

@@ -46,13 +46,15 @@
 			<Add directory="./SFML-2.1/lib" />
 		</Linker>
 		<Unit filename="Application.cpp" />
-		<Unit filename="Application.h" />
+		<Unit filename="Application.hpp" />
 		<Unit filename="Background.cpp" />
-		<Unit filename="Background.h" />
+		<Unit filename="Background.hpp" />
+		<Unit filename="Bouton.cpp" />
+		<Unit filename="Bouton.hpp" />
 		<Unit filename="Evenement.cpp" />
-		<Unit filename="Evenement.h" />
+		<Unit filename="Evenement.hpp" />
 		<Unit filename="fn_random.cpp" />
-		<Unit filename="fn_random.h" />
+		<Unit filename="fn_random.hpp" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />

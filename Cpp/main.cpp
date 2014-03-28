@@ -1,6 +1,6 @@
 
 #include <SFML/Graphics.hpp>
-#include "Application.h"
+#include "Application.hpp"
 
 using namespace std;
 using namespace sf;

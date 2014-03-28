@@ -1,4 +1,4 @@
-#include "fn_random.h"
+#include "fn_random.hpp"
 
 
 // fonction générant un entier aléatoire dans [min ; max]

@@ -1,4 +1,4 @@
-#include "Background.h"
+#include "Background.hpp"
 
 Background::Background(sf::Vector2i window_size, unsigned int nb_particules)
 {
