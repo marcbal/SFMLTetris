@@ -24,7 +24,7 @@ class Bouton : public sf::Drawable
 
 
     public:
-        // public pour facilier l'édition du shape
+        // public pour facilier l'Ã©dition du shape
         sf::RectangleShape shapeDefault;
         sf::RectangleShape shapeHover;
         sf::RectangleShape shapeClick;
