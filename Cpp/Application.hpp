@@ -1,7 +1,7 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
-#define FPS_MAX 120
+#define FPS_MAX 60
 #define WINDOW_WIDTH 960
 #define WINDOW_HEIGHT 540
 
@@ -12,12 +12,19 @@
 #include "Evenement.hpp"
 #include "Background.hpp"
 #include "Bouton.hpp"
+#include "MenuIndex.hpp"
 
 using namespace std;
 using namespace sf;
 
 class Application
 {
+    public:
+        enum ScreenStatus
+        {
+            Index, Game, Settings
+        };
+
     private:
         int _window_width;
         int _window_height;
@@ -30,6 +37,10 @@ class Application
         Evenement _event;
 
         Background _background;
+
+        ScreenStatus _state;
+
+        MenuIndex _menu;
 
 
 
@@ -46,5 +57,8 @@ class Application
         void render();
 
 };
+
+
+
 
 #endif // APPLICATION_H
