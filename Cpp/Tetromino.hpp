@@ -28,7 +28,7 @@ class Tetromino
 
     protected:
 
-        void setMatrix();
+        void setMatrixShape();
 
     private:
 

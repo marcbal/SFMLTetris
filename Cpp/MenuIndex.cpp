@@ -1,5 +1,8 @@
 #include "MenuIndex.hpp"
 
+using namespace std;
+using namespace sf;
+
 MenuIndex::MenuIndex(sf::Vector2i window_size) :
     texture(),
     sprite(),
@@ -36,14 +39,49 @@ MenuIndex::~MenuIndex() {}
 
 void MenuIndex::update()
 {
-
+    // rien à mettre pour le moment
 }
+
+
+void MenuIndex::onMouseMove(sf::Event & event)
+{
+    if (event.type != Event::MouseMoved)
+        return;
+
+    for (unsigned int i=0; i<menuElements.size(); i++)
+    {
+        menuElements[i].onMouseMove(event);
+    }
+}
+
+void MenuIndex::onMouseDown(sf::Event & event)
+{
+    if (event.type != Event::MouseButtonPressed)
+        return;
+
+    for (unsigned int i=0; i<menuElements.size(); i++)
+    {
+        menuElements[i].onMouseDown(event);
+    }
+}
+
+void MenuIndex::onMouseUp(sf::Event & event)
+{
+    if (event.type != Event::MouseButtonReleased)
+        return;
+
+    for (unsigned int i=0; i<menuElements.size(); i++)
+    {
+        menuElements[i].onMouseUp(event);
+    }
+}
+
 
 
 void MenuIndex::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(sprite, states);
-    for (int i=0; i<menuElements.size(); i++)
+    for (unsigned int i=0; i<menuElements.size(); i++)
     {
         target.draw(menuElements[i], states);
     }

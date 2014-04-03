@@ -16,6 +16,9 @@ class Bouton : public sf::Drawable
         bool _mouseHover;
         bool _mouseClick;
 
+        sf::Vector2f _position;
+        sf::Vector2f _size;
+
         sf::String texteString;
 
 
@@ -29,8 +32,6 @@ class Bouton : public sf::Drawable
         sf::RectangleShape shapeHover;
         sf::RectangleShape shapeClick;
 
-        sf::Vector2f _position;
-        sf::Vector2f _size;
 
         sf::Text texte;
 
@@ -43,6 +44,11 @@ class Bouton : public sf::Drawable
         void setPosition(sf::Vector2f pos);
         void setSize(sf::Vector2f taille);
         void setText(sf::String str);
+
+
+        void onMouseMove(sf::Event & event);
+        void onMouseDown(sf::Event & event);
+        void onMouseUp(sf::Event & event);
 
 
 

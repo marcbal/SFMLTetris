@@ -1,6 +1,9 @@
 #include "Application.hpp"
 #include <iostream>
 
+using namespace std;
+using namespace sf;
+
 Application::Application() :
     _window_width(WINDOW_WIDTH),
     _window_height(WINDOW_HEIGHT),
@@ -21,6 +24,18 @@ Application::~Application(){}
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 void Application::run()
 {
 	while (_window.isOpen())
@@ -30,6 +45,15 @@ void Application::run()
 		render();
 	}
 }
+
+
+
+
+
+
+
+
+
 
 
 
@@ -53,11 +77,48 @@ void Application::processEvents()
                 _event.onKeyboard(event);
             break;
 
+            case Event::MouseMoved:
+                if (_state == Index)
+                    _menu.onMouseMove(event);
+                else if (_state == Game)
+                    { }
+                else if (_state == Settings)
+                    { }
+            break;
+
+            case sf::Event::MouseButtonPressed:
+                if (_state == Index)
+                    _menu.onMouseDown(event);
+                else if (_state == Game)
+                    { }
+                else if (_state == Settings)
+                    { }
+            break;
+
+
+            case sf::Event::MouseButtonReleased:
+                if (_state == Index)
+                    _menu.onMouseUp(event);
+                else if (_state == Game)
+                    { }
+                else if (_state == Settings)
+                    { }
+            break;
+
             default:
             break;
 		} //SWITCH
 	}
 }
+
+
+
+
+
+
+
+
+
 
 
 
@@ -72,6 +133,16 @@ void Application::update()
     else if (_state == Settings)
         { }
 }
+
+
+
+
+
+
+
+
+
+
 
 
 void Application::render()

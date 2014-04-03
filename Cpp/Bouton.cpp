@@ -3,12 +3,12 @@
 Bouton::Bouton(sf::Vector2f pos, sf::Vector2f taille) :
     _mouseHover(false),
     _mouseClick(false),
+    _position(pos.x, pos.y),
+    _size(taille.x, taille.y),
     shapeDefault(taille),
     shapeHover(taille),
     shapeClick(taille),
-    texte(),
-    _position(pos.x, pos.y),
-    _size(taille.x, taille.y)
+    texte()
 
 {
     setPosition(pos);
@@ -84,6 +84,49 @@ void Bouton::updateTextPosition()
 
 
 
+
+
+
+
+void Bouton::onMouseMove(sf::Event & event)
+{
+    if (event.type != Event::MouseMoved)
+        return;
+    int x = event.mouseMove.x;
+    int y = event.mouseMove.y;
+    if (x > _position.x && y > _position.y &&
+        x < _position.x + _size.x && y < _position.y + _size.y)
+        _mouseHover = true;
+    else
+        _mouseHover = false;
+}
+
+
+
+
+void Bouton::onMouseDown(sf::Event & event)
+{
+    if (event.type != Event::MouseButtonPressed)
+        return;
+
+    if (event.mouseButton.button != sf::Mouse::Left)
+        return;
+    if (_mouseHover)
+        _mouseClick = true;
+}
+
+
+
+void Bouton::onMouseUp(sf::Event & event)
+{
+    if (event.type != Event::MouseButtonReleased)
+        return;
+
+    if (event.mouseButton.button != sf::Mouse::Left)
+        return;
+
+        _mouseClick = false;
+}
 
 
 

@@ -1,6 +1,9 @@
 #include "Tetromino.hpp"
 #include "fn_random.hpp"
 
+using namespace std;
+using namespace sf;
+
 
 Tetromino::Tetromino(int t, int o, sf::Vector2i pos)
 {
@@ -33,7 +36,7 @@ void Tetromino::setTypePiece(int type)
     type_piece = type;
 
     couleur = Tetromino::couleurs[type_piece];
-    setMatrix();
+    setMatrixShape();
 }
 int Tetromino::getOrientation()
 {
@@ -45,7 +48,7 @@ void Tetromino::setOrientation(int o)
     if (o < 0 || o > 3)
         o = o % 4;
     orientation = o;
-    setMatrix();
+    setMatrixShape();
 }
 sf::Vector2i Tetromino::getPosition()
 {
@@ -71,7 +74,7 @@ int** Tetromino::getMatrixShape()
 
 
 
-void Tetromino::setMatrix()
+void Tetromino::setMatrixShape()
 {
     for (int i=0; i<4; i++)
         for (int j=0; j<4; j++)
@@ -144,16 +147,16 @@ const int Tetromino::pieces[7][4][4][4] =
 
         {
             {0, 0, 0, 0},
-            {1, 1, 1, 1},
             {0, 0, 0, 0},
+            {1, 1, 1, 1},
             {0, 0, 0, 0}
         },
 
         {
-            {0, 0, 1, 0},
-            {0, 0, 1, 0},
-            {0, 0, 1, 0},
-            {0, 0, 1, 0}
+            {0, 1, 0, 0},
+            {0, 1, 0, 0},
+            {0, 1, 0, 0},
+            {0, 1, 0, 0}
         }
     },
 

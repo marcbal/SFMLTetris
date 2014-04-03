@@ -30,7 +30,9 @@ class MenuIndex : public sf::Drawable
         virtual ~MenuIndex();
 
 
-
+        void onMouseMove(sf::Event & event);
+        void onMouseDown(sf::Event & event);
+        void onMouseUp(sf::Event & event);
 
 
         void update();
