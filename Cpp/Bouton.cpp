@@ -6,13 +6,39 @@ Bouton::Bouton(sf::Vector2f pos, sf::Vector2f taille) :
     shapeDefault(taille),
     shapeHover(taille),
     shapeClick(taille),
-    texte()
+    texte(),
+    _position(pos.x, pos.y),
+    _size(taille.x, taille.y)
 
 {
     setPosition(pos);
 
-    setText("default");
-    update();
+    setText("-");
+
+
+    // format du texte
+    texte.setColor(sf::Color::White);
+
+
+    sf::Font * menuFont = new sf::Font();
+    menuFont->loadFromFile("res/LiberationMono-Regular.ttf");
+    texte.setFont(*menuFont);
+
+
+
+
+    // forme par défaut
+    shapeDefault.setOutlineColor(sf::Color::White);
+    shapeDefault.setOutlineThickness(-2);
+    shapeDefault.setFillColor(sf::Color::Black);
+    // forme en survol
+    shapeHover.setOutlineColor(sf::Color::White);
+    shapeHover.setOutlineThickness(-2);
+    shapeHover.setFillColor(sf::Color(128, 128, 128));
+    // forme au clic
+    shapeClick.setOutlineColor(sf::Color::White);
+    shapeClick.setOutlineThickness(-2);
+    shapeClick.setFillColor(sf::Color(160, 160, 160));
 }
 
 Bouton::~Bouton() {}
@@ -24,38 +50,41 @@ void Bouton::setPosition(sf::Vector2f pos)
     shapeClick.setPosition(pos);
     shapeDefault.setPosition(pos);
     shapeHover.setPosition(pos);
-    update();
+    _position = pos;
+    updateTextPosition();
 }
 void Bouton::setSize(sf::Vector2f taille)
 {
     shapeClick.setSize(taille);
     shapeDefault.setSize(taille);
     shapeHover.setSize(taille);
-    update();
+    _size = taille;
+    updateTextPosition();
 }
 void Bouton::setText(sf::String str)
 {
     texteString = str;
     texte.setString(texteString);
-    update();
+    updateTextPosition();
 }
 
 
 
 
-
-void Bouton::update()
+void Bouton::updateTextPosition()
 {
-    // placement du texte;
-    sf::Vector2f bouton_size = shapeDefault.getSize();
-    sf::Vector2f bouton_pos = shapeDefault.getPosition();
+
     texte.setPosition(0, 0);
     texte.setOrigin(texte.getGlobalBounds().left + texte.getGlobalBounds().width/2.0,
                     texte.getGlobalBounds().top + texte.getGlobalBounds().height/2.0);
-    texte.setPosition(bouton_pos.x+bouton_size.x/2.0,
-                      bouton_pos.y+bouton_size.y/2.0);
-
+    texte.setPosition(_position.x+_size.x/2.0,
+                      _position.y+_size.y/2.0);
 }
+
+
+
+
+
 
 
 

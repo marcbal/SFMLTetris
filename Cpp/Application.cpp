@@ -43,7 +43,9 @@ void Application::processEvents()
 		switch(event.type)
 		{
             case Event::Closed:
+
                 _window.close();
+
             break;
 
             case Event::KeyReleased:
@@ -62,6 +64,13 @@ void Application::processEvents()
 void Application::update()
 {
     _background.update();
+
+	if (_state == Index)
+        _menu.update();
+    else if (_state == Game)
+        { }
+    else if (_state == Settings)
+        { }
 }
 
 

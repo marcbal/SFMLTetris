@@ -29,6 +29,9 @@ class Bouton : public sf::Drawable
         sf::RectangleShape shapeHover;
         sf::RectangleShape shapeClick;
 
+        sf::Vector2f _position;
+        sf::Vector2f _size;
+
         sf::Text texte;
 
 
@@ -43,9 +46,9 @@ class Bouton : public sf::Drawable
 
 
 
-        void update();
-
     protected:
+
+        void updateTextPosition();
 };
 
 
