@@ -6,7 +6,7 @@
 #include <SFML/Window.hpp>
 #include <iostream>
 #include <string>
-
+#include "Collision.hpp"
 using namespace std;
 using namespace sf;
 

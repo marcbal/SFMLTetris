@@ -73,7 +73,6 @@ void Bouton::setText(sf::String str)
 
 void Bouton::updateTextPosition()
 {
-
     texte.setPosition(0, 0);
     texte.setOrigin(texte.getGlobalBounds().left + texte.getGlobalBounds().width/2.0,
                     texte.getGlobalBounds().top + texte.getGlobalBounds().height/2.0);
@@ -92,13 +91,7 @@ void Bouton::onMouseMove(sf::Event & event)
 {
     if (event.type != Event::MouseMoved)
         return;
-    int x = event.mouseMove.x;
-    int y = event.mouseMove.y;
-    if (x > _position.x && y > _position.y &&
-        x < _position.x + _size.x && y < _position.y + _size.y)
-        _mouseHover = true;
-    else
-        _mouseHover = false;
+    _mouseHover = pointInRect(_position,_size,Vector2f(event.mouseMove.x,event.mouseMove.y));
 }
 
 

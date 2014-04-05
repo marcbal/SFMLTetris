@@ -16,6 +16,8 @@ Application::Application() :
     _window_setting.antialiasingLevel = 4;
     _window.create(VideoMode(_window_width, _window_height), L"SFMLTetris", Style::Default, _window_setting);
 
+    _event.addEventConf("pause",sf::Keyboard::Space);
+
 }
 
 Application::~Application(){}
@@ -41,6 +43,7 @@ void Application::run()
 	while (_window.isOpen())
 	{
 		processEvents();
+		if(!_event.getEventState("pause"))
 		update();
 		render();
 	}
@@ -71,38 +74,52 @@ void Application::processEvents()
                 _window.close();
 
             break;
-
+            /*
             case Event::KeyReleased:
             case Event::KeyPressed:
-                _event.onKeyboard(event);
             break;
-
+            */
             case Event::MouseMoved:
-                if (_state == Index)
-                    _menu.onMouseMove(event);
-                else if (_state == Game)
-                    { }
-                else if (_state == Settings)
-                    { }
+                switch(_state){
+                    case Index:
+                        _menu.onMouseMove(event);
+                    break;
+                    case Game:
+                    break;
+                    case Settings:
+                    break;
+                    default:
+                    break;
+                }
             break;
 
             case sf::Event::MouseButtonPressed:
-                if (_state == Index)
-                    _menu.onMouseDown(event);
-                else if (_state == Game)
-                    { }
-                else if (_state == Settings)
-                    { }
+                switch(_state){
+                    case Index:
+                        _menu.onMouseDown(event);
+                    break;
+                    case Game:
+                    break;
+                    case Settings:
+                    break;
+                    default:
+                    break;
+                }
             break;
 
 
             case sf::Event::MouseButtonReleased:
-                if (_state == Index)
-                    _menu.onMouseUp(event);
-                else if (_state == Game)
-                    { }
-                else if (_state == Settings)
-                    { }
+                switch(_state){
+                    case Index:
+                        _menu.onMouseUp(event);
+                    break;
+                    case Game:
+                    break;
+                    case Settings:
+                    break;
+                    default:
+                    break;
+                }
             break;
 
             default:
