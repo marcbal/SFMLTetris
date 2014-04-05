@@ -6,11 +6,12 @@
 #include <SFML/Window.hpp>
 
 #include "Bouton.hpp"
-
+#include "ScreenElement.hpp"
+#include "Application.hpp"
 using namespace std;
 using namespace sf;
 
-class MenuIndex : public sf::Drawable
+class MenuIndex : public ScreenElement
 {
     private:
         sf::Texture texture;
@@ -18,7 +19,7 @@ class MenuIndex : public sf::Drawable
         vector<Bouton> menuElements;
 
         sf::Vector2i _window_size;
-
+        char *_state;
         // sf::Drawable
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     public:
@@ -26,10 +27,10 @@ class MenuIndex : public sf::Drawable
 
 
 
-        MenuIndex(sf::Vector2i window_size);
+        MenuIndex(sf::Vector2i window_size,char *state);
         virtual ~MenuIndex();
 
-
+        virtual void onEvent(sf::Event & event);
         void onMouseMove(sf::Event & event);
         void onMouseDown(sf::Event & event);
         void onMouseUp(sf::Event & event);

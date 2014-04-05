@@ -21,6 +21,8 @@ class Bouton : public sf::Drawable
 
         sf::String texteString;
 
+        char * _state;
+        char _action;
 
         // sf::Drawable
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
@@ -38,12 +40,14 @@ class Bouton : public sf::Drawable
 
 
 
-        Bouton(sf::Vector2f pos, sf::Vector2f taille);
+        Bouton(sf::Vector2f pos, sf::Vector2f taille,char * _state,char action);
+        Bouton(sf::Vector2f pos, sf::Vector2f taille,char * _state);
         virtual ~Bouton();
 
         void setPosition(sf::Vector2f pos);
         void setSize(sf::Vector2f taille);
         void setText(sf::String str);
+        void setAction(char action);
 
 
         void onMouseMove(sf::Event & event);

@@ -9,15 +9,15 @@ Application::Application() :
     _window_height(WINDOW_HEIGHT),
     _window(),
     _background(sf::Vector2i(WINDOW_WIDTH, WINDOW_HEIGHT), 200),
-    _state(Index), // correspond à l'état d'affichage (ici, le menu au lancement du programme)
-    _menu(sf::Vector2i(WINDOW_WIDTH, WINDOW_HEIGHT))
+    _state(Index) // correspond à l'état d'affichage (ici, le menu au lancement du programme)
 {
+    _screenElement[Index]= new MenuIndex(sf::Vector2i(WINDOW_WIDTH, WINDOW_HEIGHT),&_state);
+    _screenElement[Game]= new MenuIndex(sf::Vector2i(WINDOW_WIDTH, WINDOW_HEIGHT),&_state);
+    _screenElement[Settings]= new MenuIndex(sf::Vector2i(WINDOW_WIDTH, WINDOW_HEIGHT),&_state);
+    _screenElement[Rules]= new MenuIndex(sf::Vector2i(WINDOW_WIDTH, WINDOW_HEIGHT),&_state);
 	_window.setFramerateLimit(FPS_MAX);
     _window_setting.antialiasingLevel = 4;
     _window.create(VideoMode(_window_width, _window_height), L"SFMLTetris", Style::Default, _window_setting);
-
-    _event.addEventConf("pause",sf::Keyboard::Space);
-
 }
 
 Application::~Application(){}
@@ -43,9 +43,10 @@ void Application::run()
 	while (_window.isOpen())
 	{
 		processEvents();
-		if(!_event.getEventState("pause"))
+        if(_state == Close) continue;
 		update();
 		render();
+
 	}
 }
 
@@ -74,55 +75,13 @@ void Application::processEvents()
                 _window.close();
 
             break;
-            /*
-            case Event::KeyReleased:
-            case Event::KeyPressed:
-            break;
-            */
-            case Event::MouseMoved:
-                switch(_state){
-                    case Index:
-                        _menu.onMouseMove(event);
-                    break;
-                    case Game:
-                    break;
-                    case Settings:
-                    break;
-                    default:
-                    break;
-                }
-            break;
-
-            case sf::Event::MouseButtonPressed:
-                switch(_state){
-                    case Index:
-                        _menu.onMouseDown(event);
-                    break;
-                    case Game:
-                    break;
-                    case Settings:
-                    break;
-                    default:
-                    break;
-                }
-            break;
-
-
-            case sf::Event::MouseButtonReleased:
-                switch(_state){
-                    case Index:
-                        _menu.onMouseUp(event);
-                    break;
-                    case Game:
-                    break;
-                    case Settings:
-                    break;
-                    default:
-                    break;
-                }
-            break;
-
             default:
+                _screenElement[(int)_state]->onEvent(event);
+
+                if(_state == Close){
+                    _window.close();
+                    return;
+                }
             break;
 		} //SWITCH
 	}
@@ -141,14 +100,9 @@ void Application::processEvents()
 
 void Application::update()
 {
-    _background.update();
 
-	if (_state == Index)
-        _menu.update();
-    else if (_state == Game)
-        { }
-    else if (_state == Settings)
-        { }
+    _background.update();
+    _screenElement[(int)_state]->update();
 }
 
 
@@ -166,13 +120,6 @@ void Application::render()
 {
 	_window.clear();
 	_window.draw(_background);
-
-	if (_state == Index)
-        _window.draw(_menu);
-    else if (_state == Game)
-        { }
-    else if (_state == Settings)
-        { }
-
+    _window.draw(*_screenElement[(int)_state]);
 	_window.display();
 }

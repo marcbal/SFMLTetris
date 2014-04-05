@@ -3,11 +3,12 @@
 using namespace std;
 using namespace sf;
 
-MenuIndex::MenuIndex(sf::Vector2i window_size) :
+MenuIndex::MenuIndex(sf::Vector2i window_size,char * state) :
     texture(),
     sprite(),
     menuElements()
 {
+    _state = state;
     _window_size = window_size;
 
 
@@ -24,9 +25,13 @@ MenuIndex::MenuIndex(sf::Vector2i window_size) :
 
     for (int i=0; i<nbElement; i++)
     {
-        menuElements.push_back(*(new Bouton(sf::Vector2f(560, (_window_size.y-nbElement*50)/2+50*i), sf::Vector2f(300, 40))));
+        menuElements.push_back(*(new Bouton(sf::Vector2f(560, (_window_size.y-nbElement*50)/2+50*i), sf::Vector2f(300, 40),_state)));
         menuElements[i].texte.setCharacterSize(25);
     }
+    menuElements[0].setAction(Game);
+    menuElements[1].setAction(Rules);
+    menuElements[2].setAction(Settings);
+    menuElements[3].setAction(Close);
 
     menuElements[0].setText(L"Jouer");
     menuElements[1].setText(L"Règles");
@@ -52,6 +57,27 @@ void MenuIndex::onMouseMove(sf::Event & event)
     {
         menuElements[i].onMouseMove(event);
     }
+}
+
+void MenuIndex::onEvent(sf::Event & event){
+		switch(event.type)
+		{
+            case Event::MouseMoved:
+                this->onMouseMove(event);
+            break;
+
+            case sf::Event::MouseButtonPressed:
+                this->onMouseDown(event);
+            break;
+
+
+            case sf::Event::MouseButtonReleased:
+                this->onMouseUp(event);
+            break;
+
+            default:
+            break;
+		}
 }
 
 void MenuIndex::onMouseDown(sf::Event & event)

@@ -1,6 +1,6 @@
 #include "Bouton.hpp"
 
-Bouton::Bouton(sf::Vector2f pos, sf::Vector2f taille) :
+Bouton::Bouton(sf::Vector2f pos, sf::Vector2f taille,char * state,char action) :
     _mouseHover(false),
     _mouseClick(false),
     _position(pos.x, pos.y),
@@ -11,6 +11,10 @@ Bouton::Bouton(sf::Vector2f pos, sf::Vector2f taille) :
     texte()
 
 {
+    _action = action;
+    _state = state;
+
+
     setPosition(pos);
 
     setText("-");
@@ -41,9 +45,13 @@ Bouton::Bouton(sf::Vector2f pos, sf::Vector2f taille) :
     shapeClick.setFillColor(sf::Color(160, 160, 160));
 }
 
+Bouton::Bouton(sf::Vector2f pos, sf::Vector2f taille,char * state): Bouton(pos,taille,state,0){}
+
 Bouton::~Bouton() {}
 
-
+void Bouton::setAction(char action){
+    _action = action;
+}
 
 void Bouton::setPosition(sf::Vector2f pos)
 {
@@ -99,13 +107,12 @@ void Bouton::onMouseMove(sf::Event & event)
 
 void Bouton::onMouseDown(sf::Event & event)
 {
-    if (event.type != Event::MouseButtonPressed)
+    if (event.type != Event::MouseButtonPressed
+        || event.mouseButton.button != sf::Mouse::Left)
         return;
 
-    if (event.mouseButton.button != sf::Mouse::Left)
-        return;
     if (_mouseHover)
-        _mouseClick = true;
+        *_state=_action;
 }
 
 

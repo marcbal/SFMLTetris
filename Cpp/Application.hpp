@@ -14,17 +14,17 @@
 #include "Bouton.hpp"
 #include "MenuIndex.hpp"
 
+#define Index 0
+#define Game 1
+#define Settings 2
+#define Rules 3
+#define Close 4
+
 using namespace std;
 using namespace sf;
 
 class Application
 {
-    public:
-        enum ScreenStatus
-        {
-            Index, Game, Settings
-        };
-
     private:
         int _window_width;
         int _window_height;
@@ -38,17 +38,15 @@ class Application
 
         Background _background;
 
-        ScreenStatus _state;
+        char _state;
 
-        MenuIndex _menu;
-
-
-
+        ScreenElement *_screenElement[4];
 
     public:
         Application();
         virtual ~Application();
         void run();
+
 
     protected:
 
