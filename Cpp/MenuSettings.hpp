@@ -1,5 +1,5 @@
-#ifndef MENUINDEX_H
-#define MENUINDEX_H
+#ifndef MENUSETTINGS_H
+#define MENUSETTINGS_H
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
@@ -15,24 +15,23 @@ using namespace sf;
 
 
 
-class MenuIndex : public Menu
+class MenuSettings : public Menu
 {
     private:
         sf::Texture texture;
         sf::Sprite sprite;
         // sf::Drawable
-        virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     public:
 
 
 
 
-        MenuIndex(sf::Vector2i window_size,char *state);
-
+        MenuSettings(sf::Vector2i window_size,char *state);
 
 
 
 
 };
 
-#endif // MENUINDEX_H
+#endif // MENUSETTINGS_H
+

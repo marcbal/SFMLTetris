@@ -13,6 +13,7 @@
 #include "Background.hpp"
 #include "Bouton.hpp"
 #include "MenuIndex.hpp"
+#include "MenuSettings.hpp"
 
 #define Index 0
 #define Game 1

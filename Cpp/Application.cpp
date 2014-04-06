@@ -1,4 +1,5 @@
 #include "Application.hpp"
+#include "MenuSettings.hpp"
 #include <iostream>
 
 using namespace std;
@@ -13,7 +14,7 @@ Application::Application() :
 {
     _screenElement[Index]= new MenuIndex(sf::Vector2i(WINDOW_WIDTH, WINDOW_HEIGHT),&_state);
     _screenElement[Game]= new MenuIndex(sf::Vector2i(WINDOW_WIDTH, WINDOW_HEIGHT),&_state);
-    _screenElement[Settings]= new MenuIndex(sf::Vector2i(WINDOW_WIDTH, WINDOW_HEIGHT),&_state);
+    _screenElement[Settings]= new MenuSettings(sf::Vector2i(WINDOW_WIDTH, WINDOW_HEIGHT),&_state);
     _screenElement[Rules]= new MenuIndex(sf::Vector2i(WINDOW_WIDTH, WINDOW_HEIGHT),&_state);
 	_window.setFramerateLimit(FPS_MAX);
     _window_setting.antialiasingLevel = 4;
@@ -43,7 +44,7 @@ void Application::run()
 	while (_window.isOpen())
 	{
 		processEvents();
-        if(_state == Close) continue;
+        if(_state == Close) return;
 		update();
 		render();
 
