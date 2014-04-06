@@ -1,6 +1,6 @@
 #include "Bouton.hpp"
 
-Bouton::Bouton(sf::Vector2f pos, sf::Vector2f taille,char * state,char action) :
+Bouton::Bouton(sf::Vector2f pos, sf::Vector2f taille,int taillePolice,char * state,char action) :
     _mouseHover(false),
     _mouseClick(false),
     _position(pos.x, pos.y),
@@ -13,7 +13,7 @@ Bouton::Bouton(sf::Vector2f pos, sf::Vector2f taille,char * state,char action) :
 {
     _action = action;
     _state = state;
-
+    texte.setCharacterSize(taillePolice);
 
     setPosition(pos);
 
@@ -45,7 +45,7 @@ Bouton::Bouton(sf::Vector2f pos, sf::Vector2f taille,char * state,char action) :
     shapeClick.setFillColor(sf::Color(160, 160, 160));
 }
 
-Bouton::Bouton(sf::Vector2f pos, sf::Vector2f taille,char * state): Bouton(pos,taille,state,0){}
+Bouton::Bouton(sf::Vector2f pos, sf::Vector2f taille,int taillePolice,char * state): Bouton(pos,taille,taillePolice,state,0){}
 
 Bouton::~Bouton() {}
 
@@ -107,25 +107,26 @@ void Bouton::onMouseMove(sf::Event & event)
 
 void Bouton::onMouseDown(sf::Event & event)
 {
+
     if (event.type != Event::MouseButtonPressed
         || event.mouseButton.button != sf::Mouse::Left)
         return;
-
-    if (_mouseHover)
-        *_state=_action;
+    _mouseClick = true;
 }
 
 
 
 void Bouton::onMouseUp(sf::Event & event)
 {
-    if (event.type != Event::MouseButtonReleased)
-        return;
 
-    if (event.mouseButton.button != sf::Mouse::Left)
+    if (event.type != Event::MouseButtonReleased
+        || event.mouseButton.button != sf::Mouse::Left)
         return;
+    if (_mouseHover)
+        *_state=_action;
 
-        _mouseClick = false;
+    _mouseClick = false;
+    _mouseHover = false;
 }
 
 
@@ -137,7 +138,7 @@ void Bouton::onMouseUp(sf::Event & event)
 void Bouton::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(
-                ((_mouseClick) ? shapeClick : ((_mouseHover) ? shapeHover : shapeDefault)),
+                ((_mouseClick&&_mouseHover) ? shapeClick : ((_mouseHover) ? shapeHover : shapeDefault)),
                 states);
     target.draw(texte);
 }

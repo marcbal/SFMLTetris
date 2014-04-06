@@ -5,7 +5,7 @@
 		<Option title="SFMLTetris" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
-		<Option virtualFolders="Collisions\;Non-Class\;GUI Parts\;Events\;Main\;Tetris Elements\;Graphics elements\;ScreenElements\;" />
+		<Option virtualFolders="Collisions\;Non-Class\;GUI Parts\;Events\;Main\;Tetris Elements\;Graphics elements\;ScreenElements\;GUI Parts\Menu\;" />
 		<Build>
 			<Target title="Debug">
 				<Option output="bin/Debug/SFML" prefix_auto="1" extension_auto="1" />
@@ -76,11 +76,29 @@
 		<Unit filename="Evenement.hpp">
 			<Option virtualFolder="Events/" />
 		</Unit>
+		<Unit filename="Menu.cpp">
+			<Option virtualFolder="GUI Parts/Menu/" />
+		</Unit>
+		<Unit filename="Menu.hpp">
+			<Option virtualFolder="GUI Parts/Menu/" />
+		</Unit>
 		<Unit filename="MenuIndex.cpp">
-			<Option virtualFolder="GUI Parts/" />
+			<Option virtualFolder="GUI Parts/Menu/" />
 		</Unit>
 		<Unit filename="MenuIndex.hpp">
-			<Option virtualFolder="GUI Parts/" />
+			<Option virtualFolder="GUI Parts/Menu/" />
+		</Unit>
+		<Unit filename="MenuSettings.cpp">
+			<Option virtualFolder="GUI Parts/Menu/" />
+		</Unit>
+		<Unit filename="MenuSettings.hpp">
+			<Option virtualFolder="GUI Parts/Menu/" />
+		</Unit>
+		<Unit filename="MenuSettingsTouches.cpp">
+			<Option virtualFolder="GUI Parts/Menu/" />
+		</Unit>
+		<Unit filename="MenuSettingsTouches.hpp">
+			<Option virtualFolder="GUI Parts/Menu/" />
 		</Unit>
 		<Unit filename="ScreenElement.cpp">
 			<Option virtualFolder="ScreenElements/" />
@@ -108,6 +126,15 @@
 			<envvars />
 			<debugger />
 			<lib_finder disable_auto="1" />
+			<DoxyBlocks>
+				<comment_style block="0" line="0" />
+				<doxyfile_project />
+				<doxyfile_build />
+				<doxyfile_warnings />
+				<doxyfile_output />
+				<doxyfile_dot />
+				<general />
+			</DoxyBlocks>
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

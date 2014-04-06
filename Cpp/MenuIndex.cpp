@@ -19,8 +19,7 @@ MenuIndex::MenuIndex(sf::Vector2i window_size,char * state) :Menu(window_size,st
 
     for (int i=0; i<nbElement; i++)
     {
-        menuElements.push_back(*(new Bouton(sf::Vector2f(560, (_window_size.y-nbElement*50)/2+50*i), sf::Vector2f(300, 40),_state)));
-        menuElements[i].texte.setCharacterSize(25);
+        menuElements.push_back(*(new Bouton(sf::Vector2f(560, (_window_size.y-nbElement*50)/2+50*i), sf::Vector2f(300, 40),25,_state)));
     }
     menuElements[0].setAction(Game);
     menuElements[1].setAction(Rules);

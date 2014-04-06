@@ -1,5 +1,5 @@
 #include "Application.hpp"
-#include "MenuSettings.hpp"
+
 #include <iostream>
 
 using namespace std;
@@ -16,6 +16,7 @@ Application::Application() :
     _screenElement[Game]= new MenuIndex(sf::Vector2i(WINDOW_WIDTH, WINDOW_HEIGHT),&_state);
     _screenElement[Settings]= new MenuSettings(sf::Vector2i(WINDOW_WIDTH, WINDOW_HEIGHT),&_state);
     _screenElement[Rules]= new MenuIndex(sf::Vector2i(WINDOW_WIDTH, WINDOW_HEIGHT),&_state);
+    _screenElement[SettingsTouches]= new MenuSettingsTouches(sf::Vector2i(WINDOW_WIDTH, WINDOW_HEIGHT),&_state);
 	_window.setFramerateLimit(FPS_MAX);
     _window_setting.antialiasingLevel = 4;
     _window.create(VideoMode(_window_width, _window_height), L"SFMLTetris", Style::Default, _window_setting);

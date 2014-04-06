@@ -1,5 +1,5 @@
-#ifndef MENUSETTINGS_H
-#define MENUSETTINGS_H
+#ifndef MENUSETTINGS_TOUCHES_H
+#define MENUSETTINGS_TOUCHES_H
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
@@ -15,12 +15,14 @@ using namespace sf;
 
 
 
-class MenuSettings : public Menu
+class MenuSettingsTouches : public Menu
 {
     public:
-        MenuSettings(sf::Vector2i window_size,char *state);
+
+        MenuSettingsTouches(sf::Vector2i window_size,char *state);
 
 };
 
-#endif // MENUSETTINGS_H
+#endif // MENUSETTINGS_TOUCHES_H
+
 

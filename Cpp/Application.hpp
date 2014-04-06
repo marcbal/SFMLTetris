@@ -14,12 +14,14 @@
 #include "Bouton.hpp"
 #include "MenuIndex.hpp"
 #include "MenuSettings.hpp"
+#include "MenuSettingsTouches.hpp"
 
 #define Index 0
 #define Game 1
 #define Settings 2
 #define Rules 3
 #define Close 4
+#define SettingsTouches 5
 
 using namespace std;
 using namespace sf;
@@ -41,7 +43,7 @@ class Application
 
         char _state;
 
-        ScreenElement *_screenElement[4];
+        ScreenElement *_screenElement[5];
 
     public:
         Application();

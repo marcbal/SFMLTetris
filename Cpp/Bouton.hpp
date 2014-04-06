@@ -12,7 +12,7 @@ using namespace sf;
 
 class Bouton : public sf::Drawable
 {
-    private:
+    protected:
         bool _mouseHover;
         bool _mouseClick;
 
@@ -20,6 +20,10 @@ class Bouton : public sf::Drawable
         sf::Vector2f _size;
 
         sf::String texteString;
+        sf::Text texte;
+        sf::RectangleShape shapeDefault;
+        sf::RectangleShape shapeHover;
+        sf::RectangleShape shapeClick;
 
         char * _state;
         char _action;
@@ -29,30 +33,27 @@ class Bouton : public sf::Drawable
 
 
     public:
-        // public pour facilier l'édition du shape
-        sf::RectangleShape shapeDefault;
-        sf::RectangleShape shapeHover;
-        sf::RectangleShape shapeClick;
-
-
-        sf::Text texte;
 
 
 
 
-        Bouton(sf::Vector2f pos, sf::Vector2f taille,char * _state,char action);
-        Bouton(sf::Vector2f pos, sf::Vector2f taille,char * _state);
+
+
+
+
+        Bouton(sf::Vector2f pos, sf::Vector2f taille,int taillePolice,char * _state,char action);
+        Bouton(sf::Vector2f pos, sf::Vector2f taille,int taillePolice,char * _state);
         virtual ~Bouton();
 
-        void setPosition(sf::Vector2f pos);
-        void setSize(sf::Vector2f taille);
-        void setText(sf::String str);
-        void setAction(char action);
+        virtual void setPosition(sf::Vector2f pos);
+        virtual void setSize(sf::Vector2f taille);
+        virtual void setText(sf::String str);
+        virtual void setAction(char action);
 
 
-        void onMouseMove(sf::Event & event);
-        void onMouseDown(sf::Event & event);
-        void onMouseUp(sf::Event & event);
+        virtual void onMouseMove(sf::Event & event);
+        virtual void onMouseDown(sf::Event & event);
+        virtual void onMouseUp(sf::Event & event);
 
 
 
