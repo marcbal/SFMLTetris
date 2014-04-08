@@ -24,7 +24,23 @@ class Tetromino
         void setPosition(sf::Vector2i pos);
 
         sf::Color getColor();
-        int** getMatrixShape();
+        bool** getMatrixShape();
+
+
+
+
+
+        static const bool pieces[7][4][4][4];
+        /*
+            pieces[0] : O
+            pieces[1] : I
+            pieces[2] : S
+            pieces[3] : Z
+            pieces[4] : L
+            pieces[5] : J
+            pieces[6] : T
+         */
+        static const sf::Color couleurs[7];
 
     protected:
 
@@ -40,21 +56,7 @@ class Tetromino
 
         sf::Color couleur;
 
-        int** piece;
-
-
-
-        static const int pieces[7][4][4][4];
-        /*
-            pieces[0] : O
-            pieces[1] : I
-            pieces[2] : S
-            pieces[3] : Z
-            pieces[4] : L
-            pieces[5] : J
-            pieces[6] : T
-         */
-        static const sf::Color couleurs[7];
+        bool** piece;
 };
 
 #endif // TETROMINO_H

@@ -3,10 +3,10 @@
 TetrisBoard::TetrisBoard(sf::Vector2i * window_size) :
     boardShape(),
     shapeMatrix(BOARD_WIDTH * BOARD_HEIGHT) ,
-    pieceCourrante(rand_int(0, 6), 0, sf::Vector2i(0, 0))
+    pieceCourrante(rand_int(0, 6), 0, sf::Vector2i(INIT_POS_X, INIT_POS_Y))
 {
-    pieceCouranteActive = false;
     clearBoard();
+    pieceCouranteActive = true;
 
 
     _window_size = window_size;
@@ -66,7 +66,7 @@ void TetrisBoard::clearBoard()
 {
     for (int i=0; i<BOARD_WIDTH; i++)
         for (int j=0; j<BOARD_HEIGHT; j++)
-            area[i][j] = 0;
+            setBoardData(i, j, 0);
     pieceCouranteActive = false;
 }
 void TetrisBoard::HardDrop()
@@ -107,19 +107,24 @@ void TetrisBoard::fixPiece()
     for (int i=0; i<BOARD_WIDTH; i++)
         for (int j=0; j<BOARD_HEIGHT; j++)
             if (area[i][j] >= 20 && area[i][j] <= 26)
-                area[i][j] -= 10;
+                setBoardData(i, j, getBoardData(i, j) - 10);
 
 }
 
 
 void TetrisBoard::dessinePieceCourrante()
 {
+    if (!pieceCouranteActive)
+        return;
+
     sf::Vector2i pos = pieceCourrante.getPosition();
-    int ** shape = pieceCourrante.getMatrixShape();
+    bool ** shape = pieceCourrante.getMatrixShape();
     for (int i=0; i<4; i++)
         for (int j=0; j<4; j++)
             if (shape[i][j])
-                area[pos.x + i][pos.y + j] = pieceCourrante.getTypePiece() + 20;
+                setBoardData(pos.x + i,
+                             pos.y + j,
+                             pieceCourrante.getTypePiece() + 20);
 
 }
 
@@ -129,28 +134,46 @@ void TetrisBoard::effacePieceCourrante()
     for (int i=0; i<BOARD_WIDTH; i++)
         for (int j=0; j<BOARD_HEIGHT; j++)
             if (area[i][j] >= 20 && area[i][j] <= 26)
-                area[i][j] = 0;
+                setBoardData(i, j, 0);
 }
 
 int TetrisBoard::getBoardData(int x, int y)
 {
     return area[x][y];
 }
+
+
 void TetrisBoard::setBoardData(int x, int y, int data)
 {
+    if (x<0 || x>=BOARD_WIDTH || y<0 || y>=BOARD_HEIGHT)
+        return;
     area[x][y] = data;
+
+    if (area[x][y] >= 10 && area[x][y] < 17)
+    {
+        sf::Color c = Tetromino::couleurs[area[x][y]-10];
+        c.a = 192; // règle l'alpha de la couleur
+        shapeMatrix[x*BOARD_HEIGHT+y].setFillColor(c);
+    }
+    else if (area[x][y] >= 20 && area[x][y] < 27)
+    {
+        sf::Color c = Tetromino::couleurs[area[x][y]-20];
+        shapeMatrix[x*BOARD_HEIGHT+y].setFillColor(c);
+    }
+    else
+        shapeMatrix[x*BOARD_HEIGHT+y].setFillColor(sf::Color::Transparent);
 }
 
 
 bool TetrisBoard::verifierPlacementPiece(sf::Vector2i pos, int o)
 {
     // tests si la forme sors totalement de l'écran
-    if (pos.x > BOARD_WIDTH || pos.y > BOARD_HEIGHT || pos.y-4 < 0 || pos.x-4 < 0)
+    if (pos.x > BOARD_WIDTH || pos.y > BOARD_HEIGHT || pos.y+4 < 0 || pos.x+4 < 0)
         return false;
 
     // crée un tetromino de test qui correspond à la position/orientation/forme testée
     Tetromino pieceTest(pieceCourrante.getTypePiece(), o, pos);
-    int ** shape = pieceTest.getMatrixShape();
+    bool ** shape = pieceTest.getMatrixShape();
 
 
     for (int i=0; i<4; i++)

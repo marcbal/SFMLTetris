@@ -17,12 +17,22 @@ class Game : public ScreenElement
 {
     private:
         TetrisBoard matrix;
+        Tetromino pieceSuivante;
+
+        int _score = 0;
+        int _nb_line = 0;
 
         // sf::Drawable
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     public:
         Game(sf::Vector2i * window_size, char *state);
         virtual ~Game();
+
+
+        virtual void onEvent(sf::Event & event);
+
+
+        virtual void update();
 };
 
 #endif // GAME_H

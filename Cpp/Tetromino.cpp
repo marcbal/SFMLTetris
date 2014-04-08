@@ -10,9 +10,9 @@ Tetromino::Tetromino(int t, int o, sf::Vector2i pos)
 
 
 
-    piece = new int*[4];
+    piece = new bool*[4];
     for (int i = 0; i<4; i++)
-        piece[i] = new int[4];
+        piece[i] = new bool[4];
 
     setTypePiece(t);
     setOrientation(o);
@@ -75,7 +75,7 @@ sf::Color Tetromino::getColor()
     return couleur;
 }
 
-int** Tetromino::getMatrixShape()
+bool** Tetromino::getMatrixShape()
 {
     return piece;
 
@@ -92,7 +92,6 @@ void Tetromino::setMatrixShape()
         for (int j=0; j<4; j++)
         {
             piece[i][j] = pieces[type_piece][orientation][i][j];
-
         }
 }
 
@@ -113,7 +112,7 @@ const sf::Color Tetromino::couleurs[7] =
 
 
 
-const int Tetromino::pieces[7][4][4][4] =
+const bool Tetromino::pieces[7][4][4][4] =
 {
     { // O
         {
