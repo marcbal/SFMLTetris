@@ -1,10 +1,9 @@
 #include "Game.hpp"
 
 Game::Game(sf::Vector2i window_size, char *state) :
-    Menu(window_size,state),
     matrix(window_size)
 {
-
+    _window_size = window_size;
 
 }
 

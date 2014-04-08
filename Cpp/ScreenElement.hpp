@@ -11,6 +11,9 @@ using namespace sf;
 class ScreenElement : public sf::Drawable
 {
     protected:
+
+        sf::Vector2i _window_size;
+
         //sf::Drawable
             virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     public:

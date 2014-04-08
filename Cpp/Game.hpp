@@ -7,13 +7,13 @@
 
 #include "Bouton.hpp"
 #include "TetrisBoard.hpp"
-#include "Menu.hpp"
+#include "ScreenElement.hpp"
 
 using namespace std;
 using namespace sf;
 
 
-class Game : public Menu
+class Game : public ScreenElement
 {
     private:
         TetrisBoard matrix;

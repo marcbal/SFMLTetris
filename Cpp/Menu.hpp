@@ -18,7 +18,6 @@ class Menu : public ScreenElement
     protected:
         vector<Bouton> menuElements;
 
-        sf::Vector2i _window_size;
         char *_state;
         // sf::Drawable
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
