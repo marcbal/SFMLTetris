@@ -2,11 +2,11 @@
 
 using namespace std;
 using namespace sf;
-MenuSettingsTouches::MenuSettingsTouches(sf::Vector2i window_size,char * state) :Menu(window_size,state)
+MenuSettingsTouches::MenuSettingsTouches(sf::Vector2i * window_size,char * state) :Menu(window_size,state)
 {
     // création des éléments de menu
 
-    menuElements.push_back(*(new Bouton(sf::Vector2f(50, _window_size.y-120),
+    menuElements.push_back(*(new Bouton(sf::Vector2f(50, _window_size->y-120),
                                         sf::Vector2f(200, 30),
                                         18,
                                         _state)));
@@ -14,7 +14,7 @@ MenuSettingsTouches::MenuSettingsTouches(sf::Vector2i window_size,char * state) 
     menuElements[0].setAction(SETTINGS);
     menuElements[0].setText(L"Retour");
 
-    menuElements.push_back(*(new Bouton(sf::Vector2f(50, _window_size.y-80),
+    menuElements.push_back(*(new Bouton(sf::Vector2f(50, _window_size->y-80),
                                         sf::Vector2f(200, 30),
                                         18,
                                         _state)));

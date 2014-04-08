@@ -5,11 +5,10 @@ Bouton::Bouton(sf::Vector2f pos, sf::Vector2f taille,int taillePolice,char * sta
     _mouseClick(false),
     _position(pos.x, pos.y),
     _size(taille.x, taille.y),
+    texte(),
     shapeDefault(taille),
     shapeHover(taille),
-    shapeClick(taille),
-    texte()
-
+    shapeClick(taille)
 {
     _action = action;
     _state = state;
@@ -45,7 +44,9 @@ Bouton::Bouton(sf::Vector2f pos, sf::Vector2f taille,int taillePolice,char * sta
     shapeClick.setFillColor(sf::Color(160, 160, 160));
 }
 
-Bouton::Bouton(sf::Vector2f pos, sf::Vector2f taille,int taillePolice,char * state): Bouton(pos,taille,taillePolice,state,0){}
+Bouton::Bouton(sf::Vector2f pos, sf::Vector2f taille,int taillePolice,char * state):
+    Bouton(pos,taille,taillePolice,state,0)
+{}
 
 Bouton::~Bouton() {}
 

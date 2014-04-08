@@ -18,7 +18,7 @@ using namespace sf;
 class MenuSettings : public Menu
 {
     public:
-        MenuSettings(sf::Vector2i window_size,char *state);
+        MenuSettings(sf::Vector2i * window_size,char *state);
 
 };
 

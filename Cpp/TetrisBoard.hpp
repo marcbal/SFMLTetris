@@ -26,7 +26,7 @@ class TetrisBoard : public sf::Drawable
 {
     public:
 
-        TetrisBoard(sf::Vector2i window_size);
+        TetrisBoard(sf::Vector2i * window_size);
         virtual ~TetrisBoard();
 
 
@@ -58,6 +58,8 @@ class TetrisBoard : public sf::Drawable
         // element graphique
         sf::RectangleShape boardShape; // le rectangle principal
         vector<sf::RectangleShape> shapeMatrix; // les rectangles de chaque cases
+
+        sf::Vector2i * _window_size;
 
         bool verifierPlacementPiece(sf::Vector2i pos, int o);
 

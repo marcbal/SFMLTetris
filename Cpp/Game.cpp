@@ -1,6 +1,6 @@
 #include "Game.hpp"
 
-Game::Game(sf::Vector2i window_size, char *state) :
+Game::Game(sf::Vector2i * window_size, char *state) :
     matrix(window_size)
 {
     _window_size = window_size;

@@ -11,12 +11,12 @@ Application::Application() :
     _background(_window_size, 200),
     _state(INDEX) // correspond à l'état d'affichage (ici, le menu au lancement du programme)
 {
-    _screenElement[INDEX]= new MenuIndex(_window_size,&_state);
-    _screenElement[GAME]= new Game(_window_size,&_state);
-    _screenElement[SCORE]= new MenuIndex(_window_size,&_state);
-    _screenElement[SETTINGS]= new MenuSettings(_window_size,&_state);
-    _screenElement[RULES]= new MenuIndex(_window_size,&_state);
-    _screenElement[SETTINGSTOUCHES]= new MenuSettingsTouches(_window_size,&_state);
+    _screenElement[INDEX]= new MenuIndex(&_window_size,&_state);
+    _screenElement[GAME]= new Game(&_window_size,&_state);
+    _screenElement[SCORE]= new MenuIndex(&_window_size,&_state);
+    _screenElement[SETTINGS]= new MenuSettings(&_window_size,&_state);
+    _screenElement[RULES]= new MenuIndex(&_window_size,&_state);
+    _screenElement[SETTINGSTOUCHES]= new MenuSettingsTouches(&_window_size,&_state);
 	_window.setFramerateLimit(FPS_MAX);
     _window_setting.antialiasingLevel = 4;
     _window.create(VideoMode(_window_size.x, _window_size.y), L"SFMLTetris", Style::Default, _window_setting);

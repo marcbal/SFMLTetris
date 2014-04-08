@@ -27,7 +27,7 @@ class MenuIndex : public Menu
 
 
 
-        MenuIndex(sf::Vector2i window_size,char *state);
+        MenuIndex(sf::Vector2i * window_size,char *state);
 
 
 

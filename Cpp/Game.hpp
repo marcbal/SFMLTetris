@@ -21,7 +21,7 @@ class Game : public ScreenElement
         // sf::Drawable
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     public:
-        Game(sf::Vector2i window_size, char *state);
+        Game(sf::Vector2i * window_size, char *state);
         virtual ~Game();
 };
 

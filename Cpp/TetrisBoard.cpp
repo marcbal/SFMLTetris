@@ -1,6 +1,6 @@
 #include "TetrisBoard.hpp"
 
-TetrisBoard::TetrisBoard(sf::Vector2i window_size) :
+TetrisBoard::TetrisBoard(sf::Vector2i * window_size) :
     boardShape(),
     shapeMatrix(BOARD_WIDTH * BOARD_HEIGHT) ,
     pieceCourrante(rand_int(0, 6), 0, sf::Vector2i(0, 0))
@@ -9,11 +9,11 @@ TetrisBoard::TetrisBoard(sf::Vector2i window_size) :
     clearBoard();
 
 
-
+    _window_size = window_size;
 
     // positionnement du tetris board à l'écran
-    sf::Vector2f top_left_pos((window_size.x - BOARD_WIDTH * CEIL_SIZE)/2.0,
-                              (window_size.y - BOARD_HEIGHT * CEIL_SIZE)/2.0);
+    sf::Vector2f top_left_pos((window_size->x - BOARD_WIDTH * CEIL_SIZE)/2.0,
+                              (window_size->y - BOARD_HEIGHT * CEIL_SIZE)/2.0);
 
 
     boardShape.setPosition(top_left_pos);

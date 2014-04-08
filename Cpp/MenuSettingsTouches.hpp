@@ -19,7 +19,7 @@ class MenuSettingsTouches : public Menu
 {
     public:
 
-        MenuSettingsTouches(sf::Vector2i window_size,char *state);
+        MenuSettingsTouches(sf::Vector2i * window_size,char *state);
 
 };
 

@@ -5,7 +5,7 @@
 		<Option title="SFMLTetris" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
-		<Option virtualFolders="Collisions\;Non-Class\;GUI Parts\;Events\;Main\;Tetris Elements\;Graphics elements\;ScreenElements\;GUI Parts\Menu\;" />
+		<Option virtualFolders="Non-Class\;GUI Parts\;Events\;Main\;Tetris Elements\;Graphics elements\;GUI Parts\Menu\;" />
 		<Build>
 			<Target title="Debug">
 				<Option output="bin/Debug/SFML" prefix_auto="1" extension_auto="1" />
@@ -14,6 +14,7 @@
 				<Option compiler="gcc" />
 				<Option use_console_runner="0" />
 				<Compiler>
+					<Add option="-std=c++11" />
 					<Add option="-g" />
 				</Compiler>
 				<Linker>
@@ -29,6 +30,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add option="-std=c++11" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -65,10 +67,10 @@
 			<Option virtualFolder="Graphics elements/" />
 		</Unit>
 		<Unit filename="Collision.cpp">
-			<Option virtualFolder="Collisions/" />
+			<Option virtualFolder="Non-Class/" />
 		</Unit>
 		<Unit filename="Collision.hpp">
-			<Option virtualFolder="Collisions/" />
+			<Option virtualFolder="Non-Class/" />
 		</Unit>
 		<Unit filename="Evenement.cpp">
 			<Option virtualFolder="Events/" />
@@ -107,10 +109,10 @@
 			<Option virtualFolder="GUI Parts/Menu/" />
 		</Unit>
 		<Unit filename="ScreenElement.cpp">
-			<Option virtualFolder="ScreenElements/" />
+			<Option virtualFolder="GUI Parts/" />
 		</Unit>
 		<Unit filename="ScreenElement.hpp">
-			<Option virtualFolder="ScreenElements/" />
+			<Option virtualFolder="GUI Parts/" />
 		</Unit>
 		<Unit filename="TetrisBoard.cpp">
 			<Option virtualFolder="Tetris Elements/" />

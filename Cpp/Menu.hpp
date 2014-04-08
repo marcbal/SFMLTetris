@@ -26,7 +26,7 @@ class Menu : public ScreenElement
 
 
 
-        Menu(sf::Vector2i window_size,char *state);
+        Menu(sf::Vector2i * window_size,char *state);
         virtual ~Menu();
 
         virtual void onEvent(sf::Event & event);

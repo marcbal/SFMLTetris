@@ -3,7 +3,7 @@
 using namespace std;
 using namespace sf;
 
-Menu::Menu(sf::Vector2i window_size,char * state) :
+Menu::Menu(sf::Vector2i * window_size,char * state) :
     menuElements()
 {
     _state = state;
