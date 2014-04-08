@@ -6,20 +6,20 @@ using namespace std;
 using namespace sf;
 
 Application::Application() :
-    _window_width(WINDOW_WIDTH),
-    _window_height(WINDOW_HEIGHT),
+    _window_size(WINDOW_WIDTH, WINDOW_HEIGHT),
     _window(),
-    _background(sf::Vector2i(WINDOW_WIDTH, WINDOW_HEIGHT), 200),
-    _state(Index) // correspond à l'état d'affichage (ici, le menu au lancement du programme)
+    _background(_window_size, 200),
+    _state(INDEX) // correspond à l'état d'affichage (ici, le menu au lancement du programme)
 {
-    _screenElement[Index]= new MenuIndex(sf::Vector2i(WINDOW_WIDTH, WINDOW_HEIGHT),&_state);
-    _screenElement[Game]= new MenuIndex(sf::Vector2i(WINDOW_WIDTH, WINDOW_HEIGHT),&_state);
-    _screenElement[Settings]= new MenuSettings(sf::Vector2i(WINDOW_WIDTH, WINDOW_HEIGHT),&_state);
-    _screenElement[Rules]= new MenuIndex(sf::Vector2i(WINDOW_WIDTH, WINDOW_HEIGHT),&_state);
-    _screenElement[SettingsTouches]= new MenuSettingsTouches(sf::Vector2i(WINDOW_WIDTH, WINDOW_HEIGHT),&_state);
+    _screenElement[INDEX]= new MenuIndex(_window_size,&_state);
+    _screenElement[GAME]= new Game(_window_size,&_state);
+    _screenElement[SCORE]= new MenuIndex(_window_size,&_state);
+    _screenElement[SETTINGS]= new MenuSettings(_window_size,&_state);
+    _screenElement[RULES]= new MenuIndex(_window_size,&_state);
+    _screenElement[SETTINGSTOUCHES]= new MenuSettingsTouches(_window_size,&_state);
 	_window.setFramerateLimit(FPS_MAX);
     _window_setting.antialiasingLevel = 4;
-    _window.create(VideoMode(_window_width, _window_height), L"SFMLTetris", Style::Default, _window_setting);
+    _window.create(VideoMode(_window_size.x, _window_size.y), L"SFMLTetris", Style::Default, _window_setting);
 }
 
 Application::~Application(){}
@@ -45,7 +45,7 @@ void Application::run()
 	while (_window.isOpen())
 	{
 		processEvents();
-        if(_state == Close) return;
+        if(_state == CLOSE) return;
 		update();
 		render();
 
@@ -80,7 +80,7 @@ void Application::processEvents()
             default:
                 _screenElement[(int)_state]->onEvent(event);
 
-                if(_state == Close){
+                if(_state == CLOSE){
                     _window.close();
                     return;
                 }

@@ -15,21 +15,23 @@ MenuIndex::MenuIndex(sf::Vector2i window_size,char * state) :Menu(window_size,st
 
     // création des éléments de menu
 
-    int nbElement = 4;
+    int nbElement = 5;
 
     for (int i=0; i<nbElement; i++)
     {
         menuElements.push_back(*(new Bouton(sf::Vector2f(560, (_window_size.y-nbElement*50)/2+50*i), sf::Vector2f(300, 40),25,_state)));
     }
-    menuElements[0].setAction(Game);
-    menuElements[1].setAction(Rules);
-    menuElements[2].setAction(Settings);
-    menuElements[3].setAction(Close);
+    menuElements[0].setAction(GAME);
+    menuElements[1].setAction(RULES);
+    menuElements[2].setAction(SCORE);
+    menuElements[3].setAction(SETTINGS);
+    menuElements[4].setAction(CLOSE);
 
     menuElements[0].setText(L"Jouer");
     menuElements[1].setText(L"Règles");
-    menuElements[2].setText(L"Paramètres");
-    menuElements[3].setText(L"Quitter");
+    menuElements[2].setText(L"Scores");
+    menuElements[3].setText(L"Paramètres");
+    menuElements[4].setText(L"Quitter");
 }
 
 

@@ -15,13 +15,15 @@
 #include "MenuIndex.hpp"
 #include "MenuSettings.hpp"
 #include "MenuSettingsTouches.hpp"
+#include "Game.hpp"
 
-#define Index 0
-#define Game 1
-#define Settings 2
-#define Rules 3
-#define Close 4
-#define SettingsTouches 5
+#define INDEX 0
+#define GAME 1
+#define SETTINGS 2
+#define RULES 3
+#define CLOSE 4
+#define SETTINGSTOUCHES 5
+#define SCORE 6
 
 using namespace std;
 using namespace sf;
@@ -29,8 +31,7 @@ using namespace sf;
 class Application
 {
     private:
-        int _window_width;
-        int _window_height;
+        sf::Vector2i _window_size;
 
         sf::RenderWindow _window;
         sf::ContextSettings _window_setting;
@@ -43,7 +44,7 @@ class Application
 
         char _state;
 
-        ScreenElement *_screenElement[5];
+        ScreenElement * _screenElement[7];
 
     public:
         Application();

@@ -7,6 +7,9 @@ using namespace sf;
 
 Tetromino::Tetromino(int t, int o, sf::Vector2i pos)
 {
+
+
+
     piece = new int*[4];
     for (int i = 0; i<4; i++)
         piece[i] = new int[4];
@@ -15,15 +18,22 @@ Tetromino::Tetromino(int t, int o, sf::Vector2i pos)
     setOrientation(o);
     setPosition(pos);
 }
-Tetromino::Tetromino(int t, int o)
+Tetromino::Tetromino(int t, int o) : Tetromino(t, o, sf::Vector2i(0, 0))
 {
-    Tetromino(t, o, sf::Vector2i(0, 0));
 }
-Tetromino::Tetromino()
+Tetromino::Tetromino() : Tetromino(rand_int(0, 6), 0)
 {
-    Tetromino(rand_int(0, 6), 0);
 }
-Tetromino::~Tetromino() {}
+Tetromino::~Tetromino()
+{
+    for (int i = 0; i<4; i++)
+        delete[] piece[i];
+    delete[] piece;
+}
+
+
+
+
 
 int Tetromino::getTypePiece()
 {
@@ -76,9 +86,14 @@ int** Tetromino::getMatrixShape()
 
 void Tetromino::setMatrixShape()
 {
+    if (type_piece < 0 || type_piece > 6 || orientation < 0 || orientation > 3)
+        return;
     for (int i=0; i<4; i++)
         for (int j=0; j<4; j++)
+        {
             piece[i][j] = pieces[type_piece][orientation][i][j];
+
+        }
 }
 
 

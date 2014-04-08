@@ -13,7 +13,7 @@ class Tetromino
     public:
         Tetromino(int t, int o, sf::Vector2i pos);
         Tetromino(int t, int o);
-        Tetromino(); // génère aléatoirement un tetromino à l'orientation 0
+        Tetromino(); // gÃ©nÃ¨re alÃ©atoirement un tetromino Ã  l'orientation 0
         virtual ~Tetromino();
 
         int getTypePiece();

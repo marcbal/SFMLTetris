@@ -11,7 +11,7 @@ MenuSettingsTouches::MenuSettingsTouches(sf::Vector2i window_size,char * state) 
                                         18,
                                         _state)));
 
-    menuElements[0].setAction(Settings);
+    menuElements[0].setAction(SETTINGS);
     menuElements[0].setText(L"Retour");
 
     menuElements.push_back(*(new Bouton(sf::Vector2f(50, _window_size.y-80),
@@ -19,7 +19,7 @@ MenuSettingsTouches::MenuSettingsTouches(sf::Vector2i window_size,char * state) 
                                         18,
                                         _state)));
 
-    menuElements[1].setAction(Index);
+    menuElements[1].setAction(INDEX);
     menuElements[1].setText(L"Menu Principal");
 }
 
