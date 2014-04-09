@@ -60,11 +60,15 @@ void Game::update()
 {
     matrix.effacePieceCourrante();
     if (!matrix.pieceIsActive())
-    {   // passage à la pièce suivante
+    {   // passage Ã  la piÃ¨ce suivante
+
+        _nb_line += matrix.fullLinesClear();
+
+        // on tente de placer la piece suivante
         if (!matrix.newPiece(pieceSuivante))
-        {
+        {   // le jeu est fini, on recommence
             matrix.clearBoard();
-            matrix.newPiece(pieceSuivante);
+            matrix.newPiece(*(new Tetromino()));
         }
         pieceSuivante = *(new Tetromino());
     }

@@ -48,6 +48,9 @@ class TetrisBoard : public sf::Drawable
         void dessinePieceCourrante();
         void effacePieceCourrante();
 
+
+        int fullLinesClear();
+
         bool pieceIsActive();
 
         int getBoardData(int x, int y);

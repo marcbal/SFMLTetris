@@ -120,6 +120,26 @@ void TetrisBoard::rotateLeft()
     if (verifierPlacementPiece(pieceCourrante.getPosition(), new_rotation))
     {
         pieceCourrante.setOrientation(new_rotation);
+    } // suite : décalage de la pièce pour que la rotation soit effectuée
+    else if (verifierPlacementPiece(pieceCourrante.getPosition()+sf::Vector2i(0, 1), new_rotation))
+    {
+        pieceCourrante.setOrientation(new_rotation);
+        pieceCourrante.setPosition(pieceCourrante.getPosition()+sf::Vector2i(0, 1));
+    }
+    else if (verifierPlacementPiece(pieceCourrante.getPosition()+sf::Vector2i(-1,0), new_rotation))
+    {
+        pieceCourrante.setOrientation(new_rotation);
+        pieceCourrante.setPosition(pieceCourrante.getPosition()+sf::Vector2i(-1,0));
+    }
+    else if (verifierPlacementPiece(pieceCourrante.getPosition()+sf::Vector2i(1, 0), new_rotation))
+    {
+        pieceCourrante.setOrientation(new_rotation);
+        pieceCourrante.setPosition(pieceCourrante.getPosition()+sf::Vector2i(1, 0));
+    }
+    else if (verifierPlacementPiece(pieceCourrante.getPosition()+sf::Vector2i(0, -1), new_rotation))
+    {
+        pieceCourrante.setOrientation(new_rotation);
+        pieceCourrante.setPosition(pieceCourrante.getPosition()+sf::Vector2i(0, -1));
     }
 }
 void TetrisBoard::rotateRight()
@@ -129,6 +149,26 @@ void TetrisBoard::rotateRight()
     if (verifierPlacementPiece(pieceCourrante.getPosition(), new_rotation))
     {
         pieceCourrante.setOrientation(new_rotation);
+    } // suite : décalage de la pièce pour que la rotation soit effectuée
+    else if (verifierPlacementPiece(pieceCourrante.getPosition()+sf::Vector2i(0, 1), new_rotation))
+    {
+        pieceCourrante.setOrientation(new_rotation);
+        pieceCourrante.setPosition(pieceCourrante.getPosition()+sf::Vector2i(0, 1));
+    }
+    else if (verifierPlacementPiece(pieceCourrante.getPosition()+sf::Vector2i(-1,0), new_rotation))
+    {
+        pieceCourrante.setOrientation(new_rotation);
+        pieceCourrante.setPosition(pieceCourrante.getPosition()+sf::Vector2i(-1,0));
+    }
+    else if (verifierPlacementPiece(pieceCourrante.getPosition()+sf::Vector2i(1, 0), new_rotation))
+    {
+        pieceCourrante.setOrientation(new_rotation);
+        pieceCourrante.setPosition(pieceCourrante.getPosition()+sf::Vector2i(1, 0));
+    }
+    else if (verifierPlacementPiece(pieceCourrante.getPosition()+sf::Vector2i(0, -1), new_rotation))
+    {
+        pieceCourrante.setOrientation(new_rotation);
+        pieceCourrante.setPosition(pieceCourrante.getPosition()+sf::Vector2i(0, -1));
     }
 }
 
@@ -206,6 +246,48 @@ void TetrisBoard::setBoardData(int x, int y, int data)
     else
         shapeMatrix[x*BOARD_HEIGHT+y].setFillColor(sf::Color::Transparent);
 }
+
+
+
+
+
+
+int TetrisBoard::fullLinesClear()
+{
+    int nbr_lines = 0;
+    for (int i=0; i<BOARD_HEIGHT; i++)
+    {   // on parcours les lignes de haut en bas
+        bool full = true;
+        // on vérifie si la ligne est complète
+        for (int j=0; j<BOARD_WIDTH && full; j++)
+            if (getBoardData(j, i) < 10)
+                full = false;
+
+        if (full)
+        {
+            nbr_lines++;
+            // on efface la ligne
+            for (int j=0; j<BOARD_WIDTH; j++)
+                setBoardData(j, i, 0);
+
+            // on décale tout ce qui se trouve au dessus
+
+            for (int j=i; j>0; j--) // on remonte les lignes
+                for (int k=0; k<BOARD_WIDTH; k++)
+                    setBoardData(k, j, getBoardData(k, j-1));
+
+            // on efface la ligne tout en haut
+            for (int j=0; j<BOARD_WIDTH; j++)
+                setBoardData(j, 0, 0);
+
+        }
+    }
+    return nbr_lines;
+}
+
+
+
+
 
 
 bool TetrisBoard::verifierPlacementPiece(sf::Vector2i pos, int o)
