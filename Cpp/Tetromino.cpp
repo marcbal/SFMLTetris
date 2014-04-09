@@ -41,8 +41,8 @@ int Tetromino::getTypePiece()
 }
 void Tetromino::setTypePiece(int type)
 {
-    if (type < 0 || type > 6)
-        type = type % 7;
+    if (type < 0) type += 7;
+    type = type % 7;
     type_piece = type;
 
     couleur = Tetromino::couleurs[type_piece];
@@ -54,9 +54,8 @@ int Tetromino::getOrientation()
 }
 void Tetromino::setOrientation(int o)
 {
-
-    if (o < 0 || o > 3)
-        o = o % 4;
+    if (o < 0) o += 4;
+    o = o % 4;
     orientation = o;
     setMatrixShape();
 }
@@ -66,8 +65,7 @@ sf::Vector2i Tetromino::getPosition()
 }
 void Tetromino::setPosition(sf::Vector2i pos)
 {
-    position.x = pos.x;
-    position.y = pos.y;
+    position = pos;
 }
 
 sf::Color Tetromino::getColor()
@@ -77,6 +75,7 @@ sf::Color Tetromino::getColor()
 
 bool** Tetromino::getMatrixShape()
 {
+    setMatrixShape();
     return piece;
 
 }
@@ -89,10 +88,13 @@ void Tetromino::setMatrixShape()
     if (type_piece < 0 || type_piece > 6 || orientation < 0 || orientation > 3)
         return;
     for (int i=0; i<4; i++)
+    {
+
         for (int j=0; j<4; j++)
         {
-            piece[i][j] = pieces[type_piece][orientation][i][j];
+            piece[i][j] = pieces[type_piece][orientation][j][i];
         }
+    }
 }
 
 

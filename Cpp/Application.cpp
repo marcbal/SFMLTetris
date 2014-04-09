@@ -18,8 +18,9 @@ Application::Application() :
     _screenElement[RULES]= new MenuIndex(&_window_size,&_state);
     _screenElement[SETTINGSTOUCHES]= new MenuSettingsTouches(&_window_size,&_state);
 	_window.setFramerateLimit(FPS_MAX);
+	_window.setKeyRepeatEnabled(false);
     _window_setting.antialiasingLevel = 4;
-    _window.create(VideoMode(_window_size.x, _window_size.y), L"SFMLTetris", Style::Default, _window_setting);
+    _window.create(VideoMode(_window_size.x, _window_size.y), L"SFMLTetris", Style::Close | Style::Titlebar, _window_setting);
 }
 
 Application::~Application(){}

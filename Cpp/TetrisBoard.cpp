@@ -71,29 +71,65 @@ void TetrisBoard::clearBoard()
 }
 void TetrisBoard::HardDrop()
 {
-
+    bool continuer;
+    do
+    {
+        continuer = MoveDown();
+    }
+    while (continuer);
 }
 bool TetrisBoard::MoveDown()
 {
-
+    sf::Vector2i new_pos = pieceCourrante.getPosition() + sf::Vector2i(0, 1);
+    if (verifierPlacementPiece(new_pos, pieceCourrante.getOrientation()))
+    {
+        pieceCourrante.setPosition(new_pos);
+        return true;
+    }
+    else
+    {
+        effacePieceCourrante();
+        dessinePieceCourrante();
+        fixPiece();
+        return false;
+    }
 }
 
 
-bool moveLeft()
+void TetrisBoard::moveLeft()
 {
 
+    sf::Vector2i new_pos = pieceCourrante.getPosition() + sf::Vector2i(-1, 0);
+    if (verifierPlacementPiece(new_pos, pieceCourrante.getOrientation()))
+    {
+        pieceCourrante.setPosition(new_pos);
+    }
 }
-bool moveRight()
+void TetrisBoard::moveRight()
 {
 
+    sf::Vector2i new_pos = pieceCourrante.getPosition() + sf::Vector2i(1, 0);
+    if (verifierPlacementPiece(new_pos, pieceCourrante.getOrientation()))
+    {
+        pieceCourrante.setPosition(new_pos);
+    }
 }
-bool rotateLeft()
+void TetrisBoard::rotateLeft()
 {
-
+    int new_rotation = pieceCourrante.getOrientation()+1;
+    if (verifierPlacementPiece(pieceCourrante.getPosition(), new_rotation))
+    {
+        pieceCourrante.setOrientation(new_rotation);
+    }
 }
-bool rotateRight()
+void TetrisBoard::rotateRight()
 {
 
+    int new_rotation = pieceCourrante.getOrientation()-1;
+    if (verifierPlacementPiece(pieceCourrante.getPosition(), new_rotation))
+    {
+        pieceCourrante.setOrientation(new_rotation);
+    }
 }
 
 
@@ -104,9 +140,10 @@ void TetrisBoard::fixPiece()
 
     pieceCouranteActive = false;
 
+
     for (int i=0; i<BOARD_WIDTH; i++)
         for (int j=0; j<BOARD_HEIGHT; j++)
-            if (area[i][j] >= 20 && area[i][j] <= 26)
+            if (getBoardData(i, j) >= 20 && getBoardData(i, j) <= 26)
                 setBoardData(i, j, getBoardData(i, j) - 10);
 
 }
@@ -127,6 +164,12 @@ void TetrisBoard::dessinePieceCourrante()
                              pieceCourrante.getTypePiece() + 20);
 
 }
+
+
+ bool TetrisBoard::pieceIsActive()
+ {
+     return pieceCouranteActive;
+ }
 
 
 void TetrisBoard::effacePieceCourrante()
@@ -170,18 +213,17 @@ bool TetrisBoard::verifierPlacementPiece(sf::Vector2i pos, int o)
     // tests si la forme sors totalement de l'écran
     if (pos.x > BOARD_WIDTH || pos.y > BOARD_HEIGHT || pos.y+4 < 0 || pos.x+4 < 0)
         return false;
-
     // crée un tetromino de test qui correspond à la position/orientation/forme testée
     Tetromino pieceTest(pieceCourrante.getTypePiece(), o, pos);
     bool ** shape = pieceTest.getMatrixShape();
 
-
     for (int i=0; i<4; i++)
+    {
         for (int j=0; j<4; j++)
         {
             sf::Vector2i posB(pos.x + i, pos.y + j);
             if (shape[i][j] &&
-                (area[posB.x][posB.y] > 10 ||
+                ((area[posB.x][posB.y] >= 10 && area[posB.x][posB.y] < 20) ||
                  posB.x < 0 || posB.y < 0 ||
                  posB.x >= BOARD_WIDTH || posB.y >= BOARD_HEIGHT))
             {
@@ -189,6 +231,8 @@ bool TetrisBoard::verifierPlacementPiece(sf::Vector2i pos, int o)
             }
 
         }
+
+    }
 
     return true;
 }

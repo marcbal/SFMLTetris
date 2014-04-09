@@ -8,6 +8,7 @@
 #include "Bouton.hpp"
 #include "TetrisBoard.hpp"
 #include "ScreenElement.hpp"
+#include "Application.hpp"
 
 using namespace std;
 using namespace sf;
@@ -18,6 +19,8 @@ class Game : public ScreenElement
     private:
         TetrisBoard matrix;
         Tetromino pieceSuivante;
+
+        char * _state;
 
         int _score = 0;
         int _nb_line = 0;

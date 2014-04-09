@@ -38,15 +38,17 @@ class TetrisBoard : public sf::Drawable
         void HardDrop();
 
         bool MoveDown();
-        bool moveLeft();
-        bool moveRight();
-        bool rotateLeft();
-        bool rotateRight();
+        void moveLeft();
+        void moveRight();
+        void rotateLeft();
+        void rotateRight();
 
 
         void fixPiece();
         void dessinePieceCourrante();
         void effacePieceCourrante();
+
+        bool pieceIsActive();
 
         int getBoardData(int x, int y);
         void setBoardData(int x, int y, int data);
