@@ -28,7 +28,7 @@ TetrisBoard::TetrisBoard(sf::Vector2i * window_size) :
             shapeMatrix[i*BOARD_HEIGHT+j] = *(new sf::RectangleShape(sf::Vector2f(CEIL_SIZE, CEIL_SIZE)));
             shapeMatrix[i*BOARD_HEIGHT+j].setPosition(top_left_pos + sf::Vector2f(CEIL_SIZE*i, CEIL_SIZE*j));
             shapeMatrix[i*BOARD_HEIGHT+j].setOutlineThickness(-1);
-            shapeMatrix[i*BOARD_HEIGHT+j].setOutlineColor(sf::Color(255, 255, 255, 16));
+            shapeMatrix[i*BOARD_HEIGHT+j].setOutlineColor(sf::Color(63, 63, 63, 63));
             shapeMatrix[i*BOARD_HEIGHT+j].setFillColor(sf::Color::Transparent);
 
         }
