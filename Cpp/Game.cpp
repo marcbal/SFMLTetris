@@ -9,6 +9,7 @@ Game::Game(sf::Vector2i * window_size, char *state) :
     _state = state;
     _nb_line = 0;
     _score = 0;
+    _nb_manual_down = 0;
 
     setPause((*state != GAME));
 
@@ -36,10 +37,11 @@ void Game::onEvent(sf::Event & event)
                 case sf::Keyboard::Down:
                 case sf::Keyboard::Space:
                     matrix.MoveDown();
+                    _nb_manual_down += SOFT_DROP_BONUS_COEFF;
                     setTimeLastMoveDown();
                 break;
                 case sf::Keyboard::Up:
-                    matrix.HardDrop();
+                    _nb_manual_down += HARD_DROP_BONUS_COEFF * matrix.HardDrop();
                 break;
                 case sf::Keyboard::Q:
                     matrix.rotateLeft();
@@ -50,9 +52,27 @@ void Game::onEvent(sf::Event & event)
                 default: break;
             }
         break;
-        default:
-
+        case sf::Event::MouseMoved:
+            matrix.mouseLeftRight(event);
         break;
+        case sf::Event::MouseButtonPressed:
+            switch(event.mouseButton.button)
+            {
+                case sf::Mouse::Left:
+                    matrix.rotateLeft();
+                break;
+                case sf::Mouse::Right:
+                    matrix.rotateRight();
+                break;
+                case sf::Mouse::Middle:
+                    matrix.MoveDown();
+                    _nb_manual_down += SOFT_DROP_BONUS_COEFF;
+                    setTimeLastMoveDown();
+                break;
+                default: break;
+            }
+        break;
+        default: break;
     }
 
 
@@ -93,13 +113,17 @@ void Game::update()
         int new_del_line = matrix.fullLinesClear();
         _nb_line += new_del_line;
         switch (new_del_line)
-        {
-            case 1: _score+=40; break;
-            case 2: _score+=100; break;
-            case 3: _score+=300; break;
-            case 4: _score+=1200; break;
+        {   // http://tetris.wikia.com/wiki/Scoring#Original_Nintendo_Scoring_System
+            case 1: _score += 40 * (getLevel()+1); break;
+            case 2: _score += 100 * (getLevel()+1); break;
+            case 3: _score += 300 * (getLevel()+1); break;
+            case 4: _score += 1200 * (getLevel()+1); break;
             default: break;
         }
+
+        if (new_del_line > 0)
+            _score += _nb_manual_down; // ajoute le bonus pour l'accelération
+
         // on tente de placer la piece suivante
         if (!matrix.newPiece(pieceSuivante))
         {   // le jeu est fini, on recommence
@@ -110,11 +134,14 @@ void Game::update()
         }
         setTimeLastMoveDown();
         pieceSuivante = *(new Tetromino());
+
+        _nb_manual_down = 0;
+
         cout << "Lignes=" << _nb_line << " ; Score=" << _score << " ; Niveau=" << getLevel() << endl;
     }
 
     sf::Time time_diff = gameClock.getElapsedTime()-timeLastMoveDown;
-    if (time_diff.asSeconds() > exp((float) getLevel()*-0.3))
+    if (time_diff.asSeconds() > exp((float) getLevel() * (- SPEED_LEVEL_COEFF)))
     {
         matrix.MoveDown();
         setTimeLastMoveDown();

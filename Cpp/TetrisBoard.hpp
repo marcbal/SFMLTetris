@@ -3,6 +3,7 @@
 
 #include "Tetromino.hpp"
 #include "fn_random.hpp"
+#include "Collision.hpp"
 #include <vector>
 
 
@@ -35,13 +36,15 @@ class TetrisBoard : public sf::Drawable
 
         void clearBoard();
 
-        void HardDrop();
+        int HardDrop();
 
         bool MoveDown();
-        void moveLeft();
-        void moveRight();
+        bool moveLeft();
+        bool moveRight();
         void rotateLeft();
         void rotateRight();
+
+        void mouseLeftRight(sf::Event event);
 
 
         void fixPiece();

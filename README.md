@@ -17,13 +17,7 @@ Points important à faire (énoncée)
 ----------------------------------
 -> Effacer au fur et à mesure
 
-### Base
-- Contrôle par la souris
-    - Bouton gauche : rotation à gauche de 90°
-    - Bouton droite : rotation à droite de 90°
-    - Déplacement : translation suivant l’emplacement de la souris
-    - Bouton du milieu ou touche « espace » : accélération de la chute
-- Gagner un bonus selon l’accélération de la chute (donc « k fois un point » s’il finit une ligne en ayant accéléré le dernier Tetromino de k fois).
+### Base : Terminé
 
 ### Option 1 : IHM
 - Affichage du score / nombre de ligne / level
@@ -53,7 +47,7 @@ Idées (non prioritaire) (peuvent être utopique / infaisable)
 - Un cheat code, selon une certaine combinaison de touche : on pourrai faire remonter le Tetromino !
 
 ### Ambiance
-- Mettre une musique de fond
+- Mettre une musique de fond (j'en ai une de côté qui pourrait être bien)
 - Mettre des bruitages (collisions, ...)
 - Dans les options : possibilité de régler le volume de la musique / bruitages
 

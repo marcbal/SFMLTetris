@@ -69,14 +69,17 @@ void TetrisBoard::clearBoard()
             setBoardData(i, j, 0);
     pieceCouranteActive = false;
 }
-void TetrisBoard::HardDrop()
+int TetrisBoard::HardDrop()
 {
     bool continuer;
+    int nb_down = -1;
     do
     {
         continuer = MoveDown();
+        nb_down++;
     }
     while (continuer);
+    return nb_down;
 }
 bool TetrisBoard::MoveDown()
 {
@@ -96,23 +99,27 @@ bool TetrisBoard::MoveDown()
 }
 
 
-void TetrisBoard::moveLeft()
+bool TetrisBoard::moveLeft()
 {
 
     sf::Vector2i new_pos = pieceCourrante.getPosition() + sf::Vector2i(-1, 0);
     if (verifierPlacementPiece(new_pos, pieceCourrante.getOrientation()))
     {
         pieceCourrante.setPosition(new_pos);
+        return true;
     }
+    return false;
 }
-void TetrisBoard::moveRight()
+bool TetrisBoard::moveRight()
 {
 
     sf::Vector2i new_pos = pieceCourrante.getPosition() + sf::Vector2i(1, 0);
     if (verifierPlacementPiece(new_pos, pieceCourrante.getOrientation()))
     {
         pieceCourrante.setPosition(new_pos);
+        return true;
     }
+    return false;
 }
 void TetrisBoard::rotateLeft()
 {
@@ -171,6 +178,38 @@ void TetrisBoard::rotateRight()
         pieceCourrante.setPosition(pieceCourrante.getPosition()+sf::Vector2i(0, -1));
     }
 }
+
+
+
+
+void TetrisBoard::mouseLeftRight(sf::Event event)
+{
+    if (event.type != sf::Event::MouseMoved)
+        return;
+    sf::Vector2f cur_pos(event.mouseMove.x, event.mouseMove.y);
+    sf::Vector2f top_left((_window_size->x - BOARD_WIDTH * CEIL_SIZE)/2.0,
+                          (_window_size->y - BOARD_HEIGHT * CEIL_SIZE)/2.0);
+    sf::Vector2f board_size(BOARD_WIDTH * CEIL_SIZE,
+                            BOARD_HEIGHT * CEIL_SIZE);
+    if (!pointInRect(top_left, board_size, cur_pos))
+        return;
+    cur_pos -= top_left;
+    int tetromino_new_pos = (cur_pos.x * BOARD_WIDTH) / board_size.x;
+    tetromino_new_pos -= 2; // décalage pour centrer sur la souris
+    cout << tetromino_new_pos << " " << pieceCourrante.getPosition().x << endl;
+    bool continuer = true;
+    while (tetromino_new_pos < pieceCourrante.getPosition().x && continuer)
+    {
+        continuer = moveLeft();
+    }
+    while (tetromino_new_pos > pieceCourrante.getPosition().x && continuer)
+    {
+        continuer = moveRight();
+    }
+
+}
+
+
 
 
 

@@ -15,6 +15,11 @@
 
 #define POINTS_LEVEL 1000
 
+#define SPEED_LEVEL_COEFF 0.2
+
+#define HARD_DROP_BONUS_COEFF 2
+#define SOFT_DROP_BONUS_COEFF 1
+
 using namespace std;
 using namespace sf;
 
@@ -29,8 +34,9 @@ class Game : public ScreenElement
 
         bool _pause;
 
-        int _score = 0;
-        int _nb_line = 0;
+        int _score;
+        int _nb_line;
+        int _nb_manual_down;
 
         sf::Time timeLastMoveDown;
         sf::Clock gameClock;
