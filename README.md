@@ -21,7 +21,6 @@ Points important à faire (énoncée)
 
 ### Option 1 : IHM
 - Affichage du score / nombre de ligne / level
-- Affichage du/des prochain(s) tétromino(s)
 
 ### Option 2 : Tetris Explosif (what ?)
 les carrés d’un Tetromino ont une couleur propre. Si, dans les pièces qui sont tombées il apparait « k >= 4 » carrés contigüs, toute la forme des « k » carrés disparait (explosion) et donne au joueur «k » points supplémentaires (en plus des rangées remplies).

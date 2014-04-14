@@ -5,14 +5,15 @@ using namespace std;
 using namespace sf;
 
 
-Tetromino::Tetromino(int t, int o, sf::Vector2i pos)
+Tetromino::Tetromino(int t, int o, sf::Vector2i pos) :
+    piece(4)
 {
 
 
 
-    piece = new bool*[4];
-    for (int i = 0; i<4; i++)
-        piece[i] = new bool[4];
+    vector<bool> v(4, false);
+    for (int i=0; i<4; i++)
+        piece[i] = v;
 
     setTypePiece(t);
     setOrientation(o);
@@ -24,11 +25,9 @@ Tetromino::Tetromino(int t, int o) : Tetromino(t, o, sf::Vector2i(0, 0))
 Tetromino::Tetromino() : Tetromino(rand_int(0, 6), 0)
 {
 }
+
 Tetromino::~Tetromino()
 {
-    for (int i = 0; i<4; i++)
-        delete[] piece[i];
-    delete[] piece;
 }
 
 
@@ -41,7 +40,7 @@ int Tetromino::getTypePiece()
 }
 void Tetromino::setTypePiece(int type)
 {
-    if (type < 0) type += 7;
+    while (type < 0) type += 7;
     type = type % 7;
     type_piece = type;
 
@@ -54,7 +53,7 @@ int Tetromino::getOrientation()
 }
 void Tetromino::setOrientation(int o)
 {
-    if (o < 0) o += 4;
+    while (o < 0) o += 4;
     o = o % 4;
     orientation = o;
     setMatrixShape();
@@ -73,9 +72,8 @@ sf::Color Tetromino::getColor()
     return couleur;
 }
 
-bool** Tetromino::getMatrixShape()
+MatrixShape Tetromino::getMatrixShape()
 {
-    setMatrixShape();
     return piece;
 
 }

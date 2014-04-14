@@ -20,10 +20,9 @@
 #define INDEX 0
 #define GAME 1
 #define SETTINGS 2
-#define RULES 3
-#define CLOSE 4
-#define SETTINGSTOUCHES 5
-#define SCORE 6
+#define CLOSE 3
+#define SETTINGSTOUCHES 4
+#define SCORE 5
 
 using namespace std;
 using namespace sf;
@@ -44,7 +43,7 @@ class Application
 
         char _state;
 
-        ScreenElement * _screenElement[7];
+        ScreenElement * _screenElement[6];
 
     public:
         Application();

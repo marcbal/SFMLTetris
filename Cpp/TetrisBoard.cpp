@@ -44,7 +44,7 @@ TetrisBoard::~TetrisBoard(){}
 
 
 
-bool TetrisBoard::newPiece(Tetromino p)
+bool TetrisBoard::newPiece(Tetromino & p)
 {
     pieceCouranteActive = true;
     pieceCourrante = p;
@@ -196,7 +196,6 @@ void TetrisBoard::mouseLeftRight(sf::Event event)
     cur_pos -= top_left;
     int tetromino_new_pos = (cur_pos.x * BOARD_WIDTH) / board_size.x;
     tetromino_new_pos -= 2; // décalage pour centrer sur la souris
-    cout << tetromino_new_pos << " " << pieceCourrante.getPosition().x << endl;
     bool continuer = true;
     while (tetromino_new_pos < pieceCourrante.getPosition().x && continuer)
     {
@@ -234,7 +233,7 @@ void TetrisBoard::dessinePieceCourrante()
         return;
 
     sf::Vector2i pos = pieceCourrante.getPosition();
-    bool ** shape = pieceCourrante.getMatrixShape();
+    MatrixShape shape = pieceCourrante.getMatrixShape();
     for (int i=0; i<4; i++)
         for (int j=0; j<4; j++)
             if (shape[i][j])
@@ -336,8 +335,7 @@ bool TetrisBoard::verifierPlacementPiece(sf::Vector2i pos, int o)
         return false;
     // crée un tetromino de test qui correspond à la position/orientation/forme testée
     Tetromino pieceTest(pieceCourrante.getTypePiece(), o, pos);
-    bool ** shape = pieceTest.getMatrixShape();
-
+    MatrixShape shape = pieceTest.getMatrixShape();
     for (int i=0; i<4; i++)
     {
         for (int j=0; j<4; j++)

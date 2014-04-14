@@ -15,7 +15,6 @@ Application::Application() :
     _screenElement[GAME]= new Game(&_window_size,&_state);
     _screenElement[SCORE]= new MenuIndex(&_window_size,&_state);
     _screenElement[SETTINGS]= new MenuSettings(&_window_size,&_state);
-    _screenElement[RULES]= new MenuIndex(&_window_size,&_state);
     _screenElement[SETTINGSTOUCHES]= new MenuSettingsTouches(&_window_size,&_state);
 	_window.setFramerateLimit(FPS_MAX);
 	_window.setKeyRepeatEnabled(false);

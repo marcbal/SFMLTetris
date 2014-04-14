@@ -4,6 +4,12 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
+#include <vector>
+
+using namespace std;
+
+
+typedef vector<vector<bool> > MatrixShape;
 
 
 
@@ -24,7 +30,7 @@ class Tetromino
         void setPosition(sf::Vector2i pos);
 
         sf::Color getColor();
-        bool** getMatrixShape();
+        MatrixShape getMatrixShape();
 
 
 
@@ -56,7 +62,7 @@ class Tetromino
 
         sf::Color couleur;
 
-        bool** piece;
+        MatrixShape piece;
 };
 
 #endif // TETROMINO_H

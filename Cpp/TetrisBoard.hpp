@@ -31,7 +31,7 @@ class TetrisBoard : public sf::Drawable
         virtual ~TetrisBoard();
 
 
-        bool newPiece(Tetromino p); // place la nouvelle pièce en haut
+        bool newPiece(Tetromino & p); // place la nouvelle pièce en haut
         Tetromino & getPieceCourrante();
 
         void clearBoard();

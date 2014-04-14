@@ -9,8 +9,10 @@
 
 #include "Bouton.hpp"
 #include "TetrisBoard.hpp"
+#include "Tetromino.hpp"
 #include "ScreenElement.hpp"
 #include "Application.hpp"
+#include "NextTetrominoBoard.hpp"
 
 
 #define POINTS_LEVEL 1000
@@ -19,6 +21,8 @@
 
 #define HARD_DROP_BONUS_COEFF 2
 #define SOFT_DROP_BONUS_COEFF 1
+
+#define NB_NEXT_TETROMINO 3
 
 using namespace std;
 using namespace sf;
@@ -29,6 +33,7 @@ class Game : public ScreenElement
     private:
         TetrisBoard matrix;
         Tetromino pieceSuivante;
+        vector<NextTetrominoBoard> nextTetromino;
 
         char * _state;
 
@@ -40,6 +45,9 @@ class Game : public ScreenElement
 
         sf::Time timeLastMoveDown;
         sf::Clock gameClock;
+
+
+        bool nextPiece();
 
         // sf::Drawable
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

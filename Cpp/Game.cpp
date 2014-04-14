@@ -3,6 +3,7 @@
 Game::Game(sf::Vector2i * window_size, char *state) :
     matrix(window_size),
     pieceSuivante(),
+    nextTetromino(),
     gameClock()
 {
     _window_size = window_size;
@@ -12,6 +13,15 @@ Game::Game(sf::Vector2i * window_size, char *state) :
     _nb_manual_down = 0;
 
     setPause((*state != GAME));
+
+    float next_tetromino_top = (window_size->y - (NB_NEXT_TETROMINO * 4 * CEIL_SIZE + (NB_NEXT_TETROMINO - 1) * 50))/ 2.0;
+
+    for (int i = 0; i<NB_NEXT_TETROMINO; i++)
+    {
+        NextTetrominoBoard nextTB(sf::Vector2f(100, next_tetromino_top + (4 * CEIL_SIZE + 50) * i));
+        nextTB.newPiece(*(new Tetromino(rand_int(0, 6), 0, sf::Vector2i(0, 0))));
+        nextTetromino.push_back(nextTB);
+    }
 
 }
 
@@ -82,6 +92,34 @@ void Game::onEvent(sf::Event & event)
 }
 
 
+bool Game::nextPiece()
+{
+    Tetromino p = nextTetromino[0].getPiece();
+
+    if (!matrix.newPiece(p))
+    {
+        return false;
+    }
+
+
+
+    for (int i=0; i<NB_NEXT_TETROMINO; i++)
+    {
+        if (i < NB_NEXT_TETROMINO - 1)
+        {
+
+            Tetromino t = nextTetromino[i+1].getPiece();
+            nextTetromino[i].newPiece(t);
+        }
+        else
+            nextTetromino[i].newPiece(*(new Tetromino(rand_int(0, 6), 0, sf::Vector2i(0, 0))));
+    }
+
+
+    return true;
+}
+
+
 
 
 void Game::setPause(bool p)
@@ -125,7 +163,7 @@ void Game::update()
             _score += _nb_manual_down; // ajoute le bonus pour l'accelération
 
         // on tente de placer la piece suivante
-        if (!matrix.newPiece(pieceSuivante))
+        if (!nextPiece())
         {   // le jeu est fini, on recommence
             matrix.clearBoard();
             matrix.newPiece(*(new Tetromino()));
@@ -177,4 +215,8 @@ void Game::setTimeLastMoveDown()
 void Game::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(matrix, states);
+    for (int i = 0; i<NB_NEXT_TETROMINO; i++)
+    {
+        target.draw(nextTetromino[i], states);
+    }
 }
