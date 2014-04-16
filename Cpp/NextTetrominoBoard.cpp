@@ -10,8 +10,8 @@ NextTetrominoBoard::NextTetrominoBoard(sf::Vector2f position) :
     boardShape.setPosition(position);
     boardShape.setSize(sf::Vector2f(4 * CEIL_SIZE, 4 * CEIL_SIZE));
     boardShape.setFillColor(sf::Color(0, 0, 0, 192));
-    boardShape.setOutlineThickness(1);
-    boardShape.setOutlineColor(sf::Color(255, 255, 255, 128));
+    boardShape.setOutlineThickness(2);
+    boardShape.setOutlineColor(sf::Color::White);
 
 
 

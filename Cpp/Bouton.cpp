@@ -33,7 +33,7 @@ Bouton::Bouton(sf::Vector2f pos, sf::Vector2f taille,int taillePolice,char * sta
     // forme par défaut
     shapeDefault.setOutlineColor(sf::Color::White);
     shapeDefault.setOutlineThickness(-2);
-    shapeDefault.setFillColor(sf::Color::Black);
+    shapeDefault.setFillColor(sf::Color(0, 0, 0, 192));
     // forme en survol
     shapeHover.setOutlineColor(sf::Color::White);
     shapeHover.setOutlineThickness(-2);

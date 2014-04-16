@@ -6,6 +6,7 @@
 #include <SFML/Window.hpp>
 #include <iostream>
 #include <cmath>
+#include <string>
 
 #include "Bouton.hpp"
 #include "TetrisBoard.hpp"
@@ -38,6 +39,7 @@ class Game : public ScreenElement
         vector<NextTetrominoBoard> nextTetromino;
 
         Bouton scoreInfos;
+        Bouton scoreInfosBefore;
 
         char * _state;
 
@@ -47,6 +49,7 @@ class Game : public ScreenElement
         int _score;
         int _nb_line;
         int _nb_manual_down;
+        int _nb_tetromino;
 
         sf::Time timeLastMoveDown;
         sf::Clock gameClock;
@@ -73,6 +76,10 @@ class Game : public ScreenElement
         bool getPause();
 
         void restartGame();
+
+
+        // permet de prendre en compte le lag dans la descente de la pièce
+        sf::Time getTimeAutoMoveDown();
 
 
         virtual void onEvent(sf::Event & event);

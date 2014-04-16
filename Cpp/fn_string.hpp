@@ -24,8 +24,6 @@ string to_string( double Value );
 
 string to_string( bool Value );
 
-void compter_voyelles_consonnes(string mot, int& voyelles, int& consonnes);
-
 int nombre_car_mot(string mot, char l);
 
 bool sont_anagramme(string mot1, string mot2);

@@ -73,28 +73,6 @@ string to_string( bool Value )
 
 
 
-void compter_voyelles_consonnes(string mot, int& voyelles, int& consonnes)
-{	// compte les voyelles accentués en majuscules
-	voyelles = 0;
-	consonnes = 0;
-	int max = mot.size();
-	for (int i=0; i<max; i++)
-	{
-		mot[i] = tolower(mot[i]);
-		if (mot[i] == 'a' || mot[i] == 'e' || mot[i] == 'i' ||
-			mot[i] == 'o' || mot[i] == 'u' || mot[i] == 'y'
-			|| mot[i] == 'â' || mot[i] == 'à' || mot[i] == 'è'
-			|| mot[i] == 'é' || mot[i] == 'ê' || mot[i] == 'ë'
-			|| mot[i] == '½' || mot[i] == 'æ' || mot[i] == 'î'
-			|| mot[i] == 'ï' || mot[i] == 'ô' || mot[i] == 'ù'
-			|| mot[i] == 'û' || mot[i] == 'ü')
-			voyelles++;
-		else
-			consonnes++;
-	}
-}
-
-
 int nombre_car_mot(string mot, char l)
 {
 	int max = mot.size();

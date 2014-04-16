@@ -19,8 +19,8 @@ TetrisBoard::TetrisBoard(sf::Vector2i * window_size) :
     boardShape.setPosition(top_left_pos);
     boardShape.setSize(sf::Vector2f(BOARD_WIDTH * CEIL_SIZE, BOARD_HEIGHT * CEIL_SIZE));
     boardShape.setFillColor(sf::Color(0, 0, 0, 192));
-    boardShape.setOutlineThickness(1);
-    boardShape.setOutlineColor(sf::Color(255, 255, 255, 128));
+    boardShape.setOutlineThickness(2);
+    boardShape.setOutlineColor(sf::Color::White);
 
     for (int i=0; i<BOARD_WIDTH; i++)
         for (int j=0; j<BOARD_HEIGHT; j++)

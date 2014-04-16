@@ -6,6 +6,7 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <string>
+#include <cmath>
 #include "fn_string.hpp"
 
 
@@ -14,6 +15,7 @@ using namespace sf;
 
 
 string formattedDuration(sf::Time time);
+string formattedDuration(sf::Time time, unsigned int nb_dec);
 
 
 
