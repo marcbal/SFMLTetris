@@ -13,6 +13,8 @@
 #include "ScreenElement.hpp"
 #include "Application.hpp"
 #include "NextTetrominoBoard.hpp"
+#include "fn_string.hpp"
+#include "fn_time.hpp"
 
 
 #define POINTS_LEVEL 1000
@@ -35,9 +37,12 @@ class Game : public ScreenElement
         Tetromino pieceSuivante;
         vector<NextTetrominoBoard> nextTetromino;
 
+        Bouton scoreInfos;
+
         char * _state;
 
         bool _pause;
+
 
         int _score;
         int _nb_line;
@@ -45,6 +50,8 @@ class Game : public ScreenElement
 
         sf::Time timeLastMoveDown;
         sf::Clock gameClock;
+        sf::Time totalPauseTime;
+        sf::Time lastPauseStartingTime;
 
 
         bool nextPiece();
@@ -60,8 +67,12 @@ class Game : public ScreenElement
 
         void setTimeLastMoveDown();
 
+        sf::Time getGameTime();
+
         void setPause(bool p);
         bool getPause();
+
+        void restartGame();
 
 
         virtual void onEvent(sf::Event & event);

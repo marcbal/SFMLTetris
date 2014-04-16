@@ -4,7 +4,10 @@ Game::Game(sf::Vector2i * window_size, char *state) :
     matrix(window_size),
     pieceSuivante(),
     nextTetromino(),
-    gameClock()
+    scoreInfos(sf::Vector2f(650, (window_size->y-150)/2.0), sf::Vector2f(200, 150), 15, nullptr),
+    gameClock(),
+    totalPauseTime(sf::seconds(0.0)),
+    lastPauseStartingTime(sf::seconds(0.0))
 {
     _window_size = window_size;
     _state = state;
@@ -23,6 +26,10 @@ Game::Game(sf::Vector2i * window_size, char *state) :
         nextTetromino.push_back(nextTB);
     }
 
+
+
+
+
 }
 
 Game::~Game() {}
@@ -36,6 +43,7 @@ void Game::onEvent(sf::Event & event)
             switch (event.key.code)
             {
                 case sf::Keyboard::Escape:
+                    setPause(true);
                     *_state = INDEX;
                 break;
                 case sf::Keyboard::Left:
@@ -122,17 +130,42 @@ bool Game::nextPiece()
 
 
 
+sf::Time Game::getGameTime()
+{
+    return gameClock.getElapsedTime() - totalPauseTime;
+}
+
+
+
 void Game::setPause(bool p)
 {
     if (_pause && !p)
     {   // reprise du jeu
+
+        totalPauseTime += (gameClock.getElapsedTime() - lastPauseStartingTime);
+
         setTimeLastMoveDown();
+    }
+    else if (!_pause && p)
+    {   // mise en pause
+        lastPauseStartingTime = gameClock.getElapsedTime();
     }
     _pause = p;
 }
 bool Game::getPause()
 {
     return _pause;
+}
+
+
+
+
+void Game::restartGame()
+{
+    matrix.clearBoard();
+    matrix.newPiece(*(new Tetromino()));
+    _nb_line = _score = 0;
+    gameClock.restart();
 }
 
 
@@ -164,27 +197,28 @@ void Game::update()
 
         // on tente de placer la piece suivante
         if (!nextPiece())
-        {   // le jeu est fini, on recommence
-            matrix.clearBoard();
-            matrix.newPiece(*(new Tetromino()));
-            _nb_line = _score = 0;
-            gameClock.restart();
-        }
+            restartGame();
         setTimeLastMoveDown();
         pieceSuivante = *(new Tetromino());
 
         _nb_manual_down = 0;
 
-        cout << "Lignes=" << _nb_line << " ; Score=" << _score << " ; Niveau=" << getLevel() << endl;
     }
 
-    sf::Time time_diff = gameClock.getElapsedTime()-timeLastMoveDown;
-    if (time_diff.asSeconds() > exp((float) getLevel() * (- SPEED_LEVEL_COEFF)))
+    sf::Time time_diff = getGameTime()-timeLastMoveDown;
+    if (time_diff.asSeconds() > exp((float) getLevel() * (- SPEED_LEVEL_COEFF)) + 0.1)
     {
         matrix.MoveDown();
         setTimeLastMoveDown();
     }
 
+
+    sf::Time chrono = getGameTime();
+
+    scoreInfos.setText("Score : "+to_string(_score)+"\n"+
+                       "Lignes : "+to_string(_nb_line)+"\n"+
+                       "Niveau : "+to_string(getLevel())+"\n"+
+                       "Temps : "+formattedDuration(chrono)+"");
 
 
     matrix.dessinePieceCourrante();
@@ -205,7 +239,7 @@ int Game::getLevel()
 
 void Game::setTimeLastMoveDown()
 {
-    timeLastMoveDown = gameClock.getElapsedTime();
+    timeLastMoveDown = getGameTime();
 }
 
 
@@ -219,4 +253,5 @@ void Game::draw(sf::RenderTarget& target, sf::RenderStates states) const
     {
         target.draw(nextTetromino[i], states);
     }
+    target.draw(scoreInfos);
 }

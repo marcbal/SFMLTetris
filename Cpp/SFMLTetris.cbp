@@ -138,6 +138,18 @@
 		<Unit filename="fn_random.hpp">
 			<Option virtualFolder="Non-Class/" />
 		</Unit>
+		<Unit filename="fn_string.cpp">
+			<Option virtualFolder="Non-Class/" />
+		</Unit>
+		<Unit filename="fn_string.hpp">
+			<Option virtualFolder="Non-Class/" />
+		</Unit>
+		<Unit filename="fn_time.cpp">
+			<Option virtualFolder="Non-Class/" />
+		</Unit>
+		<Unit filename="fn_time.hpp">
+			<Option virtualFolder="Non-Class/" />
+		</Unit>
 		<Unit filename="main.cpp">
 			<Option virtualFolder="Main/" />
 		</Unit>

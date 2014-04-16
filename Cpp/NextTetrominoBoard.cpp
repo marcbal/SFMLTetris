@@ -32,12 +32,9 @@ NextTetrominoBoard::~NextTetrominoBoard() {}
 
 void NextTetrominoBoard::newPiece(Tetromino & t)
 {
-    cout << "newPiece (";
     piece = t;
     clearPiece();
     dessinePiece();
-
-    cout << ") ok" << endl;
 }
 
 
