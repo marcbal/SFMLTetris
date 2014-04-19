@@ -5,7 +5,7 @@
 		<Option title="SFMLTetris" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
-		<Option virtualFolders="Non-Class\;GUI Parts\;Events\;Main\;Tetris Elements\;Graphics elements\;GUI Parts\Menu\;" />
+		<Option virtualFolders="Non-Class\;GUI Parts\;Events\;Main\;Tetris Elements\;Graphics elements\;GUI Parts\Menu\;Inputs\;Audio\;" />
 		<Build>
 			<Target title="Debug">
 				<Option output="bin/Debug/SFML" prefix_auto="1" extension_auto="1" />
@@ -18,6 +18,7 @@
 					<Add option="-g" />
 				</Compiler>
 				<Linker>
+					<Add library="sfml-audio-s-d" />
 					<Add library="sfml-graphics-s-d" />
 					<Add library="sfml-window-s-d" />
 					<Add library="sfml-system-s-d" />
@@ -34,6 +35,7 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add library="sfml-audio-s" />
 					<Add library="sfml-graphics-s" />
 					<Add library="sfml-window-s" />
 					<Add library="sfml-system-s" />
@@ -53,6 +55,12 @@
 		</Unit>
 		<Unit filename="Application.hpp">
 			<Option virtualFolder="Main/" />
+		</Unit>
+		<Unit filename="AudioConfiguration.cpp">
+			<Option virtualFolder="Audio/" />
+		</Unit>
+		<Unit filename="AudioConfiguration.hpp">
+			<Option virtualFolder="Audio/" />
 		</Unit>
 		<Unit filename="Background.cpp">
 			<Option virtualFolder="GUI Parts/" />
@@ -84,6 +92,18 @@
 		<Unit filename="Game.hpp">
 			<Option virtualFolder="GUI Parts/" />
 		</Unit>
+		<Unit filename="InputCheck.cpp">
+			<Option virtualFolder="Inputs/" />
+		</Unit>
+		<Unit filename="InputCheck.hpp">
+			<Option virtualFolder="Inputs/" />
+		</Unit>
+		<Unit filename="InputRange.cpp">
+			<Option virtualFolder="Inputs/" />
+		</Unit>
+		<Unit filename="InputRange.hpp">
+			<Option virtualFolder="Inputs/" />
+		</Unit>
 		<Unit filename="Menu.cpp">
 			<Option virtualFolder="GUI Parts/Menu/" />
 		</Unit>
@@ -100,6 +120,12 @@
 			<Option virtualFolder="GUI Parts/Menu/" />
 		</Unit>
 		<Unit filename="MenuSettings.hpp">
+			<Option virtualFolder="GUI Parts/Menu/" />
+		</Unit>
+		<Unit filename="MenuSettingsAudio.cpp">
+			<Option virtualFolder="GUI Parts/Menu/" />
+		</Unit>
+		<Unit filename="MenuSettingsAudio.hpp">
 			<Option virtualFolder="GUI Parts/Menu/" />
 		</Unit>
 		<Unit filename="MenuSettingsTouches.cpp">
@@ -131,6 +157,12 @@
 		</Unit>
 		<Unit filename="Tetromino.hpp">
 			<Option virtualFolder="Tetris Elements/" />
+		</Unit>
+		<Unit filename="fileManager.cpp">
+			<Option virtualFolder="Non-Class/" />
+		</Unit>
+		<Unit filename="fileManager.hpp">
+			<Option virtualFolder="Non-Class/" />
 		</Unit>
 		<Unit filename="fn_random.cpp">
 			<Option virtualFolder="Non-Class/" />
