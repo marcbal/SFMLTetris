@@ -15,14 +15,18 @@
 #include "MenuIndex.hpp"
 #include "MenuSettings.hpp"
 #include "MenuSettingsTouches.hpp"
+#include "MenuSettingsAudio.hpp"
 #include "Game.hpp"
+#include "AudioConfiguration.hpp"
 
 #define INDEX 0
 #define GAME 1
 #define SETTINGS 2
 #define CLOSE 3
 #define SETTINGSTOUCHES 4
-#define SCORE 5
+#define SETTINGSAUDIO 5
+#define SCORE 6
+
 
 using namespace std;
 using namespace sf;
@@ -31,7 +35,7 @@ class Application
 {
     private:
         sf::Vector2i _window_size;
-
+        AudioConfiguration _audio;
         sf::RenderWindow _window;
         sf::ContextSettings _window_setting;
 
@@ -43,7 +47,7 @@ class Application
 
         char _state;
 
-        ScreenElement * _screenElement[6];
+        ScreenElement * _screenElement[7];
 
     public:
         Application();

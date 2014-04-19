@@ -6,7 +6,7 @@ MenuSettings::MenuSettings(sf::Vector2i * window_size,char * state) :Menu(window
 {
     // création des éléments de menu
 
-    int nbElement = 2;
+    int nbElement = 3;
 
     for (int i=0; i<nbElement; i++)
     {
@@ -16,6 +16,8 @@ MenuSettings::MenuSettings(sf::Vector2i * window_size,char * state) :Menu(window
     }
     menuElements[0].setAction(SETTINGSTOUCHES);
     menuElements[0].setText(L"Configuration des touches");
-    menuElements[1].setAction(INDEX);
-    menuElements[1].setText(L"Retour");
+    menuElements[1].setAction(SETTINGSAUDIO);
+    menuElements[1].setText(L"Configuration Audio");
+    menuElements[2].setAction(INDEX);
+    menuElements[2].setText(L"Retour");
 }
