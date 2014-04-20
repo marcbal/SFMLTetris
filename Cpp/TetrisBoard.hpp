@@ -1,23 +1,12 @@
 #ifndef TETRISBOARD_H
 #define TETRISBOARD_H
 
+#include "headers.hpp"
+
 #include "Tetromino.hpp"
 #include "fn_random.hpp"
 #include "Collision.hpp"
-#include <vector>
-
-
-
-
-
-#define BOARD_HEIGHT 20
-#define BOARD_WIDTH 10
-#define INIT_POS_X 3
-#define INIT_POS_Y -1
-
-#define CEIL_SIZE 22
-
-
+#include "ExplosionManager.hpp"
 
 using namespace std;
 using namespace sf;
@@ -52,7 +41,7 @@ class TetrisBoard : public sf::Drawable
         void effacePieceCourrante();
 
 
-        int fullLinesClear();
+        int fullLinesClear(ExplosionManager * explosions);
 
         bool pieceIsActive();
 

@@ -1,5 +1,4 @@
 #include "fileManager.hpp"
-#include <iostream>
 
 vector<string> listOfFiles(string dir){
     vector<string> files;

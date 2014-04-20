@@ -1,6 +1,8 @@
 #ifndef _COLLISION_HPP_
 #define _COLLISION_HPP_
-#include <SFML/Graphics.hpp>
+
+#include "headers.hpp"
+
 struct AABB{
     float x;
     float y;

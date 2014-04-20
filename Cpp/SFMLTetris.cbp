@@ -5,7 +5,7 @@
 		<Option title="SFMLTetris" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
-		<Option virtualFolders="Non-Class\;GUI Parts\;Events\;Main\;Tetris Elements\;Graphics elements\;GUI Parts\Menu\;Inputs\;Audio\;" />
+		<Option virtualFolders="Non-Class\;GUI Parts\;Events\;Main\;Tetris Elements\;Graphics elements\;GUI Parts\Menu\;Audio\;GUI Parts\Inputs\;" />
 		<Build>
 			<Target title="Debug">
 				<Option output="bin/Debug/SFML" prefix_auto="1" extension_auto="1" />
@@ -86,6 +86,12 @@
 		<Unit filename="Evenement.hpp">
 			<Option virtualFolder="Events/" />
 		</Unit>
+		<Unit filename="ExplosionManager.cpp">
+			<Option virtualFolder="Tetris Elements/" />
+		</Unit>
+		<Unit filename="ExplosionManager.hpp">
+			<Option virtualFolder="Tetris Elements/" />
+		</Unit>
 		<Unit filename="Game.cpp">
 			<Option virtualFolder="GUI Parts/" />
 		</Unit>
@@ -93,22 +99,22 @@
 			<Option virtualFolder="GUI Parts/" />
 		</Unit>
 		<Unit filename="InputCheck.cpp">
-			<Option virtualFolder="Inputs/" />
+			<Option virtualFolder="GUI Parts/Inputs/" />
 		</Unit>
 		<Unit filename="InputCheck.hpp">
-			<Option virtualFolder="Inputs/" />
+			<Option virtualFolder="GUI Parts/Inputs/" />
 		</Unit>
 		<Unit filename="InputKey.cpp">
-			<Option virtualFolder="Inputs/" />
+			<Option virtualFolder="GUI Parts/Inputs/" />
 		</Unit>
 		<Unit filename="InputKey.hpp">
-			<Option virtualFolder="Inputs/" />
+			<Option virtualFolder="GUI Parts/Inputs/" />
 		</Unit>
 		<Unit filename="InputRange.cpp">
-			<Option virtualFolder="Inputs/" />
+			<Option virtualFolder="GUI Parts/Inputs/" />
 		</Unit>
 		<Unit filename="InputRange.hpp">
-			<Option virtualFolder="Inputs/" />
+			<Option virtualFolder="GUI Parts/Inputs/" />
 		</Unit>
 		<Unit filename="Menu.cpp">
 			<Option virtualFolder="GUI Parts/Menu/" />
@@ -187,6 +193,9 @@
 		</Unit>
 		<Unit filename="fn_time.hpp">
 			<Option virtualFolder="Non-Class/" />
+		</Unit>
+		<Unit filename="headers.hpp">
+			<Option virtualFolder="Main/" />
 		</Unit>
 		<Unit filename="main.cpp">
 			<Option virtualFolder="Main/" />

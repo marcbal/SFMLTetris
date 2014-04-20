@@ -1,11 +1,8 @@
 #ifndef FN_STRING_HPP
 #define FN_STRING_HPP
 
-#include <cstring>
-#include <string>
-#include <vector>
-#include <sstream>
-#include <map>
+
+#include "headers.hpp"
 
 using namespace std;
 

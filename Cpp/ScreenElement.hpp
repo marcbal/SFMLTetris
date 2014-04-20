@@ -1,9 +1,8 @@
 #ifndef _SCREEN_HPP_
 #define _SCREEN_HPP_
 
-#include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Window.hpp>
+
+#include "headers.hpp"
 
 using namespace std;
 using namespace sf;

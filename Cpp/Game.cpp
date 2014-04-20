@@ -11,7 +11,8 @@ Game::Game(sf::Vector2i * window_size, char *state,Evenement * evenement) :
     scoreInfosBefore(sf::Vector2f(650, (window_size->y-150)/2.0-100), sf::Vector2f(225, 150), 17, nullptr),
     gameClock(),
     totalPauseTime(sf::seconds(0.0)),
-    lastPauseStartingTime(sf::seconds(0.0))
+    lastPauseStartingTime(sf::seconds(0.0)),
+    _explosions(window_size)
 {
     _evenement = evenement;
     _window_size = window_size;
@@ -197,7 +198,7 @@ void Game::update()
 
     if (!matrix.pieceIsActive())
     {   // passage à la pièce suivante
-        int new_del_line = matrix.fullLinesClear();
+        int new_del_line = matrix.fullLinesClear(&_explosions);
         _nb_line += new_del_line;
         switch (new_del_line)
         {   // http://tetris.wikia.com/wiki/Scoring#Original_Nintendo_Scoring_System
@@ -235,7 +236,7 @@ void Game::update()
                        "Niveau : "+to_string(getLevel())+"\n"+
                        "Tetrominos : "+to_string(_nb_tetromino)+"\n"+
                        "Temps : "+formattedDuration(getGameTime(), 1)+"");
-
+    _explosions.update();
 
     matrix.dessinePieceCourrante();
 }
@@ -277,4 +278,5 @@ void Game::draw(sf::RenderTarget& target, sf::RenderStates states) const
     }
     target.draw(scoreInfos);
     target.draw(scoreInfosBefore);
+    target.draw(_explosions);
 }

@@ -1,12 +1,8 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Window.hpp>
-#include <iostream>
-#include <cmath>
-#include <string>
+
+#include "headers.hpp"
 
 #include "Bouton.hpp"
 #include "TetrisBoard.hpp"
@@ -17,16 +13,8 @@
 #include "fn_string.hpp"
 #include "fn_time.hpp"
 #include "Evenement.hpp"
+#include "ExplosionManager.hpp"
 
-
-#define POINTS_LEVEL 1000
-
-#define SPEED_LEVEL_COEFF 0.2
-
-#define HARD_DROP_BONUS_COEFF 2
-#define SOFT_DROP_BONUS_COEFF 1
-
-#define NB_NEXT_TETROMINO 3
 
 using namespace std;
 using namespace sf;
@@ -62,6 +50,8 @@ class Game : public ScreenElement
         sf::Clock gameClock;
         sf::Time totalPauseTime;
         sf::Time lastPauseStartingTime;
+
+        ExplosionManager _explosions;
 
 
         bool nextPiece();

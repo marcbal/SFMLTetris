@@ -1,6 +1,7 @@
 #ifndef _INPUT_KEY_HPP_
 #define _INPUT_KEY_HPP_
-#include <SFML/Graphics.hpp>
+
+#include "headers.hpp"
 #include "Evenement.hpp"
 #include "Collision.hpp"
 

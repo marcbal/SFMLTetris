@@ -1,11 +1,8 @@
 #ifndef INPUT_RANGE_HPP
 #define INPUT_RANGE_HPP
 
-#include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Window.hpp>
-#include <iostream>
-#include <string>
+
+#include "headers.hpp"
 #include "Collision.hpp"
 
 using namespace std;

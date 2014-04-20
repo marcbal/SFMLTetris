@@ -1,11 +1,12 @@
 #ifndef _MENU_SETTINGS_AUDIO_HPP_
 #define _MENU_SETTINGS_AUDIO_HPP_
+
+#include "headers.hpp"
 #include "Menu.hpp"
 #include "AudioConfiguration.hpp"
 #include "Application.hpp"
 #include "InputCheck.hpp"
 #include "InputRange.hpp"
-#include <SFML/Graphics.hpp>
 
 
 class MenuSettingsAudio : public Menu{

@@ -1,10 +1,8 @@
 #ifndef _MENU_HPP_
 #define _MENU_HPP_
 
-#include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Window.hpp>
 
+#include "headers.hpp"
 #include "Bouton.hpp"
 #include "ScreenElement.hpp"
 

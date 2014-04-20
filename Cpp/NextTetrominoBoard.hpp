@@ -1,11 +1,10 @@
 #ifndef NEXTTETROMINOBOARD_H
 #define NEXTTETROMINOBOARD_H
 
+#include "headers.hpp"
 
 #include "Tetromino.hpp"
 #include "TetrisBoard.hpp"
-#include <vector>
-#include <iostream>
 
 
 class NextTetrominoBoard : public sf::Drawable

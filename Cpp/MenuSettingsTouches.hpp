@@ -1,11 +1,8 @@
 #ifndef MENUSETTINGS_TOUCHES_H
 #define MENUSETTINGS_TOUCHES_H
 
-#include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Window.hpp>
-#include <vector>
 
+#include "headers.hpp"
 
 #include "Bouton.hpp"
 #include "ScreenElement.hpp"

@@ -2,11 +2,8 @@
 #define FN_TIME_H
 
 
-#include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Window.hpp>
-#include <string>
-#include <cmath>
+
+#include "headers.hpp"
 #include "fn_string.hpp"
 
 

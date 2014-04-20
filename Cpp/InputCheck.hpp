@@ -1,7 +1,9 @@
 #ifndef InputCheck_HPP
 #define InputCheck_HPP
+
+
+#include "headers.hpp"
 #include "collision.hpp"
-#include <SFML/Graphics.hpp>
 
 class InputCheck : public sf::Drawable
 {

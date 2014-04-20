@@ -1,13 +1,7 @@
 #ifndef _fileManager_hpp_
 #define _fileManager_hpp_
-#include <vector>
-#include <string>
 
-#include <dirent.h>
-
-#ifndef WIN32
-    #include <sys/types.h>
-#endif
+#include "headers.hpp"
 
 using namespace std;
 //using namespace std;

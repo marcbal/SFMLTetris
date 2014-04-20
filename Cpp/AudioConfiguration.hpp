@@ -1,9 +1,7 @@
 #ifndef AUDIOCONFIGURATION_H
 #define AUDIOCONFIGURATION_H
-#include <SFML/Audio.hpp>
-#include <vector>
-#include <regex>
-#include <iostream>
+
+#include "headers.hpp"
 #include "fileManager.hpp"
 #include "fn_random.hpp"
 

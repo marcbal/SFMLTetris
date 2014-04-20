@@ -1,8 +1,7 @@
 #ifndef _EVENEMENT_HPP_
 #define _EVENEMENT_HPP_
-#include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Window.hpp>
+
+#include "headers.hpp"
 
 class Evenement
 {

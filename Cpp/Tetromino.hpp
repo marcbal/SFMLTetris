@@ -1,10 +1,8 @@
 #ifndef TETROMINO_H
 #define TETROMINO_H
 
-#include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Window.hpp>
-#include <vector>
+
+#include "headers.hpp"
 
 using namespace std;
 

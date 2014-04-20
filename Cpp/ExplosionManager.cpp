@@ -69,12 +69,13 @@ RectangleExplosion::RectangleExplosion(sf::Vector2i * window_size,
 
     for (unsigned int i=0; i<nb_particules; i++)
     {
+        couleur *= sf::Color(255, 230, 230);
         ExplosionParticle p(window_size,
                             sf::Vector2f(rand_float(init_surface.left, init_surface.left + init_surface.width),
                                          rand_float(init_surface.top, init_surface.top + init_surface.height)),
-                            sf::Vector2f(rand_float(-1, 1),
-                                         rand_float(-1, 1)),
-                            sf::Vector2f(0,20),
+                            sf::Vector2f(rand_float(-200, 200),
+                                         rand_float(-200, 50)),
+                            sf::Vector2f(0,200),
                             rand_float(1, max_size_particules),
                             couleur);
         particules.push_back(p);

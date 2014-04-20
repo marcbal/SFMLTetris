@@ -1,12 +1,10 @@
 #ifndef EXPLOSIONMANAGER_H
 #define EXPLOSIONMANAGER_H
 
-#include <vector>
-#include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Window.hpp>
+
+#include "headers.hpp"
+
 #include "fn_random.hpp"
-#include "Application.hpp"
 
 
 using namespace std;

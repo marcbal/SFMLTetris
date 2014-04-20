@@ -1,13 +1,8 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
-#define FPS_MAX 60
-#define WINDOW_WIDTH 960
-#define WINDOW_HEIGHT 540
 
-#include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Window.hpp>
+#include "headers.hpp"
 
 #include "Evenement.hpp"
 #include "Background.hpp"
@@ -18,15 +13,6 @@
 #include "MenuSettingsAudio.hpp"
 #include "Game.hpp"
 #include "AudioConfiguration.hpp"
-
-#define INDEX 0
-#define GAME 1
-#define SETTINGS 2
-#define CLOSE 3
-#define SETTINGSTOUCHES 4
-#define SETTINGSAUDIO 5
-#define SCORE 6
-
 
 using namespace std;
 using namespace sf;

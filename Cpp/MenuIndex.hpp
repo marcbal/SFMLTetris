@@ -1,11 +1,8 @@
 #ifndef MENUINDEX_H
 #define MENUINDEX_H
 
-#include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Window.hpp>
 
-
+#include "headers.hpp"
 #include "Bouton.hpp"
 #include "ScreenElement.hpp"
 #include "Application.hpp"

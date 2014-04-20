@@ -290,7 +290,7 @@ void TetrisBoard::setBoardData(int x, int y, int data)
 
 
 
-int TetrisBoard::fullLinesClear()
+int TetrisBoard::fullLinesClear(ExplosionManager * explosions)
 {
     int nbr_lines = 0;
     for (int i=0; i<BOARD_HEIGHT; i++)
@@ -306,7 +306,15 @@ int TetrisBoard::fullLinesClear()
             nbr_lines++;
             // on efface la ligne
             for (int j=0; j<BOARD_WIDTH; j++)
+            {
+                sf::RectangleShape r = shapeMatrix[j*BOARD_HEIGHT+i];
+                explosions->addExplosion(RectangleExplosion(_window_size,
+                                                          sf::FloatRect(r.getPosition(), r.getSize()),
+                                                          20,
+                                                          6.0,
+                                                          r.getFillColor()));
                 setBoardData(j, i, 0);
+            }
 
             // on décale tout ce qui se trouve au dessus
 

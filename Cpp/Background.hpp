@@ -1,11 +1,8 @@
 #ifndef BACKGROUND_H
 #define BACKGROUND_H
 
-#include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Window.hpp>
-#include <iostream>
-#include <vector>
+
+#include "headers.hpp"
 
 #include "fn_random.hpp"
 

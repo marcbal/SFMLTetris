@@ -1,9 +1,7 @@
 #ifndef FN_RANDOM_H
 #define FN_RANDOM_H
 
-#include <ctime>
-#include <cmath>
-#include <cstdlib>
+#include "headers.hpp"
 
 
 int rand_int(int min, int max);
