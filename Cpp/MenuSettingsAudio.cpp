@@ -4,8 +4,8 @@ using namespace std;
 using namespace sf;
 MenuSettingsAudio::MenuSettingsAudio(Vector2i * window_size,char *state,AudioConfiguration * audio):
     Menu(window_size,state),
-    _volume(Vector2f(_window_size->x/2-150,200),Vector2f(300,20),100,0,100),
-    _play(Vector2f(_window_size->x/2-7,260), Vector2f(15,15),true)
+    _play(Vector2f(_window_size->x/2-7,260), Vector2f(15,15),true),
+    _volume(Vector2f(_window_size->x/2-150,200),Vector2f(300,20),100,0,100)
 {
     _audio=audio;
 

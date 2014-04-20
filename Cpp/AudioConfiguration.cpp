@@ -66,6 +66,7 @@ void AudioConfiguration::changeMusic(int i){
 
 void AudioConfiguration::update(){
     if(musicPlayed>-1)
+    {
         if(_musics[musicPlayed]->getStatus() != sf::Music::Status::Playing && _play){
             changeMusic(rand_without(0,_musics.size()-1,musicPlayed));
             _musics[musicPlayed]->play();
@@ -73,6 +74,7 @@ void AudioConfiguration::update(){
         }
         else if(!_play)
             _musics[musicPlayed]->stop();
+    }
 }
 
 
