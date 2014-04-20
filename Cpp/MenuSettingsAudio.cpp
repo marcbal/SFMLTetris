@@ -9,18 +9,18 @@ MenuSettingsAudio::MenuSettingsAudio(Vector2i * window_size,char *state,AudioCon
 {
     _audio=audio;
 
-    menuElements.push_back(*(new Bouton(sf::Vector2f(50, _window_size->y-120),
+    menuElements.push_back(Bouton(sf::Vector2f(50, _window_size->y-120),
                                         sf::Vector2f(200, 30),
                                         18,
-                                        _state)));
+                                        _state));
 
     menuElements[0].setAction(SETTINGS);
     menuElements[0].setText(L"Retour");
 
-    menuElements.push_back(*(new Bouton(sf::Vector2f(50, _window_size->y-80),
+    menuElements.push_back(Bouton(sf::Vector2f(50, _window_size->y-80),
                                         sf::Vector2f(200, 30),
                                         18,
-                                        _state)));
+                                        _state));
 
     menuElements[1].setAction(INDEX);
     menuElements[1].setText(L"Menu Principal");

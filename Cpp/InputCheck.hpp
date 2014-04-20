@@ -7,8 +7,6 @@ class InputCheck : public sf::Drawable
 {
     protected:
 
-        sf::String test;
-
     bool _mouseHover;
     bool _mouseClick;
 

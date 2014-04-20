@@ -69,6 +69,7 @@ void InputRange::updateVal(){
         majGraphique();
         return;
     }
+
     if(_positionMouse.x >= _position.x + _size.x){
         val = valMax;
         majGraphique();

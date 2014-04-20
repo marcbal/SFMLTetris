@@ -16,6 +16,7 @@
 #include "NextTetrominoBoard.hpp"
 #include "fn_string.hpp"
 #include "fn_time.hpp"
+#include "Evenement.hpp"
 
 
 #define POINTS_LEVEL 1000
@@ -34,6 +35,12 @@ using namespace sf;
 class Game : public ScreenElement
 {
     private:
+
+
+
+
+        Evenement * _evenement;
+
         TetrisBoard matrix;
         Tetromino pieceSuivante;
         vector<NextTetrominoBoard> nextTetromino;
@@ -62,7 +69,7 @@ class Game : public ScreenElement
         // sf::Drawable
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     public:
-        Game(sf::Vector2i * window_size, char *state);
+        Game(sf::Vector2i * window_size, char *state, Evenement * evenement);
         virtual ~Game();
 
 

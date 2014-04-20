@@ -98,6 +98,12 @@
 		<Unit filename="InputCheck.hpp">
 			<Option virtualFolder="Inputs/" />
 		</Unit>
+		<Unit filename="InputKey.cpp">
+			<Option virtualFolder="Inputs/" />
+		</Unit>
+		<Unit filename="InputKey.hpp">
+			<Option virtualFolder="Inputs/" />
+		</Unit>
 		<Unit filename="InputRange.cpp">
 			<Option virtualFolder="Inputs/" />
 		</Unit>

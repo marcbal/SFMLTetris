@@ -9,6 +9,8 @@ class Evenement
 
 protected:
 
+    static const std::string KeyName[];
+
     typedef  std::map<std::string,sf::Keyboard::Key> EventConf;
 
     /* ########################     Eventconf    ########################
@@ -18,7 +20,7 @@ protected:
     EventConf _eventconf;
 
 public:
-
+    Evenement();
     /* ########################   addEventConf   ########################
 
         Fonction permettant d'ajouter un événement.
@@ -59,6 +61,11 @@ public:
         05      }
     */
     bool getEventState(std::string str);
+
+
+    sf::Keyboard::Key getEventKey(std::string str);
+
+    static std::string keyToString(sf::Keyboard::Key key);
 
 
 };

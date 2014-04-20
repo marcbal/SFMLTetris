@@ -1,6 +1,9 @@
 #include "Game.hpp"
 
-Game::Game(sf::Vector2i * window_size, char *state) :
+
+
+
+Game::Game(sf::Vector2i * window_size, char *state,Evenement * evenement) :
     matrix(window_size),
     pieceSuivante(),
     nextTetromino(),
@@ -10,6 +13,7 @@ Game::Game(sf::Vector2i * window_size, char *state) :
     totalPauseTime(sf::seconds(0.0)),
     lastPauseStartingTime(sf::seconds(0.0))
 {
+    _evenement = evenement;
     _window_size = window_size;
     _state = state;
     _nb_line = 0;
@@ -43,35 +47,37 @@ void Game::onEvent(sf::Event & event)
     switch(event.type)
     {
         case sf::Event::KeyPressed:
-            switch (event.key.code)
-            {
-                case sf::Keyboard::Escape:
+            if(event.key.code == _evenement->getEventKey("Pause")){
                     setPause(true);
                     *_state = INDEX;
-                break;
-                case sf::Keyboard::Left:
+            }
+
+            if(event.key.code == _evenement->getEventKey("Gauche")){
                     matrix.moveLeft();
-                break;
-                case sf::Keyboard::Right:
+            }
+
+            if(event.key.code == _evenement->getEventKey("Droite")){
                     matrix.moveRight();
-                break;
-                case sf::Keyboard::Down:
-                case sf::Keyboard::Space:
+            }
+
+            if(event.key.code == _evenement->getEventKey("Descente Rapide")){
                     matrix.MoveDown();
                     _nb_manual_down += SOFT_DROP_BONUS_COEFF;
                     setTimeLastMoveDown();
-                break;
-                case sf::Keyboard::Up:
-                    _nb_manual_down += HARD_DROP_BONUS_COEFF * matrix.HardDrop();
-                break;
-                case sf::Keyboard::Q:
-                    matrix.rotateLeft();
-                break;
-                case sf::Keyboard::D:
-                    matrix.rotateRight();
-                break;
-                default: break;
             }
+            if(event.key.code == _evenement->getEventKey("Descente Instantanee")){
+                    _nb_manual_down += HARD_DROP_BONUS_COEFF * matrix.HardDrop();
+            }
+
+            if(event.key.code == _evenement->getEventKey("Rotation Gauche"))
+            {
+                    matrix.rotateLeft();
+            }
+            if(event.key.code == _evenement->getEventKey("Rotation Droite"))
+            {
+                    matrix.rotateRight();
+            }
+
         break;
         case sf::Event::MouseMoved:
             matrix.mouseLeftRight(event);

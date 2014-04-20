@@ -11,12 +11,14 @@ Application::Application() :
     _background(_window_size, 200),
     _state(INDEX) // correspond à l'état d'affichage (ici, le menu au lancement du programme)
 {
+
+
     _audio.setPlay(true);
     _screenElement[INDEX]= new MenuIndex(&_window_size,&_state);
-    _screenElement[GAME]= new Game(&_window_size,&_state);
+    _screenElement[GAME]= new Game(&_window_size,&_state,&_event);
     _screenElement[SCORE]= new MenuIndex(&_window_size,&_state);
     _screenElement[SETTINGS]= new MenuSettings(&_window_size,&_state);
-    _screenElement[SETTINGSTOUCHES]= new MenuSettingsTouches(&_window_size,&_state);
+    _screenElement[SETTINGSTOUCHES]= new MenuSettingsTouches(&_window_size,&_state,&_event);
     _screenElement[SETTINGSAUDIO]= new MenuSettingsAudio(&_window_size,&_state,&_audio);
 	_window.setFramerateLimit(FPS_MAX);
 	_window.setKeyRepeatEnabled(false);
