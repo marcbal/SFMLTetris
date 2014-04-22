@@ -13,6 +13,7 @@
 #include <ctime>
 #include <cstdlib>
 #include <dirent.h>
+#include <fstream>
 
 #ifndef WIN32
     #include <sys/types.h>

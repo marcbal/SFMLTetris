@@ -5,9 +5,15 @@ using namespace sf;
 
 AudioConfiguration::AudioConfiguration()
 {
-    _play = false;
+    if(!loadFromFile("configuration/audio.cfg")){
+        initDefault();
+    }
 
-    loadFromFolder("res/music/");
+
+
+    loadFromFolder(_folder.c_str());
+
+
     if(_musics.size()>0)
         musicPlayed = 0;
     else
@@ -20,20 +26,86 @@ AudioConfiguration::~AudioConfiguration()
     //dtor
 }
 
+void AudioConfiguration::initDefault(){
+    _play = false;
+    _folder="res/music/";
+    _volume=100;
+}
+
 void AudioConfiguration::addMusic(string file){
     _musics.push_back(new Music());
     if(!_musics[_musics.size()-1]->openFromFile(file.c_str()))
         _musics.pop_back();
-    else
+    else{
         _musics[_musics.size()-1]->setLoop(false);
+        _musics[_musics.size()-1]->setVolume(_volume);
+    }
 
 
 
 }
 
-void AudioConfiguration::loadFromFile(string file){
-    clearMusics();
-    addMusic(file);
+bool AudioConfiguration::saveConfigurationFile(){
+     ofstream saveFile("configuration/audio.cfg", ios::out | ios::trunc);
+     if(!saveFile)
+        return false;
+
+     saveFile << "music_search_path:"<<_folder<<endl;
+     saveFile << "play_music:"<<_play<<endl;
+     saveFile << "volume:"<<_volume<<endl;
+
+     saveFile.close();
+
+     return true;
+}
+
+bool AudioConfiguration::loadFromFile(string file){
+
+        ifstream saveFile(file.c_str(), ios::in);
+
+        bool folder,play,volume;
+        folder = play = volume = false;
+
+        if(!saveFile)
+            return false;
+
+        string line;
+        vector<string> words;
+        while(getline(saveFile, line)){
+            words = explode(line,':');
+            if(words.size()!=2){
+                cout << "Erreur de format de la ligne :" << endl;
+                cout << line << endl;
+                cout << "Dans le fichier configuration/audio.cfg" << endl;
+                continue;
+            }
+            if(words[0]=="music_search_path"){
+                _folder=words[1];
+                folder = true;
+            }
+            else if (words[0] == "play_music"){
+                _play=string_to_int(words[1])!=0;
+                play = true;
+            }
+            else if(words[0] == "volume"){
+                _volume = string_to_float(words[1]);
+                volume = true;
+            }
+            else{
+                cout << "Erreur de format de la ligne :" << endl;
+                cout << line << endl;
+                cout << "Dans le fichier configuration/audio.cfg" << endl;
+            }
+        }
+
+
+
+        saveFile.close();
+
+        if(volume&&play&&folder)
+        return true;
+
+        return false;
 }
 
 void AudioConfiguration::loadFromFolder(string folder){
@@ -48,6 +120,9 @@ void AudioConfiguration::loadFromFolder(string folder){
     }
 
 }
+
+
+
 void AudioConfiguration::clearMusics(){
     int nbMusics = _musics.size();
     for(int i=0;i<nbMusics;++i)
@@ -79,7 +154,8 @@ void AudioConfiguration::update(){
 
 
 void AudioConfiguration::setPlay(bool _state){
- _play = _state;
+     _play = _state;
+     saveConfigurationFile();
 }
 bool AudioConfiguration::getPlay(){
     return _play;
@@ -89,6 +165,8 @@ void AudioConfiguration::setVolume(float volume){
     int nbMusics = _musics.size();
     for(int i=0;i<nbMusics;++i)
         _musics[i]->setVolume(_volume);
+
+    saveConfigurationFile();
 }
 float AudioConfiguration::getVolume(){
     return _volume;

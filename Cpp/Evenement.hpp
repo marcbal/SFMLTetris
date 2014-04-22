@@ -2,6 +2,7 @@
 #define _EVENEMENT_HPP_
 
 #include "headers.hpp"
+#include "fn_string.hpp"
 
 class Evenement
 {
@@ -17,6 +18,9 @@ protected:
             EventConf sert à associer une touche et un événement sous forme de string.
     */
     EventConf _eventconf;
+    bool loadFromFile(std::string file);
+    bool saveConfigurationFile();
+    void initDefault();
 
 public:
     Evenement();

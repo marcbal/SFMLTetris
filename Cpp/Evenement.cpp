@@ -19,6 +19,11 @@ const std::string Evenement::KeyName[] = {"a", "b", "c", "d", "e", "f", "g", "h"
 								 "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12", "F13", "F14", "F15", "Pause"};
 
 Evenement::Evenement(){
+    if(!loadFromFile("configuration/keyboard.cfg"))
+        initDefault();
+}
+
+void Evenement::initDefault(){
     addEventConf("Gauche",Keyboard::Left);
     addEventConf("Droite",Keyboard::Right);
     addEventConf("Pause",Keyboard::Escape);
@@ -28,10 +33,51 @@ Evenement::Evenement(){
     addEventConf("Rotation Droite",Keyboard::D);
 }
 
+bool Evenement::loadFromFile(string file){
+
+        ifstream saveFile(file.c_str(), ios::in);
+
+        if(!saveFile)
+            return false;
+
+        string line;
+        vector<string> words;
+
+        while(getline(saveFile, line)){
+            words = explode(line,':');
+            if(words.size()!=2)
+                return false;
+
+            _eventconf[words[0]] = (sf::Keyboard::Key)string_to_int(words[1]);
+        }
+
+
+
+        saveFile.close();
+
+        return true;
+}
+
+bool Evenement::saveConfigurationFile(){
+     ofstream saveFile("configuration/keyboard.cfg", ios::out | ios::trunc);
+
+     if(!saveFile)
+        return false;
+
+    for(EventConf::iterator it=_eventconf.begin() ; it!=_eventconf.end() ; ++it)
+    {
+        saveFile << it->first << ':' << it->second << endl;;
+    }
+
+     saveFile.close();
+
+     return true;
+}
 
 void Evenement::addEventConf(string str,Keyboard::Key key)
 {
     _eventconf[str] = key;    //On crée ou met à jour la touche associée à un événement 'str'. Cette touche sera maintenant 'key'
+    saveConfigurationFile();
 }
 
 bool Evenement::getEventState(std::string str)
