@@ -12,3 +12,4 @@
 # Specifique aux projets code blocks
 *.layout
 *.depend
+Cpp/save/score.bin

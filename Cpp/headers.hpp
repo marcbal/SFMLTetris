@@ -71,4 +71,14 @@
 
 
 
+// Scores :
+// force les valeurs stockés dans les fichiers binaire
+// au format little endian
+#define BINARY_FILE_BIG_ENDIAN false
+
+
+
+
+
+
 #endif // HEADERS_HPP

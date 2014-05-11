@@ -3,7 +3,7 @@
 
 
 
-Game::Game(sf::Vector2i * window_size, char *state,Evenement * evenement) :
+Game::Game(sf::Vector2i * window_size, char *state,Evenement * evenement, Scores * scores) :
     matrix(window_size),
     pieceSuivante(),
     nextTetromino(),
@@ -15,6 +15,7 @@ Game::Game(sf::Vector2i * window_size, char *state,Evenement * evenement) :
     _explosions(window_size)
 {
     _evenement = evenement;
+    _scores = scores;
     _window_size = window_size;
     _state = state;
     _nb_line = 0;
@@ -178,6 +179,13 @@ void Game::restartGame()
                              "Tetrominos : "+to_string(_nb_tetromino)+"\n"+
                              "Temps : "+formattedDuration(getGameTime(), 1));
 
+    RecordLine record;
+    record.name[0] = '\0';  // temporaire, car les joueurs n'ont pas encore de noms
+    record.points = _score;
+    record.lines = _nb_line;
+    record.tetrominos = _nb_tetromino;
+    record.time = lrint(getGameTime().asSeconds());
+    _scores->addScore(record);
 
     _nb_line = _score = 0;
     _nb_tetromino = 1;

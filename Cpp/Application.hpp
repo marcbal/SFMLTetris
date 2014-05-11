@@ -13,6 +13,7 @@
 #include "MenuSettingsAudio.hpp"
 #include "Game.hpp"
 #include "AudioConfiguration.hpp"
+#include "Scores.hpp"
 
 using namespace std;
 using namespace sf;
@@ -34,6 +35,8 @@ class Application
         char _state;
 
         ScreenElement * _screenElement[7];
+
+        Scores _scores;
 
     public:
         Application();

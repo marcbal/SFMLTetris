@@ -14,6 +14,7 @@
 #include "fn_time.hpp"
 #include "Evenement.hpp"
 #include "ExplosionManager.hpp"
+#include "Scores.hpp"
 
 
 using namespace std;
@@ -53,13 +54,15 @@ class Game : public ScreenElement
 
         ExplosionManager _explosions;
 
+        Scores * _scores;
+
 
         bool nextPiece();
 
         // sf::Drawable
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     public:
-        Game(sf::Vector2i * window_size, char *state, Evenement * evenement);
+        Game(sf::Vector2i * window_size, char *state, Evenement * evenement, Scores * scores);
         virtual ~Game();
 
 

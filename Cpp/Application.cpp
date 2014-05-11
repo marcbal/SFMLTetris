@@ -9,10 +9,11 @@ Application::Application() :
     _window_size(WINDOW_WIDTH, WINDOW_HEIGHT),
     _window(),
     _background(_window_size, 200),
-    _state(INDEX) // correspond à l'état d'affichage (ici, le menu au lancement du programme)
+    _state(INDEX), // correspond à l'état d'affichage (ici, le menu au lancement du programme)
+    _scores()
 {
     _screenElement[INDEX]= new MenuIndex(&_window_size,&_state);
-    _screenElement[GAME]= new Game(&_window_size,&_state,&_event);
+    _screenElement[GAME]= new Game(&_window_size,&_state,&_event,&_scores);
     _screenElement[SCORE]= new MenuIndex(&_window_size,&_state);
     _screenElement[SETTINGS]= new MenuSettings(&_window_size,&_state);
     _screenElement[SETTINGSTOUCHES]= new MenuSettingsTouches(&_window_size,&_state,&_event);
