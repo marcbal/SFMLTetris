@@ -21,7 +21,7 @@ Points important à faire (énoncée)
 
 #### Option 1 : IHM : Terminé
 
-#### Option 2 : Tetris Explosif
+#### Option 2 : Tetris Explosif : Terminé
 Effets spéciaux d'explosion
 
 

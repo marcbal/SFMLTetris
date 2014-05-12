@@ -15,6 +15,7 @@
 #include "Evenement.hpp"
 #include "ExplosionManager.hpp"
 #include "Scores.hpp"
+#include "TetrominoRandomizer.hpp"
 
 
 using namespace std;
@@ -31,7 +32,6 @@ class Game : public ScreenElement
         Evenement * _evenement;
 
         TetrisBoard matrix;
-        Tetromino pieceSuivante;
         vector<NextTetrominoBoard> nextTetromino;
 
         Bouton scoreInfos;
@@ -55,6 +55,8 @@ class Game : public ScreenElement
         ExplosionManager _explosions;
 
         Scores * _scores;
+
+        TetrominoRandomizer tetrominoRand;
 
 
         bool nextPiece();

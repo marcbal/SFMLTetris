@@ -5,14 +5,14 @@
 
 Game::Game(sf::Vector2i * window_size, char *state,Evenement * evenement, Scores * scores) :
     matrix(window_size),
-    pieceSuivante(),
     nextTetromino(),
     scoreInfos(sf::Vector2f(650, (window_size->y-150)/2.0+100), sf::Vector2f(225, 150), 17, nullptr),
     scoreInfosBefore(sf::Vector2f(650, (window_size->y-150)/2.0-100), sf::Vector2f(225, 150), 17, nullptr),
     gameClock(),
     totalPauseTime(sf::seconds(0.0)),
     lastPauseStartingTime(sf::seconds(0.0)),
-    _explosions(window_size)
+    _explosions(window_size),
+    tetrominoRand()
 {
     _evenement = evenement;
     _scores = scores;
@@ -30,7 +30,7 @@ Game::Game(sf::Vector2i * window_size, char *state,Evenement * evenement, Scores
     for (int i = 0; i<NB_NEXT_TETROMINO; i++)
     {
         NextTetrominoBoard nextTB(sf::Vector2f(100, next_tetromino_top + (4 * CEIL_SIZE + 50) * i));
-        nextTB.newPiece(*(new Tetromino(rand_int(0, 6), 0, sf::Vector2i(0, 0))));
+        nextTB.newPiece(*(new Tetromino(tetrominoRand.getTetrominoType(), 0, sf::Vector2i(0, 0))));
         nextTetromino.push_back(nextTB);
     }
 
@@ -131,7 +131,7 @@ bool Game::nextPiece()
             nextTetromino[i].newPiece(t);
         }
         else
-            nextTetromino[i].newPiece(*(new Tetromino(rand_int(0, 6), 0, sf::Vector2i(0, 0))));
+            nextTetromino[i].newPiece(*(new Tetromino(tetrominoRand.getTetrominoType(), 0, sf::Vector2i(0, 0))));
     }
 
 
@@ -172,7 +172,7 @@ bool Game::getPause()
 void Game::restartGame()
 {
     matrix.clearBoard();
-    matrix.newPiece(*(new Tetromino()));
+    matrix.newPiece(*(new Tetromino(tetrominoRand.getTetrominoType(), 0)));
     scoreInfosBefore.setText(L"Partie précédente :  \nScore : "+ to_string(_score) +"\n"+
                              "Lignes : "+to_string(_nb_line)+"\n"+
                              "Niveau : "+to_string(getLevel())+"\n"+
@@ -224,7 +224,6 @@ void Game::update()
         if (!nextPiece())
             restartGame();
         setTimeLastMoveDown();
-        pieceSuivante = *(new Tetromino());
 
         _nb_manual_down = 0;
 

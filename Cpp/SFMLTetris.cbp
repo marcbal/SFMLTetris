@@ -182,6 +182,12 @@
 		<Unit filename="Tetromino.hpp">
 			<Option virtualFolder="Tetris Elements/" />
 		</Unit>
+		<Unit filename="TetrominoRandomizer.cpp">
+			<Option virtualFolder="Tetris Elements/" />
+		</Unit>
+		<Unit filename="TetrominoRandomizer.hpp">
+			<Option virtualFolder="Tetris Elements/" />
+		</Unit>
 		<Unit filename="fileManager.cpp">
 			<Option virtualFolder="Non-Class/" />
 		</Unit>

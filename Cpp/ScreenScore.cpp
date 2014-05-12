@@ -5,7 +5,7 @@
 
 ScreenScore::ScreenScore(sf::Vector2i * window_size, char *state, Scores * scores) :
     Menu(window_size, state),
-    scoreTable(10)
+    scoreTable(25)
 {
     _scores = scores;
 

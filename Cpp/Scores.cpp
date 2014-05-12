@@ -72,7 +72,7 @@ void Scores::addScore(RecordLine rec)
 {
     scoreTable.push_back(rec);
 
-    for (int i=scoreTable.size()-1; i>0; i++)
+    for (unsigned int i=scoreTable.size()-1; i>0; i--)
     {
         if (scoreTable[i].points > scoreTable[i-1].points)
             swap(scoreTable[i], scoreTable[i-1]);
