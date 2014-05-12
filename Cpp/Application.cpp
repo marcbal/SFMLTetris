@@ -14,7 +14,7 @@ Application::Application() :
 {
     _screenElement[INDEX]= new MenuIndex(&_window_size,&_state);
     _screenElement[GAME]= new Game(&_window_size,&_state,&_event,&_scores);
-    _screenElement[SCORE]= new MenuIndex(&_window_size,&_state);
+    _screenElement[SCORE]= new ScreenScore(&_window_size,&_state,&_scores);
     _screenElement[SETTINGS]= new MenuSettings(&_window_size,&_state);
     _screenElement[SETTINGSTOUCHES]= new MenuSettingsTouches(&_window_size,&_state,&_event);
     _screenElement[SETTINGSAUDIO]= new MenuSettingsAudio(&_window_size,&_state,&_audio);

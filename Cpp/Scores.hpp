@@ -73,7 +73,7 @@ class Scores
         Scores();
         virtual ~Scores();
 
-        RecordLine getScore(unsigned int i);
+        vector<RecordLine> getScores();
         void addScore(RecordLine rec);
 
     protected:

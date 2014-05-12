@@ -63,13 +63,9 @@ Scores::~Scores()
 
 
 
-RecordLine Scores::getScore(unsigned int i)
+vector<RecordLine> Scores::getScores()
 {
-    if (i < scoreTable.size())
-        return scoreTable[i];
-    RecordLine r;
-    r.tetrominos = 0;
-    return r;
+    return scoreTable;
 }
 
 void Scores::addScore(RecordLine rec)

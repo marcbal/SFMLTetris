@@ -14,6 +14,7 @@
 #include "Game.hpp"
 #include "AudioConfiguration.hpp"
 #include "Scores.hpp"
+#include "ScreenScore.hpp"
 
 using namespace std;
 using namespace sf;
