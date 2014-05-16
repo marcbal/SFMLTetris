@@ -4,6 +4,7 @@
 // Bibliothèques standard C++
 #include <iostream>
 #include <sstream>
+#include <ostream>
 #include <string>
 #include <vector>
 #include <map>
@@ -24,6 +25,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
+#include <SFML/Network.hpp>
 
 
 
@@ -76,6 +78,16 @@
 // au format little endian
 #define BINARY_FILE_BIG_ENDIAN false
 
+
+
+
+// ScoreWebSender
+#define SERVER_ADDR "localhost"
+#define SERVER_PORT 80
+#define SERVER_QUERRY "/SFMLTetris/post_score.php"
+
+// nécessaire car c'est la norme sur les réseaux
+#define BINARY_NETWORK_BIG_ENDIAN true
 
 
 

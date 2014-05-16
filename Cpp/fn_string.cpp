@@ -243,5 +243,11 @@ map<string, int> iterration_mots(string texte)
 }
 
 
-
+string str_replace_car(char match, char replaced, string str)
+{
+    for (unsigned int i=0; i<str.size(); i++)
+        if (str[i]==match)
+            str[i]=replaced;
+    return str;
+}
 

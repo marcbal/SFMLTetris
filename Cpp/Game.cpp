@@ -12,6 +12,7 @@ Game::Game(sf::Vector2i * window_size, char *state,Evenement * evenement, Scores
     totalPauseTime(sf::seconds(0.0)),
     lastPauseStartingTime(sf::seconds(0.0)),
     _explosions(window_size),
+    _scoreSender(),
     tetrominoRand()
 {
     _evenement = evenement;
@@ -180,12 +181,14 @@ void Game::restartGame()
                              "Temps : "+formattedDuration(getGameTime(), 1));
 
     RecordLine record;
-    record.name[0] = '\0';  // temporaire, car les joueurs n'ont pas encore de noms
+    record.name[0] = '?';  // temporaire, car les joueurs n'ont pas encore de noms
+    record.name[1] = '\0';
     record.points = _score;
     record.lines = _nb_line;
     record.tetrominos = _nb_tetromino;
     record.time = lrint(getGameTime().asSeconds());
     _scores->addScore(record);
+    _scoreSender.addDataToFinishGame(record);
 
     _nb_line = _score = 0;
     _nb_tetromino = 1;
@@ -207,6 +210,7 @@ void Game::update()
     if (!matrix.pieceIsActive())
     {   // passage à la pièce suivante
         int new_del_line = matrix.fullLinesClear(&_explosions);
+        int old_score = _score;
         _nb_line += new_del_line;
         switch (new_del_line)
         {   // http://tetris.wikia.com/wiki/Scoring#Original_Nintendo_Scoring_System
@@ -219,6 +223,11 @@ void Game::update()
 
         if (new_del_line > 0)
             _score += _nb_manual_down; // ajoute le bonus pour l'accelération
+
+        _scoreSender.addDataInfoNextPiece(_score, _score - old_score, _nb_tetromino,
+                                          getGameTime(), _nb_line,
+                                          new_del_line, _nb_manual_down,
+                                          matrix.getPieceCourrante());
 
         // on tente de placer la piece suivante
         if (!nextPiece())

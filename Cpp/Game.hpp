@@ -16,6 +16,7 @@
 #include "ExplosionManager.hpp"
 #include "Scores.hpp"
 #include "TetrominoRandomizer.hpp"
+#include "ScoreWebSender.hpp"
 
 
 using namespace std;
@@ -55,6 +56,7 @@ class Game : public ScreenElement
         ExplosionManager _explosions;
 
         Scores * _scores;
+        ScoreWebSender _scoreSender;
 
         TetrominoRandomizer tetrominoRand;
 

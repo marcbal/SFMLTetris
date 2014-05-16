@@ -38,4 +38,8 @@ int substr_count(string chaine, string pattern);
 
 map<string, int> iterration_mots(string texte);
 
+
+string str_replace_car(char match, char replaced, string str);
+
+
 #endif // FN_STRING_HPP

@@ -5,7 +5,7 @@
 
 using namespace std;
 
-using byte = unsigned char;
+using byte = uint8_t;
 
 union _8bytes
 {
@@ -32,9 +32,9 @@ union _2bytes
 bool is_big_endian();
 
 
-_2bytes convert_endianness(_2bytes var);
-_4bytes convert_endianness(_4bytes var);
-_8bytes convert_endianness(_8bytes var);
+_2bytes convert_endianness(_2bytes var, bool external_endianness_big_endian);
+_4bytes convert_endianness(_4bytes var, bool external_endianness_big_endian);
+_8bytes convert_endianness(_8bytes var, bool external_endianness_big_endian);
 
 
 
@@ -43,8 +43,8 @@ _8bytes convert_endianness(_8bytes var);
 
 union RecordLine
 {
-    byte b[46];
-    char c[46];
+    byte b[48];
+    char c[48];
     struct
     {
         char name[30];

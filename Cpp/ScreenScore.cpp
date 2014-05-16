@@ -69,8 +69,8 @@ void ScreenScore::update()
 void ScreenScore::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     for (unsigned int i=0; i<scoreTable.size(); i++)
-        target.draw(scoreTable[i]);
+        target.draw(scoreTable[i], states);
 
     for (unsigned int i=0; i<menuElements.size(); i++)
-        target.draw(menuElements[i]);
+        target.draw(menuElements[i], states);
 }
