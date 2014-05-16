@@ -7,7 +7,9 @@ $bdd_user = 'test';
 $bdd_pass = ' '; // c'est vraiment temporaire x)
 $bdd_db = 'test';
 $bdd_table = 'tetris_scores';
-$bdd_querry_prepare = 'INSERT INTO '.$bdd_table.' VALUES ( null, :name , :score , :time , :lines , :nbtetro , :data );';
+$bdd_querry_prepare = 'INSERT INTO '.$bdd_table.' VALUES ( null, :name , :score , :time , :lines , :nbtetro , :data , false);';
+
+$min_score_to_saving = 1;
 
 
 
@@ -80,6 +82,13 @@ for ($i=0; $i<$nbLineDatas; ++$i)
 {
 	$datasRows[$i] = substr($datas, (int) ($i*$sizeof_data_row), (int) $sizeof_data_row);
 }
+
+
+// vérifie l'utilité de sauvegarder ce score
+if ($output_data['score'] < $min_score_to_saving)
+	exit('cancelled_score_to_low : score < '.$min_score_to_saving);
+
+
 
 foreach ($datasRows as $row => $line)
 {

@@ -7,12 +7,12 @@ ScoreWebSender::~ScoreWebSender(){ }
 
 
 void ScoreWebSender::addDataInfoNextPiece(int score,        // nouveau score obtenu
-                                  int scoreDiff,            // différence avec l'ancien score
-                                  int nbTetromino,          // nombre de tetromino posé
+                                  int scoreDiff,            // diffÃ©rence avec l'ancien score
+                                  int nbTetromino,          // nombre de tetromino posÃ©
                                   sf::Time time,            // horloge actuelle
-                                  int delLines,             // nombre de lignes détruites depuis le début
-                                  int newDelLines,          // nombre de ligne détruite à ce moment
-                                  int nbManualDown,         // compteur d'accélération de descente
+                                  int delLines,             // nombre de lignes dÃ©truites depuis le dÃ©but
+                                  int newDelLines,          // nombre de ligne dÃ©truite Ã  ce moment
+                                  int nbManualDown,         // compteur d'accÃ©lÃ©ration de descente
                                   Tetromino tetrominoPlace)
 {
     ScoreWebSenderDataSample line;
@@ -37,11 +37,17 @@ void ScoreWebSender::addDataInfoNextPiece(int score,        // nouveau score obt
 
 void ScoreWebSender::addDataToFinishGame(RecordLine rL)
 {
+    if (rL.points == 0)
+    {
+        clearData();
+        return;
+    }
+
     ostringstream oss;
-    // << taille des données initiales : 1 octet
+    // << taille des donnÃ©es initiales : 1 octet
     oss << (unsigned char) sizeof(RecordLine);
 
-    // << données initiales : x octets
+    // << donnÃ©es initiales : x octets
 
 
     rL.lines_u = convert_endianness(rL.lines_u, BINARY_NETWORK_BIG_ENDIAN);
@@ -52,8 +58,8 @@ void ScoreWebSender::addDataToFinishGame(RecordLine rL)
     for (size_t i=0; i<sizeof(RecordLine); i++)
         oss << (char) rL.b[i];
 
-    // << nombre de ligne de données du déroulement de jeu
-    // << taille d'une ligne de donnée
+    // << nombre de ligne de donnÃ©es du dÃ©roulement de jeu
+    // << taille d'une ligne de donnÃ©e
     _4bytes gameDataSize;
     gameDataSize.i = gameDatas.size();
     gameDataSize = convert_endianness(gameDataSize , BINARY_NETWORK_BIG_ENDIAN);

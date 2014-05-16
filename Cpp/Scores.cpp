@@ -70,6 +70,9 @@ vector<RecordLine> Scores::getScores()
 
 void Scores::addScore(RecordLine rec)
 {
+    if (rec.points == 0)
+        return;
+
     scoreTable.push_back(rec);
 
     for (unsigned int i=scoreTable.size()-1; i>0; i--)
