@@ -25,8 +25,6 @@ if (empty($_POST['data']))
 
 $datas = base64_decode(strtr($_POST['data'], '-_', '+/'));
 
-file_put_contents('temp/'.time().'.dat', $datas);
-
 $output_data = Array();
 
 
@@ -108,6 +106,14 @@ try {
 
 
 $req=$bdd_connexion->prepare($bdd_querry_prepare);
+$req->execute(Array(
+	'name' => $output_data['player_name'],
+	'score' => $output_data['score'],
+	'time' => $output_data['time'],
+	'lines' => $output_data['delLines'],
+	'nbtetro' => $output_data['tetrominoes'],
+	'data' => serialize($output_data['history'])
+));
 
 	
 exit('ok');
