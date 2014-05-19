@@ -5,6 +5,7 @@ include_once('include/_head.php');
 ?>
 
 <p><i>SFML Tetris</i> est un Tetris développé en C++ en tant que projet pour le DUT Informatique.
+Il a été développé avec l'API multimédia <a href="http://www.sfml-dev.org/index-fr.php">SFML</a>.
 L'équipe du projet est composé de 2 membres :</p>
 <ul>
 	<li>Louis Behague</li>

@@ -32,6 +32,7 @@ echo '<p>Il y a '.$nb_result.' score'.(($nb_result>1)?'s':'').' à afficher</p>'
 
 if ($nb_result > 0)
 {
+	include_once('include/function_time.php');
 	?>
 		<h3>Affichage des 100 meilleures scores</h3>
 	<?php
@@ -59,7 +60,7 @@ if ($nb_result > 0)
 					<td><?php echo $ligne->score; ?></td>
 					<td><?php echo $ligne->lignes; ?></td>
 					<td><?php echo $ligne->nb_tetromino; ?></td>
-					<td><?php echo $ligne->time; ?></td>
+					<td><?php echo time_duration($ligne->time); ?></td>
 				</tr>
 				<?php
 				$i++;
