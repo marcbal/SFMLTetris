@@ -77,7 +77,7 @@ void InputKey::updateGraphic(){
     if(_isActive){
         _fond.setFillColor(Color(180,180,180));
         _text.setColor(Color::Black);
-        _text.setString(L"Appuyer sur une touche");
+        _text.setString(L"Appuyez sur une touche");
     }
     else{
         _fond.setFillColor(Color(50,50,50));
@@ -87,10 +87,10 @@ void InputKey::updateGraphic(){
 
     _text.setOrigin(0, 0);
     _text.setPosition(0, 0);
-    _text.setOrigin(_text.getGlobalBounds().left + _text.getGlobalBounds().width/2.0,
-                    _text.getGlobalBounds().top + _text.getGlobalBounds().height/2.0);
-    _text.setPosition(_pos.x+_size.x/2.0,
-                      _pos.y+_size.y/2.0);
+    _text.setOrigin((int) (_text.getGlobalBounds().left + _text.getGlobalBounds().width/2.0),
+                    (int)(_text.getGlobalBounds().top + _text.getGlobalBounds().height/2.0));
+    _text.setPosition((int)(_pos.x+_size.x/2.0),
+                      (int)(_pos.y+_size.y/2.0));
 
 }
 

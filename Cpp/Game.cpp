@@ -174,11 +174,12 @@ void Game::restartGame()
 {
     matrix.clearBoard();
     matrix.newPiece(*(new Tetromino(tetrominoRand.getTetrominoType(), 0)));
-    scoreInfosBefore.setText(L"Partie précédente :  \nScore : "+ to_string(_score) +"\n"+
-                             "Lignes : "+to_string(_nb_line)+"\n"+
-                             "Niveau : "+to_string(getLevel())+"\n"+
-                             "Tetrominos : "+to_string(_nb_tetromino)+"\n"+
-                             "Temps : "+formattedDuration(getGameTime(), 1));
+    if (_score > 0)
+        scoreInfosBefore.setText(L"Partie précédente :  \nScore : "+ to_string(_score) +"\n"+
+                                 "Lignes : "+to_string(_nb_line)+"\n"+
+                                 "Niveau : "+to_string(getLevel())+"\n"+
+                                 "Tetrominos : "+to_string(_nb_tetromino)+"\n"+
+                                 "Temps : "+formattedDuration(getGameTime(), 1));
 
     RecordLine record;
     record.name[0] = '?';  // temporaire, car les joueurs n'ont pas encore de noms

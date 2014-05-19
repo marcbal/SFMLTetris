@@ -84,10 +84,10 @@ void Bouton::updateTextPosition()
 {
     texte.setOrigin(0, 0);
     texte.setPosition(0, 0);
-    texte.setOrigin(texte.getGlobalBounds().left + texte.getGlobalBounds().width/2.0,
-                    texte.getGlobalBounds().top + texte.getGlobalBounds().height/2.0);
-    texte.setPosition(_position.x+_size.x/2.0,
-                      _position.y+_size.y/2.0);
+    texte.setOrigin((int) (texte.getGlobalBounds().left + texte.getGlobalBounds().width/2.0),
+                    (int) (texte.getGlobalBounds().top + texte.getGlobalBounds().height/2.0));
+    texte.setPosition((int)(_position.x+_size.x/2.0),
+                      (int)(_position.y+_size.y/2.0));
 }
 
 

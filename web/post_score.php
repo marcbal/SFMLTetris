@@ -1,12 +1,6 @@
 <?php
+include_once('include/id_bdd.php');
 
-
-$bdd_host = 'localhost';
-$bdd_port = '3306';
-$bdd_user = 'test';
-$bdd_pass = ' '; // c'est vraiment temporaire x)
-$bdd_db = 'test';
-$bdd_table = 'tetris_scores';
 $bdd_querry_prepare = 'INSERT INTO '.$bdd_table.' VALUES ( null, :name , :score , :time , :lines , :nbtetro , :data , false);';
 
 $min_score_to_saving = 1;
@@ -101,7 +95,7 @@ foreach ($datasRows as $row => $line)
 try {
 	$bdd_connexion = new PDO('mysql:host='.$bdd_host.';port='.$bdd_port.';dbname='.$bdd_db, $bdd_user, $bdd_pass);
 } catch(Exception $e) {
-    echo 'Erreur '.$e->getCode().' : '.$e->getMessage()."\n";
+    exit('error_db_connect : '.$e->getCode().' ; '.$e->getMessage()."\n");
 }
 
 
