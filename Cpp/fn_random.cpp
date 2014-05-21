@@ -9,9 +9,7 @@ int rand_int(int min, int max)
 
 float rand_float(float min, float max)
 {
-    float v = rand()+rand()/(float) rand();
-    v = fmod(v, max-min);
-    return v+min;
+    return rand()/ (float) RAND_MAX * (max-min) + min;
 }
 
 int rand_without(int min, int max, int exclu){
