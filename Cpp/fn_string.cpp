@@ -23,13 +23,14 @@ int string_to_int( const string & Str)
     return Dest;
 }
 
-
+#ifdef _WIN32
 string to_string( int Value )
 {
     std::ostringstream oss;
     oss << Value;
     return oss.str();
 }
+#endif
 
 string to_string( int Value, unsigned int nb_car )
 {

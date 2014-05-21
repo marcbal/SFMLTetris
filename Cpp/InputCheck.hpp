@@ -3,7 +3,7 @@
 
 
 #include "headers.hpp"
-#include "collision.hpp"
+#include "Collision.hpp"
 
 class InputCheck : public sf::Drawable
 {

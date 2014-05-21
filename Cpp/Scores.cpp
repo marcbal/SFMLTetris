@@ -128,7 +128,7 @@ void Scores::loadFromFile()
         return;
     }
 
-    if (fileSize != sizeEnregistrement*nbEnregistrement+6)
+    if (fileSize != (unsigned int) (sizeEnregistrement*nbEnregistrement+6))
     {
         cout << "Erreur lors du chargement des scores" << endl;
         return;

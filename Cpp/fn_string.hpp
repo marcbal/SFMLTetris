@@ -11,7 +11,9 @@ float string_to_float( const string & Str);
 
 int string_to_int( const string & Str);
 
+#ifdef _WIN32
 string to_string( int Value );
+#endif
 
 string to_string( int Value, unsigned int nb_car );
 

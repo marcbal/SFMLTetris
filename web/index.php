@@ -40,9 +40,9 @@ Nous faisons tout notre possible pour qu'il sois compilable au moins sous Window
 authentique possible (enfin, pas toujours). Voici <a href="http://tetris.wikia.com/wiki/Tetris_Guideline">un site (en)</a>
 décrivant bon nombre des spécificités de ce guide officiel.</p>
 <ul>
-	<li><b>Génération aléatoire des dominos</b><br/>
+	<li><b>Génération aléatoire des tétrominos</b><br/>
 		Le générateur prends à la suite les 7 tétrominos disponibles (I, J, L, O, S, T, Z) puis les mélanges de façon aléatoire. Ils sont ensuite
-		distribués dans l'ordre obtenus. Lorsque les 7 pièces sont distribués, le générateur recommence l'opération avec les 7 tétrominos différents mélangés.</li>
+		distribués dans l'ordre obtenus. Lorsque les 7 pièces sont distribués, le générateur recommence l'opération avec les 7 tétrominos remélangés.</li>
 	<li><b>Système de score</b><br/>
 		Le système de score utilisé est une combinaison entre <a href="http://tetris.wikia.com/wiki/Scoring#Original_Nintendo_Scoring_System">le système de score
 		original de Nintendo</a>(appliqué entièrement) et les bonus appliqués lors de l'utilisation des Soft/Hard Drop (accélération du tétromino), c'est à dire
