@@ -12,7 +12,8 @@ $min_score_to_saving = 1;
 if (empty($_POST['data']))
 	exit('error_empty');
 
-
+if (empty($_POST['key']))
+	$_POST['key'] = '0';
 
 // ceci est temporaire, cela permet de stocker
 // les données pour effectuer des tests sur ce que le serveur reçoit comme données
@@ -110,4 +111,4 @@ $req->execute(Array(
 ));
 
 	
-exit('ok');
+exit('ok:'.$_POST['key']);

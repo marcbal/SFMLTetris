@@ -12,7 +12,7 @@ L'équipe du projet est composé de 2 membres :</p>
 	<li>Marc Baloup</li>
 </ul>
 <p>Le projet est disponible sur <a href="https://github.com/marcbal/SFMLTetris">GitHub</a> et devrait être disponible en <a href="download.php">téléchargement</a> dans pas longtemps.
-Nous faisons tout notre possible pour qu'il sois compilable au moins sous Windows et sous Linux.</p>
+Nous faisons tout notre possible pour qu'il soit exécutable au moins sous Windows et sous Linux.</p>
 <h3>Fonctionnalités</h3>
 <h4>Interface et utilisation</h4>
 <ul>
