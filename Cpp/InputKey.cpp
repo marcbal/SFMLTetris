@@ -12,7 +12,7 @@ InputKey::InputKey(sf::Vector2f pos, sf::Vector2f taille,string eventName,Evenem
     _event = event;
 
     _fond.setOutlineColor(sf::Color::White);
-    _fond.setOutlineThickness(2);
+    _fond.setOutlineThickness(-2);
     _fond.setPosition(_pos);
     _fond.setSize(_size);
     _text.setCharacterSize(20);
@@ -40,7 +40,7 @@ void InputKey::onEvent(Event & event){
         default:
         break;
     }
-
+    updateGraphic();
 }
 
 void InputKey::onMouseDown(Event & event){
@@ -53,7 +53,6 @@ void InputKey::onKeyUp(Event & event){
     _event->addEventConf(_eventName,event.key.code);
     _isActive = false;
 
-    updateGraphic();
 }
 
 void InputKey::onMouseUp(Event & event){
@@ -64,7 +63,6 @@ void InputKey::onMouseUp(Event & event){
         _isActive = !_isActive;
         else
         _isActive = false;
-        updateGraphic();
 }
 
 void InputKey::onMouseMove(Event & event){
@@ -73,12 +71,12 @@ void InputKey::onMouseMove(Event & event){
 
 void InputKey::updateGraphic(){
     if(_isActive){
-        _fond.setFillColor(Color(180,180,180));
+        _fond.setFillColor(Color(160, 160, 160));
         _text.setColor(Color::Black);
-        _text.setString(L"Appuyez sur une touche");
+        _text.setString("Appuyez sur une touche");
     }
     else{
-        _fond.setFillColor(Color(50,50,50));
+        _fond.setFillColor((_mouseHover)?Color(128, 128, 128):Color(0, 0, 0, 192));
         _text.setColor(Color::White);
         _text.setString(_eventName + " : " + Evenement::keyToString(_event->getEventKey(_eventName)));
     }

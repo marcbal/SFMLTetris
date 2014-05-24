@@ -4,8 +4,10 @@ using namespace std;
 using namespace sf;
 MenuSettingsGraphic::MenuSettingsGraphic(sf::Vector2i * window_size,char *state,OpenGL_Manager * oGL):
     Menu(window_size,state),
-    _activate3D(Vector2f(_window_size->x/2-150,260), Vector2f(20,20),oGL->getActivate()),
-    _inclinaison(Vector2f(_window_size->x/2-150,200),Vector2f(300,20),-oGL->getInclinaison(),0,100)
+    _activate3D(Vector2f(_window_size->x/2-200,200), Vector2f(20,20),oGL->getActivate()),
+    textActivate3D(),
+    _inclinaison(Vector2f(_window_size->x/2-200,290),Vector2f(400,24),-oGL->getInclinaison(),0,100),
+    textInclinaison()
 {
     _oGL = oGL;
 
@@ -24,6 +26,19 @@ MenuSettingsGraphic::MenuSettingsGraphic(sf::Vector2i * window_size,char *state,
 
     menuElements[1].setAction(INDEX);
     menuElements[1].setText(L"Menu Principal");
+
+
+    textActivate3D.setCharacterSize(20);
+    textActivate3D.setColor(sf::Color::White);
+    textActivate3D.setFont(*Ressources::getDefaultFont());
+    textActivate3D.setPosition(_window_size->x/2-160, 200);
+    textActivate3D.setString("Activer la 3D ?");
+
+    textInclinaison.setCharacterSize(20);
+    textInclinaison.setColor(sf::Color::White);
+    textInclinaison.setFont(*Ressources::getDefaultFont());
+    textInclinaison.setPosition(_window_size->x/2-200, 250);
+    textInclinaison.setString("Inclinaison de la matrice :");
 }
 
 
@@ -42,5 +57,7 @@ void MenuSettingsGraphic::draw(sf::RenderTarget& target, sf::RenderStates states
     Menu::draw(target,states);
     target.draw(_activate3D,states);
     target.draw(_inclinaison,states);
+    target.draw(textActivate3D,states);
+    target.draw(textInclinaison,states);
 }
 

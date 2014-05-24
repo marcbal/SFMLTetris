@@ -25,6 +25,7 @@ class InputCheck : public sf::Drawable
     virtual void onMouseUp(sf::Event & event);
 
     sf::RectangleShape checkCase;
+    sf::RectangleShape checkedRectangle;
 
     virtual void updateGraphic();
 

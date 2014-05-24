@@ -8,13 +8,16 @@
 #include "InputCheck.hpp"
 #include "InputRange.hpp"
 #include "OpenGL_Manager.hpp"
+#include "Ressources.hpp"
 
 class MenuSettingsGraphic : public Menu{
 
 private :
     OpenGL_Manager * _oGL;
     InputCheck _activate3D;
+    sf::Text textActivate3D;
     InputRange _inclinaison;
+    sf::Text textInclinaison;
 public :
     MenuSettingsGraphic(sf::Vector2i * window_size,char *state,OpenGL_Manager * oGL);
     virtual void onEvent(sf::Event & event);

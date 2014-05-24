@@ -12,15 +12,18 @@ InputRange::InputRange(sf::Vector2f pos, sf::Vector2f taille,float _val,float _m
     _position=pos;
     _size=taille;
 
-    cursorDefault.setFillColor(Color::White);
-    cursorDefault.setOutlineColor(Color::Black);
-    cursorDefault.setOutlineThickness(2.0);
-    cursorDefault.setSize(Vector2f(10,taille.y+20));
+    cursorDefault.setOutlineColor(Color::White);
+    cursorDefault.setOutlineThickness(-2);
+    cursorDefault.setSize(Vector2f(14,taille.y+20));
 //    cursorHover;
 //    cursorClick;
 
-    rightPart.setFillColor(Color(50,50,50));
-    leftPart.setFillColor(Color(190,190,190));
+    rightPart.setFillColor(Color(0, 0, 0, 192));
+    rightPart.setOutlineColor(Color::White);
+    rightPart.setOutlineThickness(-2);
+    leftPart.setFillColor(Color(160, 160, 160));
+    leftPart.setOutlineColor(Color::White);
+    leftPart.setOutlineThickness(-2);
 
     valMin=_min;
     val=_val;
@@ -51,15 +54,20 @@ void InputRange::majGraphique()
     rightPart.setPosition(Vector2f(middle,_position.y));
     rightPart.setSize(Vector2f(_size.x-(middle-_position.x),_size.y));
 
-    cursorDefault.setPosition(Vector2f(middle-5,_position.y-10));
+    cursorDefault.setPosition(Vector2f(middle-7,_position.y-10));
+
+    cursorDefault.setFillColor((_mouseClick)?Color(160, 160, 160):((_mouseHover)?Color(128, 128, 128):Color(0, 0, 0)));
 }
 
 void InputRange::onMouseMove(sf::Event & event)
 {
-    _mouseHover = pointInRect(_position,_size,Vector2f(event.mouseMove.x,event.mouseMove.y));
+    _mouseHover = pointInRect(_position,_size,Vector2f(event.mouseMove.x,event.mouseMove.y))
+                || pointInRect(cursorDefault.getPosition(),cursorDefault.getSize(),Vector2f(event.mouseMove.x,event.mouseMove.y));
     _positionMouse = Vector2i(event.mouseMove.x,event.mouseMove.y);
     if(_mouseClick)
         updateVal();
+    else
+        majGraphique();
 }
 
 void InputRange::updateVal(){
@@ -100,6 +108,8 @@ void InputRange::onMouseUp(sf::Event & event)
         return;
 
     _mouseClick = false;
+
+    majGraphique();
 }
 
 

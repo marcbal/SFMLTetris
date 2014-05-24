@@ -10,7 +10,9 @@ InputCheck::InputCheck(sf::Vector2f pos, sf::Vector2f taille,bool val){
     _val = val;
 
     checkCase.setOutlineColor(sf::Color::White);
-    checkCase.setOutlineThickness(2);
+    checkCase.setOutlineThickness(-2);
+    checkCase.setFillColor(Color(0, 0, 0, 192));
+    checkedRectangle.setFillColor(Color(160, 160, 160));
 
     updateGraphic();
 }
@@ -30,22 +32,24 @@ void InputCheck::onEvent(Event & event){
         default:
         break;
     }
-
+    updateGraphic();
 }
 
 void InputCheck::onMouseDown(Event & event){
-
+    if (event.mouseButton.button != sf::Mouse::Left)
+        return;
+    _mouseClick = _mouseHover;
 }
 
 void InputCheck::onMouseUp(Event & event){
 
-        if (event.mouseButton.button != sf::Mouse::Left)
+    if (event.mouseButton.button != sf::Mouse::Left)
         return;
 
-        if(_mouseHover){
+    if(_mouseHover){
         _val = !_val;
-        updateGraphic();
-        }
+    }
+    _mouseClick = false;
 }
 
 void InputCheck::onMouseMove(Event & event){
@@ -53,18 +57,20 @@ void InputCheck::onMouseMove(Event & event){
 }
 
 void InputCheck::updateGraphic(){
-    if(_val)
-    checkCase.setFillColor(Color(220,220,220));
-    else
-    checkCase.setFillColor(Color(50,50,50));
 
     checkCase.setSize(_size);
     checkCase.setPosition(_pos);
+    checkCase.setFillColor((_mouseClick)?Color(160, 160, 160):((_mouseHover)?Color(128, 128, 128):Color(0, 0, 0)));
+
+    checkedRectangle.setSize(_size-sf::Vector2f(8, 8));
+    checkedRectangle.setPosition(_pos+sf::Vector2f(4, 4));
 }
 
 void InputCheck::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(checkCase,states);
+    if (_val)
+        target.draw(checkedRectangle, states);
 }
 
 void InputCheck::setPosition(sf::Vector2f pos){

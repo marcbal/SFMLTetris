@@ -14,7 +14,9 @@ class MenuSettingsAudio : public Menu{
 private :
     AudioConfiguration * _audio;
     InputCheck _play;
+    sf::Text textPlay;
     InputRange _volume;
+    sf::Text textVolume;
 public :
     MenuSettingsAudio(sf::Vector2i * window_size,char *state,AudioConfiguration * audio);
     virtual void onEvent(sf::Event & event);
