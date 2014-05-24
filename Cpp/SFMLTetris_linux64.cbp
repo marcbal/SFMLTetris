@@ -3,50 +3,59 @@
 	<FileVersion major="1" minor="6" />
 	<Project>
 		<Option title="SFMLTetris_linux64" />
+		<Option platforms="Windows;Unix;" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Option virtualFolders="Non-Class/;GUI Parts/;Events/;Main/;Tetris Elements/;GUI Parts/Menu/;Audio/;GUI Parts/Inputs/;Scoring/;OpenGL/;" />
 		<Build>
-			<Target title="Debug">
+			<Target title="Debug_linux64_1">
+				<Option platforms="Unix;" />
 				<Option output="bin/Debug_l/SFMLTetris_linux64" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug_l/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-std=c++11" />
 					<Add option="-Wextra" />
 					<Add option="-Wall" />
 					<Add option="-g" />
+					<Add option="-std=c++11" />
+					<Add directory="SFML-2.1-linux64/include" />
 				</Compiler>
+				<Linker>
+					<Add option="-lGL" />
+					<Add option="-lGLU" />
+					<Add library="SFML-2.1-linux64/lib/libsfml-audio.so" />
+					<Add library="SFML-2.1-linux64/lib/libsfml-graphics.so" />
+					<Add library="SFML-2.1-linux64/lib/libsfml-window.so" />
+					<Add library="SFML-2.1-linux64/lib/libsfml-system.so" />
+					<Add library="SFML-2.1-linux64/lib/libsfml-network.so" />
+					<Add directory="SFML-2.1-linux64/lib" />
+				</Linker>
 			</Target>
-			<Target title="Release">
-				<Option output="bin/Release_l/SFMLTetris_linux64" prefix_auto="1" extension_auto="1" />
+			<Target title="Release_linux64_1">
+				<Option platforms="Unix;" />
+				<Option output="SFMLTetris_linux64" prefix_auto="0" extension_auto="0" />
 				<Option object_output="obj/Release_l/" />
-				<Option type="1" />
+				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O3" />
 					<Add option="-std=c++11" />
+					<Add directory="SFML-2.1-linux64/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add option="-lGL" />
+					<Add option="-lGLU" />
+					<Add library="SFML-2.1-linux64/lib/libsfml-audio.so" />
+					<Add library="SFML-2.1-linux64/lib/libsfml-graphics.so" />
+					<Add library="SFML-2.1-linux64/lib/libsfml-window.so" />
+					<Add library="SFML-2.1-linux64/lib/libsfml-system.so" />
+					<Add library="SFML-2.1-linux64/lib/libsfml-network.so" />
+					<Add directory="SFML-2.1-linux64/lib" />
 				</Linker>
 			</Target>
 		</Build>
-		<Compiler>
-			<Add option="-std=c++0x" />
-			<Add directory="SFML-2.1-linux64/include" />
-		</Compiler>
-		<Linker>
-			<Add option="-lGL" />
-			<Add option="-lGLU" />
-			<Add library="SFML-2.1-linux64/lib/libsfml-audio.so" />
-			<Add library="SFML-2.1-linux64/lib/libsfml-graphics.so" />
-			<Add library="SFML-2.1-linux64/lib/libsfml-window.so" />
-			<Add library="SFML-2.1-linux64/lib/libsfml-system.so" />
-			<Add library="SFML-2.1-linux64/lib/libsfml-network.so" />
-			<Add directory="SFML-2.1-linux64/lib" />
-		</Linker>
 		<Unit filename="Application.cpp">
 			<Option virtualFolder="Main/" />
 		</Unit>
