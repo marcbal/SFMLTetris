@@ -3,11 +3,11 @@
 
 
 
-Game::Game(sf::Vector2i * window_size, char *state,Evenement * evenement, Scores * scores) :
-    matrix(window_size),
+Game::Game(sf::Vector2i * window_size, char *state,Evenement * evenement, Scores * scores, OpenGL_Manager * oGL) :
+    matrix(window_size,oGL),
     nextTetromino(),
-    scoreInfos(sf::Vector2f(650, (window_size->y-150)/2.0+100), sf::Vector2f(225, 150), 17, nullptr),
-    scoreInfosBefore(sf::Vector2f(650, (window_size->y-150)/2.0-100), sf::Vector2f(225, 150), 17, nullptr),
+    scoreInfos(sf::Vector2f(window_size->x-230, (window_size->y-150)/2.0+100), sf::Vector2f(225, 150), 17, nullptr),
+    scoreInfosBefore(sf::Vector2f(window_size->x-230, (window_size->y-150)/2.0-100), sf::Vector2f(225, 150), 17, nullptr),
     gameClock(),
     totalPauseTime(sf::seconds(0.0)),
     lastPauseStartingTime(sf::seconds(0.0)),
@@ -23,9 +23,8 @@ Game::Game(sf::Vector2i * window_size, char *state,Evenement * evenement, Scores
     _score = 0;
     _nb_manual_down = 0;
     _nb_tetromino = 1;
-
     setPause((*state != GAME));
-
+    _oGL = oGL;
     float next_tetromino_top = (window_size->y - (NB_NEXT_TETROMINO * 4 * CEIL_SIZE + (NB_NEXT_TETROMINO - 1) * 50))/ 2.0;
 
     for (int i = 0; i<NB_NEXT_TETROMINO; i++)
@@ -35,10 +34,7 @@ Game::Game(sf::Vector2i * window_size, char *state,Evenement * evenement, Scores
         nextTetromino.push_back(nextTB);
     }
 
-
-
     scoreInfosBefore.setText(L"Partie précédente :  \nScore : -\nLignes : -\nNiveau : -\nTetrominos : -\nTemps : -");
-
 
 }
 
@@ -256,6 +252,9 @@ void Game::update()
     _explosions.update();
 
     matrix.dessinePieceCourrante();
+    if(_oGL->getActivate())
+        _oGL->preDraw();//Pré-dessinage de la scène 3D
+
 }
 
 

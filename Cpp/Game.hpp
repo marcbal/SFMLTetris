@@ -17,6 +17,7 @@
 #include "Scores.hpp"
 #include "TetrominoRandomizer.hpp"
 #include "ScoreWebSender.hpp"
+#include "OpenGL_Manager.hpp"
 
 
 using namespace std;
@@ -28,10 +29,8 @@ class Game : public ScreenElement
     private:
 
 
-
-
         Evenement * _evenement;
-
+        OpenGL_Manager * _oGL;
         TetrisBoard matrix;
         vector<NextTetrominoBoard> nextTetromino;
 
@@ -66,7 +65,7 @@ class Game : public ScreenElement
         // sf::Drawable
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     public:
-        Game(sf::Vector2i * window_size, char *state, Evenement * evenement, Scores * scores);
+        Game(sf::Vector2i * window_size, char *state, Evenement * evenement, Scores * scores, OpenGL_Manager * oGL);
         virtual ~Game();
 
 

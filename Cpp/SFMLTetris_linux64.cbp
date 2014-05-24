@@ -5,7 +5,7 @@
 		<Option title="SFMLTetris_linux64" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
-		<Option virtualFolders="Non-Class/;GUI Parts/;Events/;Main/;Tetris Elements/;GUI Parts/Menu/;Audio/;GUI Parts/Inputs/;Scoring/;" />
+		<Option virtualFolders="Non-Class/;GUI Parts/;Events/;Main/;Tetris Elements/;GUI Parts/Menu/;Audio/;GUI Parts/Inputs/;Scoring/;OpenGL/;" />
 		<Build>
 			<Target title="Debug">
 				<Option output="bin/Debug_l/SFMLTetris_linux64" prefix_auto="1" extension_auto="1" />
@@ -38,6 +38,8 @@
 			<Add directory="SFML-2.1-linux64/include" />
 		</Compiler>
 		<Linker>
+			<Add option="-lGL" />
+			<Add option="-lGLU" />
 			<Add library="SFML-2.1-linux64/lib/libsfml-audio.so" />
 			<Add library="SFML-2.1-linux64/lib/libsfml-graphics.so" />
 			<Add library="SFML-2.1-linux64/lib/libsfml-window.so" />
@@ -135,6 +137,12 @@
 		<Unit filename="MenuSettingsAudio.hpp">
 			<Option virtualFolder="GUI Parts/Menu/" />
 		</Unit>
+		<Unit filename="MenuSettingsGraphic.cpp">
+			<Option virtualFolder="GUI Parts/Menu/" />
+		</Unit>
+		<Unit filename="MenuSettingsGraphic.hpp">
+			<Option virtualFolder="GUI Parts/Menu/" />
+		</Unit>
 		<Unit filename="MenuSettingsTouches.cpp">
 			<Option virtualFolder="GUI Parts/Menu/" />
 		</Unit>
@@ -146,6 +154,12 @@
 		</Unit>
 		<Unit filename="NextTetrominoBoard.hpp">
 			<Option virtualFolder="Tetris Elements/" />
+		</Unit>
+		<Unit filename="OpenGL_Manager.cpp">
+			<Option virtualFolder="OpenGL/" />
+		</Unit>
+		<Unit filename="OpenGL_Manager.hpp">
+			<Option virtualFolder="OpenGL/" />
 		</Unit>
 		<Unit filename="ScoreWebSender.cpp">
 			<Option virtualFolder="Scoring/" />

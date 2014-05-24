@@ -1,12 +1,15 @@
 #include "TetrisBoard.hpp"
 
-TetrisBoard::TetrisBoard(sf::Vector2i * window_size) :
+TetrisBoard::TetrisBoard(sf::Vector2i * window_size,OpenGL_Manager * oGL) :
     boardShape(),
     shapeMatrix(BOARD_WIDTH * BOARD_HEIGHT) ,
     pieceCourrante(rand_int(0, 6), 0, sf::Vector2i(INIT_POS_X, INIT_POS_Y))
 {
     clearBoard();
     pieceCouranteActive = true;
+    _oGL = oGL;
+    _oGL->setTetrisBoard(area);
+
 
 
     _window_size = window_size;
@@ -21,20 +24,16 @@ TetrisBoard::TetrisBoard(sf::Vector2i * window_size) :
     boardShape.setFillColor(sf::Color(0, 0, 0, 192));
     boardShape.setOutlineThickness(2);
     boardShape.setOutlineColor(sf::Color::White);
-
     for (int i=0; i<BOARD_WIDTH; i++)
         for (int j=0; j<BOARD_HEIGHT; j++)
         {
-            shapeMatrix[i*BOARD_HEIGHT+j] = *(new sf::RectangleShape(sf::Vector2f(CEIL_SIZE, CEIL_SIZE)));
+            shapeMatrix[i*BOARD_HEIGHT+j] = sf::RectangleShape(sf::Vector2f(CEIL_SIZE, CEIL_SIZE));
             shapeMatrix[i*BOARD_HEIGHT+j].setPosition(top_left_pos + sf::Vector2f(CEIL_SIZE*i, CEIL_SIZE*j));
             shapeMatrix[i*BOARD_HEIGHT+j].setOutlineThickness(-1);
             shapeMatrix[i*BOARD_HEIGHT+j].setOutlineColor(sf::Color(46, 46, 46, 46));
             shapeMatrix[i*BOARD_HEIGHT+j].setFillColor(sf::Color::Transparent);
 
         }
-
-
-
 
 
 }
@@ -247,7 +246,6 @@ void TetrisBoard::dessinePieceCourrante()
     // ------------------------------
 
 
-
     sf::Vector2i pos = pieceCourrante.getPosition();
     MatrixShape shape = pieceCourrante.getMatrixShape();
     for (int i=0; i<4; i++)
@@ -390,9 +388,11 @@ bool TetrisBoard::verifierPlacementPiece(sf::Vector2i pos, int o)
 
 void TetrisBoard::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
+    if(!_oGL->getActivate()){
     target.draw(boardShape, states);
     for (int i=0; i< (BOARD_WIDTH*BOARD_HEIGHT); i++)
         target.draw(shapeMatrix[i], states);
+    }
 }
 
 

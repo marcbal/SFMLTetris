@@ -26,7 +26,9 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Network.hpp>
-
+//Pour l'affichage 3D
+#include <SFML/OpenGL.hpp>
+#include <GL/glu.h>
 
 
 
@@ -58,6 +60,7 @@
 #define SETTINGSTOUCHES 4
 #define SETTINGSAUDIO 5
 #define SCORE 6
+#define SETTINGSGRAPHIC 7
 
 
 // TetrisBoard :
@@ -82,7 +85,7 @@
 
 
 // ScoreWebSender
-#define SERVER_ADDR "sfmltetris.no-ip.org"
+#define SERVER_ADDR "localhost"
 #define SERVER_PORT 80
 #define SERVER_QUERRY "/SFMLTetris/post_score.php"
 

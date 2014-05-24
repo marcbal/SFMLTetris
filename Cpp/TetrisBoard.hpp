@@ -7,7 +7,7 @@
 #include "fn_random.hpp"
 #include "Collision.hpp"
 #include "ExplosionManager.hpp"
-
+#include "OpenGL_Manager.hpp"
 using namespace std;
 using namespace sf;
 
@@ -16,7 +16,7 @@ class TetrisBoard : public sf::Drawable
 {
     public:
 
-        TetrisBoard(sf::Vector2i * window_size);
+        TetrisBoard(sf::Vector2i * window_size,OpenGL_Manager * oGL);
         virtual ~TetrisBoard();
 
 
@@ -51,7 +51,7 @@ class TetrisBoard : public sf::Drawable
 
 
     private:
-
+        OpenGL_Manager * _oGL;
         // element graphique
         sf::RectangleShape boardShape; // le rectangle principal
         vector<sf::RectangleShape> shapeMatrix; // les rectangles de chaque cases

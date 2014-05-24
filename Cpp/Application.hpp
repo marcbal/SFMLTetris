@@ -11,10 +11,12 @@
 #include "MenuSettings.hpp"
 #include "MenuSettingsTouches.hpp"
 #include "MenuSettingsAudio.hpp"
+#include "MenuSettingsGraphic.hpp"
 #include "Game.hpp"
 #include "AudioConfiguration.hpp"
 #include "Scores.hpp"
 #include "ScreenScore.hpp"
+#include "OpenGL_Manager.hpp"
 
 using namespace std;
 using namespace sf;
@@ -28,14 +30,17 @@ class Application
         sf::ContextSettings _window_setting;
 
         sf::Clock _app_clock;
+        sf::Clock clock;
 
         Evenement _event;
 
         Background _background;
 
+        OpenGL_Manager _oGL;
+
         char _state;
 
-        ScreenElement * _screenElement[7];
+        ScreenElement * _screenElement[8];
 
         Scores _scores;
 
