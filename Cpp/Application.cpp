@@ -12,18 +12,25 @@ Application::Application() :
     _state(INDEX), // correspond à l'état d'affichage (ici, le menu au lancement du programme)
     _scores()
 {
+
+    _gameconfig.drawGhost = true;
+    _gameconfig.drawExplosions = true;
+
+
     _screenElement[INDEX]= new MenuIndex(&_window_size,&_state);
-    _screenElement[GAME]= new Game(&_window_size,&_state,&_event,&_scores,&_oGL);
+    _screenElement[GAME]= new Game(&_window_size,&_state,&_event,&_scores,&_oGL,&_gameconfig);
     _screenElement[SCORE]= new ScreenScore(&_window_size,&_state,&_scores);
     _screenElement[SETTINGS]= new MenuSettings(&_window_size,&_state);
     _screenElement[SETTINGSTOUCHES]= new MenuSettingsTouches(&_window_size,&_state,&_event);
     _screenElement[SETTINGSAUDIO]= new MenuSettingsAudio(&_window_size,&_state,&_audio);
-    _screenElement[SETTINGSGRAPHIC]= new MenuSettingsGraphic(&_window_size,&_state,&_oGL);
+    _screenElement[SETTINGSGRAPHIC]= new MenuSettingsGraphic(&_window_size,&_state,&_oGL,&_gameconfig);
 	_window.setFramerateLimit(FPS_MAX);
 	_window.setKeyRepeatEnabled(false);
 	_window_setting.depthBits = 24;
     _window_setting.antialiasingLevel = 4;
     _window.create(VideoMode(_window_size.x, _window_size.y), L"SFMLTetris", Style::Close | Style::Titlebar, _window_setting);
+
+
     glClearDepth(1.f);
     glClearColor(0.f, 0.f, 0.f, 0.f);
     glEnable(GL_DEPTH_TEST);

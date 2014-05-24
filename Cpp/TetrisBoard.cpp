@@ -91,7 +91,7 @@ bool TetrisBoard::MoveDown()
     else
     {
         effacePieceCourrante();
-        dessinePieceCourrante();
+        dessinePieceCourrante(false);
         fixPiece();
         return false;
     }
@@ -226,23 +226,27 @@ void TetrisBoard::fixPiece()
 }
 
 
-void TetrisBoard::dessinePieceCourrante()
+void TetrisBoard::dessinePieceCourrante(bool drawGhost)
 {
     if (!pieceCouranteActive)
         return;
 
     // on positionne et trace le fantome de la pièce courante
-    int y = pieceCourrante.getPosition().y;
-    while (verifierPlacementPiece(sf::Vector2i(pieceCourrante.getPosition().x, y+1), pieceCourrante.getOrientation()))
-        y++;
-    sf::Vector2i fpos = sf::Vector2i(pieceCourrante.getPosition().x, y);
-    MatrixShape fshape = pieceCourrante.getMatrixShape();
-    for (int i=0; i<4; i++)
-        for (int j=0; j<4; j++)
-            if (fshape[i][j])
-                setBoardData(fpos.x + i,
-                             fpos.y + j,
-                             pieceCourrante.getTypePiece() + 30);
+    if (drawGhost)
+    {
+        int y = pieceCourrante.getPosition().y;
+        while (verifierPlacementPiece(sf::Vector2i(pieceCourrante.getPosition().x, y+1), pieceCourrante.getOrientation()))
+            y++;
+        sf::Vector2i fpos = sf::Vector2i(pieceCourrante.getPosition().x, y);
+        MatrixShape fshape = pieceCourrante.getMatrixShape();
+        for (int i=0; i<4; i++)
+            for (int j=0; j<4; j++)
+                if (fshape[i][j])
+                    setBoardData(fpos.x + i,
+                                 fpos.y + j,
+                                 pieceCourrante.getTypePiece() + 30);
+
+    }
     // ------------------------------
 
 

@@ -42,6 +42,8 @@ class Application
 
         ScreenElement * _screenElement[8];
 
+        GameConfiguration _gameconfig;
+
         Scores _scores;
 
     public:

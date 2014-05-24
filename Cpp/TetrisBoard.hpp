@@ -37,7 +37,7 @@ class TetrisBoard : public sf::Drawable
 
 
         void fixPiece();
-        void dessinePieceCourrante();
+        void dessinePieceCourrante(bool drawGhost);
         void effacePieceCourrante();
 
 

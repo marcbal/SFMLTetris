@@ -45,8 +45,9 @@ void InputCheck::onMouseUp(Event & event){
 
     if (event.mouseButton.button != sf::Mouse::Left)
         return;
+    ;
 
-    if(_mouseHover){
+    if(_mouseHover && _mouseClick){
         _val = !_val;
     }
     _mouseClick = false;
@@ -75,10 +76,12 @@ void InputCheck::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 void InputCheck::setPosition(sf::Vector2f pos){
     _pos = pos;
+    updateGraphic();
 }
 
 void InputCheck::setSize(sf::Vector2f taille){
     _size = taille;
+    updateGraphic();
 }
 
 bool InputCheck::getValue(){

@@ -4,6 +4,16 @@
 
 #include "headers.hpp"
 
+
+
+
+struct GameConfiguration
+{
+    bool drawGhost;
+    bool drawExplosions;
+    // d'autres variables de configuration ici
+};
+
 #include "Bouton.hpp"
 #include "TetrisBoard.hpp"
 #include "Tetromino.hpp"
@@ -22,6 +32,13 @@
 
 using namespace std;
 using namespace sf;
+
+
+
+
+
+
+
 
 
 class Game : public ScreenElement
@@ -57,6 +74,8 @@ class Game : public ScreenElement
         Scores * _scores;
         ScoreWebSender _scoreSender;
 
+        GameConfiguration * _gameConfig;
+
         TetrominoRandomizer tetrominoRand;
 
 
@@ -65,7 +84,7 @@ class Game : public ScreenElement
         // sf::Drawable
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     public:
-        Game(sf::Vector2i * window_size, char *state, Evenement * evenement, Scores * scores, OpenGL_Manager * oGL);
+        Game(sf::Vector2i * window_size, char *state, Evenement * evenement, Scores * scores, OpenGL_Manager * oGL, GameConfiguration* gameConfig);
         virtual ~Game();
 
 

@@ -9,17 +9,25 @@
 #include "InputRange.hpp"
 #include "OpenGL_Manager.hpp"
 #include "Ressources.hpp"
+#include "Game.hpp"
 
 class MenuSettingsGraphic : public Menu{
 
 private :
     OpenGL_Manager * _oGL;
+    GameConfiguration * _gameConfig;
+    InputCheck _activateExplosions;
+    sf::Text textActivateExplosions;
+    InputCheck _activateGhost;
+    sf::Text textActivateGhost;
     InputCheck _activate3D;
     sf::Text textActivate3D;
+    InputCheck _activateAutorotation;
+    sf::Text textActivateAutorotation;
     InputRange _inclinaison;
     sf::Text textInclinaison;
 public :
-    MenuSettingsGraphic(sf::Vector2i * window_size,char *state,OpenGL_Manager * oGL);
+    MenuSettingsGraphic(sf::Vector2i * window_size,char *state,OpenGL_Manager * oGL, GameConfiguration* gameConfig);
     virtual void onEvent(sf::Event & event);
 protected:
      virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

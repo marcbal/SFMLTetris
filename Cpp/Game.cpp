@@ -3,7 +3,7 @@
 
 
 
-Game::Game(sf::Vector2i * window_size, char *state,Evenement * evenement, Scores * scores, OpenGL_Manager * oGL) :
+Game::Game(sf::Vector2i * window_size, char *state,Evenement * evenement, Scores * scores, OpenGL_Manager * oGL, GameConfiguration* gameConfig) :
     matrix(window_size,oGL),
     nextTetromino(),
     scoreInfos(sf::Vector2f(window_size->x-230, (window_size->y-150)/2.0+100), sf::Vector2f(225, 150), 17, nullptr),
@@ -15,6 +15,8 @@ Game::Game(sf::Vector2i * window_size, char *state,Evenement * evenement, Scores
     _scoreSender(),
     tetrominoRand()
 {
+
+    _gameConfig = gameConfig;
     _evenement = evenement;
     _scores = scores;
     _window_size = window_size;
@@ -251,7 +253,7 @@ void Game::update()
                        "Temps : "+formattedDuration(getGameTime(), 1)+"");
     _explosions.update();
 
-    matrix.dessinePieceCourrante();
+    matrix.dessinePieceCourrante(_gameConfig->drawGhost);
     if(_oGL->getActivate())
         _oGL->preDraw();//Pré-dessinage de la scène 3D
 
@@ -294,5 +296,6 @@ void Game::draw(sf::RenderTarget& target, sf::RenderStates states) const
     }
     target.draw(scoreInfos);
     target.draw(scoreInfosBefore);
-    target.draw(_explosions);
+    if (!_oGL->getActivate() && _gameConfig->drawExplosions)
+        target.draw(_explosions);
 }
