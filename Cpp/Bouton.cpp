@@ -23,9 +23,7 @@ Bouton::Bouton(sf::Vector2f pos, sf::Vector2f taille,int taillePolice,char * sta
     texte.setColor(sf::Color::White);
 
 
-    sf::Font * menuFont = new sf::Font();
-    menuFont->loadFromFile("res/LiberationMono-Regular.ttf");
-    texte.setFont(*menuFont);
+    texte.setFont(*Ressources::getDefaultFont());
 
 
 

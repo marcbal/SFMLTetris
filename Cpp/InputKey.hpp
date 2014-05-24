@@ -4,6 +4,7 @@
 #include "headers.hpp"
 #include "Evenement.hpp"
 #include "Collision.hpp"
+#include "Ressources.hpp"
 
 class InputKey : public sf::Drawable
 {

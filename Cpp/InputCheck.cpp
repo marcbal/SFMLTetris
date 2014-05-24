@@ -54,7 +54,7 @@ void InputCheck::onMouseMove(Event & event){
 
 void InputCheck::updateGraphic(){
     if(_val)
-    checkCase.setFillColor(Color(180,180,180));
+    checkCase.setFillColor(Color(220,220,220));
     else
     checkCase.setFillColor(Color(50,50,50));
 

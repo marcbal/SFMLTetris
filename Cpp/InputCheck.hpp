@@ -4,6 +4,7 @@
 
 #include "headers.hpp"
 #include "Collision.hpp"
+#include "Ressources.hpp"
 
 class InputCheck : public sf::Drawable
 {

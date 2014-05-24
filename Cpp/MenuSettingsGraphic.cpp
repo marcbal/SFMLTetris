@@ -4,7 +4,7 @@ using namespace std;
 using namespace sf;
 MenuSettingsGraphic::MenuSettingsGraphic(sf::Vector2i * window_size,char *state,OpenGL_Manager * oGL):
     Menu(window_size,state),
-    _activate3D(Vector2f(_window_size->x/2-7,260), Vector2f(15,15),oGL->getActivate()),
+    _activate3D(Vector2f(_window_size->x/2-150,260), Vector2f(20,20),oGL->getActivate()),
     _inclinaison(Vector2f(_window_size->x/2-150,200),Vector2f(300,20),-oGL->getInclinaison(),0,100)
 {
     _oGL = oGL;

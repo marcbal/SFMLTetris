@@ -10,8 +10,6 @@ ScreenScore::ScreenScore(sf::Vector2i * window_size, char *state, Scores * score
     _scores = scores;
 
 
-    sf::Font* font = new sf::Font();
-    font->loadFromFile("res/LiberationMono-Regular.ttf");
 
 
 
@@ -20,7 +18,7 @@ ScreenScore::ScreenScore(sf::Vector2i * window_size, char *state, Scores * score
     {
         sf::Text t;
         t.setCharacterSize(15);
-        t.setFont(*font);
+        t.setFont(*Ressources::getDefaultFont());
         t.setColor(sf::Color::White);
         t.setString("gne");
         t.setPosition(20, i * (window_size->y -100) / scoreTable.size() + 20);

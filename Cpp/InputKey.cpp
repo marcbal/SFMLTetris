@@ -16,9 +16,7 @@ InputKey::InputKey(sf::Vector2f pos, sf::Vector2f taille,string eventName,Evenem
     _fond.setPosition(_pos);
     _fond.setSize(_size);
     _text.setCharacterSize(20);
-    sf::Font * menuFont = new sf::Font();
-    menuFont->loadFromFile("res/LiberationMono-Regular.ttf");
-    _text.setFont(*menuFont);
+    _text.setFont(*Ressources::getDefaultFont());
 
     updateGraphic();
 
