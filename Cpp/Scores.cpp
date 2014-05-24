@@ -51,6 +51,7 @@ const string Scores::scoreFile = "save/score.bin";
 Scores::Scores() :
     scoreTable()
 {
+    loadFromFile();
 }
 
 Scores::~Scores()
@@ -166,7 +167,8 @@ void Scores::saveToFile()
 
     if (!file.is_open())
     {
-        cout << "Erreur : impossible d'écrire dans le fichier des scores" << endl;
+        cout << "Erreur : impossible d'écrire dans le fichier des scores." << endl
+        << "Vérifiez qu'un dossier \"save\" est présent à côté de l'exécutable" << endl;
         return;
     }
 

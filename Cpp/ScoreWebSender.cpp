@@ -114,12 +114,21 @@ void webSendData(string& data)
     sf::Http http(SERVER_ADDR, SERVER_PORT);
 
     sf::Http::Request req(SERVER_QUERRY, sf::Http::Request::Method::Post);
+    string key = to_string(rand_int(100000, 999999));
 
-    req.setBody("data="+base64_encode((unsigned char*)data.c_str(), data.size(), true));
+    key = base64_encode((unsigned char*)key.c_str(), key.size(), true);
+    req.setBody("data="+base64_encode((unsigned char*)data.c_str(), data.size(), true)+"&key="+key);
 
     sf::Http::Response rep = http.sendRequest(req, sf::Time::Zero);
+   vector<string> repData = explode(rep.getBody(), ':');
 
-    cout << "Reponse serveur " << rep.getStatus() << " : " << rep.getBody() << endl;
+   if (rep.getStatus() == 200 && repData.size() == 2 && repData[0] == "ok")
+        if (repData[1] == key)
+            cout << "Le score a ete publie avec succes" << endl;
+        else
+           cout << "La requete semble etre intercepte par un serveur proxy : score non envoye !" << endl;
+        else
+            cout << "Score non envoye : Code HTTP " << rep.getStatus() << endl << rep.getBody() << endl;
 
 }
 

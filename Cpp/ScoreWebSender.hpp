@@ -5,6 +5,8 @@
 #include "Scores.hpp"
 #include "fn_base64.hpp"
 #include "Tetromino.hpp"
+#include "fn_string.hpp"
+#include "fn_random.hpp"
 
 using namespace std;
 

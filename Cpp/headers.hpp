@@ -85,7 +85,7 @@
 
 
 // ScoreWebSender
-#define SERVER_ADDR "localhost"
+#define SERVER_ADDR "sfmltetris.no-ip.org"
 #define SERVER_PORT 80
 #define SERVER_QUERRY "/SFMLTetris/post_score.php"
 
