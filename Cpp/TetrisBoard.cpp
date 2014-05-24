@@ -28,7 +28,7 @@ TetrisBoard::TetrisBoard(sf::Vector2i * window_size) :
             shapeMatrix[i*BOARD_HEIGHT+j] = *(new sf::RectangleShape(sf::Vector2f(CEIL_SIZE, CEIL_SIZE)));
             shapeMatrix[i*BOARD_HEIGHT+j].setPosition(top_left_pos + sf::Vector2f(CEIL_SIZE*i, CEIL_SIZE*j));
             shapeMatrix[i*BOARD_HEIGHT+j].setOutlineThickness(-1);
-            shapeMatrix[i*BOARD_HEIGHT+j].setOutlineColor(sf::Color(63, 63, 63, 63));
+            shapeMatrix[i*BOARD_HEIGHT+j].setOutlineColor(sf::Color(46, 46, 46, 46));
             shapeMatrix[i*BOARD_HEIGHT+j].setFillColor(sf::Color::Transparent);
 
         }
@@ -232,6 +232,22 @@ void TetrisBoard::dessinePieceCourrante()
     if (!pieceCouranteActive)
         return;
 
+    // on positionne et trace le fantome de la pièce courante
+    int y = pieceCourrante.getPosition().y;
+    while (verifierPlacementPiece(sf::Vector2i(pieceCourrante.getPosition().x, y+1), pieceCourrante.getOrientation()))
+        y++;
+    sf::Vector2i fpos = sf::Vector2i(pieceCourrante.getPosition().x, y);
+    MatrixShape fshape = pieceCourrante.getMatrixShape();
+    for (int i=0; i<4; i++)
+        for (int j=0; j<4; j++)
+            if (fshape[i][j])
+                setBoardData(fpos.x + i,
+                             fpos.y + j,
+                             pieceCourrante.getTypePiece() + 30);
+    // ------------------------------
+
+
+
     sf::Vector2i pos = pieceCourrante.getPosition();
     MatrixShape shape = pieceCourrante.getMatrixShape();
     for (int i=0; i<4; i++)
@@ -254,7 +270,7 @@ void TetrisBoard::effacePieceCourrante()
 {
     for (int i=0; i<BOARD_WIDTH; i++)
         for (int j=0; j<BOARD_HEIGHT; j++)
-            if (area[i][j] >= 20 && area[i][j] <= 26)
+            if ((area[i][j] >= 20 && area[i][j] <= 26) || (area[i][j] >= 30 && area[i][j] <= 36))
                 setBoardData(i, j, 0);
 }
 
@@ -279,6 +295,12 @@ void TetrisBoard::setBoardData(int x, int y, int data)
     else if (area[x][y] >= 20 && area[x][y] < 27)
     {
         sf::Color c = Tetromino::couleurs[area[x][y]-20];
+        shapeMatrix[x*BOARD_HEIGHT+y].setFillColor(c);
+    }
+    else if (area[x][y] >= 30 && area[x][y] < 37)
+    {
+        sf::Color c = Tetromino::couleurs[area[x][y]-30];
+        c.a = 64; // règle l'alpha de la couleur
         shapeMatrix[x*BOARD_HEIGHT+y].setFillColor(c);
     }
     else
