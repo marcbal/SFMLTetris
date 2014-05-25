@@ -61,7 +61,7 @@ void MenuSettingsTouches::onEvent(Event & event){
 void MenuSettingsTouches::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     Menu::draw(target,states);
-    for(int i=0;i<_inputKey.size();++i)
+    for(unsigned int i=0;i<_inputKey.size();++i)
         target.draw(_inputKey[i],states);
     target.draw(_checkMouse, states);
     target.draw(_textMouse, states);

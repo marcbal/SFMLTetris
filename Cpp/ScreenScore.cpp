@@ -22,7 +22,7 @@ ScreenScore::ScreenScore(sf::Vector2i * window_size, char *state, Scores * score
     {
         scoreTable[i].clear();
 
-        for(int j=0; j<nbScorePerPage; j++)
+        for(unsigned int j=0; j<nbScorePerPage; j++)
         {
             sf::Text t;
             t.setCharacterSize(15);
@@ -64,7 +64,6 @@ void ScreenScore::update()
     if (_pageChange == 1 || _page > 0)
     _page += (int)_pageChange;
     _pageChange = (char)0;
-    if (_page < 0) _page = 0;
     if (_page >= _max_page) _page = _max_page-1;
 
 
