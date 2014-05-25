@@ -15,6 +15,7 @@ Application::Application() :
     _scores()
 {
 
+    _resized_window_size = _window_size;
 
     _screenElement[INDEX]= new MenuIndex(&_window_size,&_state);
     _screenElement[GAME]= new Game(&_window_size,&_state,&_event,&_scores,&_oGL,&_gameconfig);
@@ -27,7 +28,7 @@ Application::Application() :
 	_window.setKeyRepeatEnabled(false);
 	_window_setting.depthBits = 24;
     _window_setting.antialiasingLevel = 4;
-    _window.create(VideoMode(_window_size.x, _window_size.y), L"SFMLTetris", Style::Close | Style::Titlebar, _window_setting);
+    _window.create(VideoMode(_window_size.x, _window_size.y), L"SFMLTetris", Style::Close | Style::Titlebar | Style::Resize, _window_setting);
 
 
     glClearDepth(1.f);
@@ -97,8 +98,30 @@ void Application::processEvents()
                 _window.close();
 
             break;
+            case Event::Resized:
+                _resized_window_size = Vector2i(event.size.width, event.size.height);
+            break;
             default:
+                // gestion du redimentionnement dela fenêtre
+                if (event.type == sf::Event::MouseWheelMoved)
+                {
+                    event.mouseWheel.x *= _window_size.x / (float) _resized_window_size.x;
+                    event.mouseWheel.y *= _window_size.y / (float) _resized_window_size.y;
+                }
+                else if (event.type == sf::Event::MouseButtonPressed || event.type == sf::Event::MouseButtonReleased)
+                {
+                    event.mouseButton.x *= _window_size.x / (float) _resized_window_size.x;
+                    event.mouseButton.y *= _window_size.y / (float) _resized_window_size.y;
+                }
+                else if (event.type == sf::Event::MouseMoved)
+                {
+                    event.mouseMove.x *= _window_size.x / (float) _resized_window_size.x;
+                    event.mouseMove.y *= _window_size.y / (float) _resized_window_size.y;
+                }
+                // -----------------------------------------
+
                 _screenElement[(int)_state]->onEvent(event);
+
 
                 if(_state == CLOSE){
                     _window.close();

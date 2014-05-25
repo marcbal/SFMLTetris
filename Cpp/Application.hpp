@@ -26,6 +26,7 @@ class Application
 {
     private:
         sf::Vector2i _window_size;
+        sf::Vector2i _resized_window_size;
         AudioConfiguration _audio;
         sf::RenderWindow _window;
         sf::ContextSettings _window_setting;
