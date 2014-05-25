@@ -1,12 +1,11 @@
 #include "OpenGL_Manager.hpp"
 using namespace std;
-OpenGL_Manager::OpenGL_Manager(){
+OpenGL_Manager::OpenGL_Manager(GameConfiguration* gameConfig){
     //_tetrisBoard = NULL;
 
-    _isActivate = true;
-    _inclinaison = -35;
+    _gameConfig = gameConfig;
     _tetrisBoard = new int*[BOARD_WIDTH];
-    float test = 0;
+    orientation_progress = 0;
 }
 
 void OpenGL_Manager::setTetrisBoard(int tetrisBoard[][BOARD_HEIGHT]){
@@ -32,12 +31,30 @@ void OpenGL_Manager::preDraw(){
 
     //glRotatef(10, 0.f, 1.f, 0.f);
 
-    glTranslatef(-100,0,-1300+(_inclinaison*10));
-    glRotatef(_inclinaison, 1.f, 0.f, 0.f);
-    glRotatef(test, 0.f, 1.f, 0.f);
-    glRotatef(test, 0.f, 0.f, 1.f);
+    /* l'éloignement de l'élément dessiné dépendra de l'orientation
+    car selon l'orientation choisi, le tetrisBoard 3D prendra plus ou moins
+    de place :
+    à 0 et 180 °, la place prise à l'affichage est la plus faible
+    donc l'éloignement est la plus faible
+    à 90 et 270 °, la place prise à l'affichage est la plus forte
+    donc l'éloignement est la plus élevée
+    */
+    float eloignement = _gameConfig->get3DInclinaison();
+    while (eloignement > 180) eloignement -= 180;
+    while (eloignement < 0) eloignement += 180;
+    if (eloignement > 90) eloignement = 180 - eloignement;
+    glTranslatef(-100,0,-1600-(eloignement*2));
 
-    test +=0.8;
+
+    glRotatef(-_gameConfig->get3DInclinaison(), 1.f, 0.f, 0.f);
+    if (_gameConfig->get3DAutorotation())
+    {
+        glRotatef(orientation_progress, 0.f, 1.f, 0.f);
+        glRotatef(orientation_progress, 0.f, 0.f, 1.f);
+        orientation_progress +=0.8;
+    }
+    else
+        orientation_progress = 0;
     glTranslatef(-100.f*(BOARD_WIDTH/2),100.f*(BOARD_HEIGHT/2),0);
     for(int i=0;i<BOARD_WIDTH;++i){
             glTranslatef(100.f,0.f,0.f);
@@ -180,16 +197,4 @@ void OpenGL_Manager::setGLColor(float r, float g, float b){
 }
 void OpenGL_Manager::setGLColor(){
     setGLColor(0,0,0);
-}
-bool OpenGL_Manager::getActivate(){
-    return _isActivate;
-}
-float OpenGL_Manager::getInclinaison(){
-    return _inclinaison;
-}
-void OpenGL_Manager::setActivate(bool _n){
-    _isActivate = _n;
-}
-void OpenGL_Manager::setInclinaison(float _n){
-    _inclinaison = _n;
 }

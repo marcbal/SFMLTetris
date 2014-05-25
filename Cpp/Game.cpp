@@ -4,6 +4,7 @@
 
 
 Game::Game(sf::Vector2i * window_size, char *state,Evenement * evenement, Scores * scores, OpenGL_Manager * oGL, GameConfiguration* gameConfig) :
+    Menu(window_size, state),
     matrix(window_size,oGL),
     nextTetromino(),
     scoreInfos(sf::Vector2f(window_size->x-230, (window_size->y-150)/2.0+100), sf::Vector2f(225, 150), 17, nullptr),
@@ -38,6 +39,17 @@ Game::Game(sf::Vector2i * window_size, char *state,Evenement * evenement, Scores
 
     scoreInfosBefore.setText(L"Partie précédente :  \nScore : -\nLignes : -\nNiveau : -\nTetrominos : -\nTemps : -");
 
+
+
+    menuElements.push_back(Bouton(sf::Vector2f(50, 30),
+                                        sf::Vector2f(150, 40),
+                                        18,
+                                        _state));
+
+    menuElements[0].setAction(INDEX);
+    menuElements[0].setText("Pause");
+
+
 }
 
 Game::~Game() {}
@@ -45,6 +57,20 @@ Game::~Game() {}
 
 void Game::onEvent(sf::Event & event)
 {
+    Menu::onEvent(event);
+
+    // le jeu ignore le clique si il a été effectué sur un bouton
+    if (event.type == sf::Event::MouseButtonPressed)
+        for (unsigned int i=0; i<menuElements.size(); i++)
+            if (menuElements[i].isHover() || menuElements[i].isClicked())
+                return;
+    if (event.type == sf::Event::MouseButtonReleased && *_state != GAME)
+    {
+        setPause(true);
+        return;
+    }
+
+
     switch(event.type)
     {
         case sf::Event::KeyPressed:
@@ -81,13 +107,18 @@ void Game::onEvent(sf::Event & event)
 
         break;
         case sf::Event::MouseMoved:
+            if (!_gameConfig->getUseMouse())
+                return;
             matrix.mouseLeftRight(event);
         break;
         case sf::Event::MouseButtonPressed:
+            if (!_gameConfig->getUseMouse())
+                return;
             switch(event.mouseButton.button)
             {
                 case sf::Mouse::Left:
                     matrix.rotateLeft();
+                    cout << "WHAT !" << endl;
                 break;
                 case sf::Mouse::Right:
                     matrix.rotateRight();
@@ -180,8 +211,10 @@ void Game::restartGame()
                                  "Temps : "+formattedDuration(getGameTime(), 1));
 
     RecordLine record;
-    record.name[0] = '?';  // temporaire, car les joueurs n'ont pas encore de noms
-    record.name[1] = '\0';
+    string name = _gameConfig->getNickName();
+    for (unsigned int i=0; i<29 && i<name.size(); i++)
+        record.name[i] = name[i];
+    record.name[(name.size()<29)?name.size():29] = '\0';
     record.points = _score;
     record.lines = _nb_line;
     record.tetrominos = _nb_tetromino;
@@ -253,8 +286,9 @@ void Game::update()
                        "Temps : "+formattedDuration(getGameTime(), 1)+"");
     _explosions.update();
 
-    matrix.dessinePieceCourrante(_gameConfig->drawGhost);
-    if(_oGL->getActivate())
+    matrix.dessinePieceCourrante(_gameConfig->getDrawGhost());
+
+    if(_gameConfig->get3DMode())
         _oGL->preDraw();//Pré-dessinage de la scène 3D
 
 }
@@ -289,13 +323,18 @@ sf::Time Game::getTimeAutoMoveDown()
 
 void Game::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    target.draw(matrix, states);
+    Menu::draw(target, states);
+
+    if (!_gameConfig->get3DMode())
+        target.draw(matrix, states);
+
+
     for (int i = 0; i<NB_NEXT_TETROMINO; i++)
     {
         target.draw(nextTetromino[i], states);
     }
     target.draw(scoreInfos);
     target.draw(scoreInfosBefore);
-    if (!_oGL->getActivate() && _gameConfig->drawExplosions)
+    if (!_gameConfig->get3DMode() && _gameConfig->getDrawExplosions())
         target.draw(_explosions);
 }

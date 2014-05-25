@@ -15,11 +15,11 @@ MenuSettings::MenuSettings(sf::Vector2i * window_size,char * state) :Menu(window
                                             sf::Vector2f(500, 40),25,_state));
     }
     menuElements[0].setAction(SETTINGSTOUCHES);
-    menuElements[0].setText(L"Configuration des touches");
+    menuElements[0].setText(L"Clavier et souris");
     menuElements[1].setAction(SETTINGSAUDIO);
-    menuElements[1].setText(L"Configuration Audio");
+    menuElements[1].setText(L"Musiques");
     menuElements[2].setAction(SETTINGSGRAPHIC);
-    menuElements[2].setText(L"Configuration Graphique");
+    menuElements[2].setText(L"Paramètres de jeu");
     menuElements[3].setAction(INDEX);
     menuElements[3].setText(L"Retour");
 }

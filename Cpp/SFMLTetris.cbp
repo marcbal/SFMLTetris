@@ -150,6 +150,12 @@
 		<Unit filename="Game.hpp">
 			<Option virtualFolder="GUI Parts/" />
 		</Unit>
+		<Unit filename="GameConfiguration.cpp">
+			<Option virtualFolder="Tetris Elements/" />
+		</Unit>
+		<Unit filename="GameConfiguration.hpp">
+			<Option virtualFolder="Tetris Elements/" />
+		</Unit>
 		<Unit filename="InputCheck.cpp">
 			<Option virtualFolder="GUI Parts/Inputs/" />
 		</Unit>

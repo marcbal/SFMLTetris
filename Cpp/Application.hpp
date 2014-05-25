@@ -14,6 +14,7 @@
 #include "MenuSettingsGraphic.hpp"
 #include "Game.hpp"
 #include "AudioConfiguration.hpp"
+#include "GameConfiguration.hpp"
 #include "Scores.hpp"
 #include "ScreenScore.hpp"
 #include "OpenGL_Manager.hpp"
@@ -36,13 +37,13 @@ class Application
 
         Background _background;
 
+        GameConfiguration _gameconfig;
+
         OpenGL_Manager _oGL;
 
         char _state;
 
         ScreenElement * _screenElement[8];
-
-        GameConfiguration _gameconfig;
 
         Scores _scores;
 

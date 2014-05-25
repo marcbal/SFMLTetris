@@ -53,6 +53,8 @@ class Bouton : public sf::Drawable
         virtual void onMouseDown(sf::Event & event);
         virtual void onMouseUp(sf::Event & event);
 
+        bool isClicked();
+        bool isHover();
 
 
     protected:

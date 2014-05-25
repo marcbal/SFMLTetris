@@ -143,3 +143,7 @@ void Bouton::draw(sf::RenderTarget& target, sf::RenderStates states) const
     target.draw(texte);
 }
 
+
+
+bool Bouton::isClicked(){return _mouseClick;}
+bool Bouton::isHover(){return _mouseHover;}

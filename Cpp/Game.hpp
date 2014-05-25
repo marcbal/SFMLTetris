@@ -6,14 +6,6 @@
 
 
 
-
-struct GameConfiguration
-{
-    bool drawGhost;
-    bool drawExplosions;
-    // d'autres variables de configuration ici
-};
-
 #include "Bouton.hpp"
 #include "TetrisBoard.hpp"
 #include "Tetromino.hpp"
@@ -28,6 +20,7 @@ struct GameConfiguration
 #include "TetrominoRandomizer.hpp"
 #include "ScoreWebSender.hpp"
 #include "OpenGL_Manager.hpp"
+#include "GameConfiguration.hpp"
 
 
 using namespace std;
@@ -41,7 +34,7 @@ using namespace sf;
 
 
 
-class Game : public ScreenElement
+class Game : public Menu
 {
     private:
 

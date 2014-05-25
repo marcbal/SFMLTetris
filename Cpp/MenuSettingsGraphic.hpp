@@ -3,7 +3,7 @@
 
 #include "headers.hpp"
 #include "Menu.hpp"
-#include "AudioConfiguration.hpp"
+#include "GameConfiguration.hpp"
 #include "Application.hpp"
 #include "InputCheck.hpp"
 #include "InputRange.hpp"

@@ -392,11 +392,9 @@ bool TetrisBoard::verifierPlacementPiece(sf::Vector2i pos, int o)
 
 void TetrisBoard::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    if(!_oGL->getActivate()){
     target.draw(boardShape, states);
     for (int i=0; i< (BOARD_WIDTH*BOARD_HEIGHT); i++)
         target.draw(shapeMatrix[i], states);
-    }
 }
 
 
