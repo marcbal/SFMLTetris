@@ -21,8 +21,8 @@ class GameConfiguration
         void set3DMode(bool b);
         bool get3DAutorotation();
         void set3DAutorotation(bool b);
-        float get3DInclinaison();
-        void set3DInclinaison(float b);
+        sf::Vector3f get3DInclinaison();
+        void set3DInclinaison(sf::Vector3f v);
         string getNickName();
         void setNickName(string s);
         bool getUseMouse();
@@ -45,7 +45,7 @@ class GameConfiguration
         bool _3DAutorotation;
         bool _useMouse;
         bool _onlineScore;
-        float _3DInclinaison;
+        sf::Vector3f _3DInclinaison;
         string _nickname;
 
 

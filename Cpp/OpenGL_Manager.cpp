@@ -5,7 +5,8 @@ OpenGL_Manager::OpenGL_Manager(GameConfiguration* gameConfig){
 
     _gameConfig = gameConfig;
     _tetrisBoard = new int*[BOARD_WIDTH];
-    orientation_progress = orientation_vitesse = orientation_timeMax = Vector3f(0,0,0);
+    orientation_vitesse = orientation_timeMax = Vector3f(0,0,0);
+    orientation_progress = _gameConfig->get3DInclinaison();
     for(int i=0;i<4;i++)
     color[i]=1.0;
 
@@ -29,16 +30,7 @@ void OpenGL_Manager::preDraw(){
 
     //glRotatef(10, 0.f, 1.f, 0.f);
 
-    /* l'éloignement de l'élément dessiné dépendra de l'orientation
-    car selon l'orientation choisi, le tetrisBoard 3D prendra plus ou moins
-    de place :
-    à 0 et 180 °, la place prise à l'affichage est la plus faible
-    donc l'éloignement est la plus faible
-    à 90 et 270 °, la place prise à l'affichage est la plus forte
-    donc l'éloignement est la plus élevée
-    */
-    float eloignement = abs(_gameConfig->get3DInclinaison()-180);
-    glTranslatef(-100,0,-1600-(eloignement*2));
+    glTranslatef(0,0,-2240);
 
 
     glRotatef(orientation_progress.z, 1.f, 0.f, 0.f);
@@ -65,7 +57,7 @@ void OpenGL_Manager::preDraw(){
         orientation_progress += orientation_vitesse*timer.getElapsedTime().asSeconds();
     }
 
-    glTranslatef(-100.f*(BOARD_WIDTH/2),100.f*(BOARD_HEIGHT/2),0);
+    glTranslatef(-100.f*(BOARD_WIDTH/2)-50,100.f*(BOARD_HEIGHT/2)+50,0);
 
     for(int i=0;i<BOARD_WIDTH;++i){
             glTranslatef(100.f,0.f,0.f);
@@ -275,6 +267,7 @@ void OpenGL_Manager::onEvent(sf::Event & event)
             if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                 Vector2i _movement = sf::Vector2i(event.mouseMove.x,event.mouseMove.y)-lastMousePos;
                 orientation_progress += Vector3f(_movement.x,orientation_progress.y,_movement.y);
+                _gameConfig->set3DInclinaison(orientation_progress);
             }
             lastMousePos = sf::Vector2i(event.mouseMove.x,event.mouseMove.y);
         break;

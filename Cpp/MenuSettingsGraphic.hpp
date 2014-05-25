@@ -24,8 +24,6 @@ private :
     sf::Text textActivate3D;
     InputCheck _activateAutorotation;
     sf::Text textActivateAutorotation;
-    InputRange _inclinaison;
-    sf::Text textInclinaison;
     InputCheck _onlineScore;
     sf::Text textOnlineScore;
 public :

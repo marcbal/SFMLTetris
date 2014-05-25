@@ -37,10 +37,10 @@ Application::Application() :
     glDepthMask(GL_TRUE);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(90.f, WINDOW_WIDTH/float(WINDOW_HEIGHT), 1.f, 5000.f);
+    gluPerspective(60.f, WINDOW_WIDTH/float(WINDOW_HEIGHT), 1.f, 5000.f);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable( GL_BLEND );
-
+    glViewport(0, 0, WINDOW_WIDTH*0.95, WINDOW_HEIGHT);
 }
 
 Application::~Application(){}
@@ -100,7 +100,7 @@ void Application::processEvents()
             break;
             case Event::Resized:
                 _resized_window_size = Vector2i(event.size.width, event.size.height);
-                glViewport(0, 0, event.size.width, event.size.height);
+                glViewport(0, 0, event.size.width*0.95, event.size.height);
             break;
             default:
                 // gestion du redimentionnement dela fenêtre

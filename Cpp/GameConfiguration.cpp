@@ -22,7 +22,7 @@ bool GameConfiguration::getDrawExplosions(){return _drawExplosions;}
 bool GameConfiguration::getDrawGhost(){return _drawGhost;}
 bool GameConfiguration::get3DMode(){return _3DMode;}
 bool GameConfiguration::get3DAutorotation(){return _3DAutorotation;}
-float GameConfiguration::get3DInclinaison(){return _3DInclinaison;}
+sf::Vector3f GameConfiguration::get3DInclinaison(){return _3DInclinaison;}
 string GameConfiguration::getNickName(){return _nickname;}
 bool GameConfiguration::getUseMouse(){return _useMouse;}
 bool GameConfiguration::getOnlineScore(){return _onlineScore;}
@@ -55,7 +55,7 @@ void GameConfiguration::set3DAutorotation(bool b){
         saveConfigurationFile();
     }
 }
-void GameConfiguration::set3DInclinaison(float f){
+void GameConfiguration::set3DInclinaison(sf::Vector3f f){
     if (_3DInclinaison != f)
     {
         _3DInclinaison = f;
@@ -139,8 +139,15 @@ bool GameConfiguration::loadFromFile()
             online = true;
         }
         else if(words[0]=="3D_inclinaison"){
-            _3DInclinaison=string_to_float(words[1]);
-            inclinaison = true;
+            vector<string> axes = explode(words[1], ';');
+            if (axes.size() == 3)
+            {
+                _3DInclinaison.x=string_to_float(axes[0]);
+                _3DInclinaison.y=string_to_float(axes[1]);
+                _3DInclinaison.z=string_to_float(axes[2]);
+                inclinaison = true;
+            }
+            else inclinaison = false;
         }
         else if(words[0]=="nickname"){
             _nickname=words[1];
@@ -172,7 +179,7 @@ bool GameConfiguration::saveConfigurationFile()
     saveFile << "publish_online:"<<_onlineScore<<endl;
     saveFile << "3D:"<<_3DMode<<endl;
     saveFile << "3D_autorotation:"<<_3DAutorotation<<endl;
-    saveFile << "3D_inclinaison:"<<_3DInclinaison<<endl;
+    saveFile << "3D_inclinaison:"<<_3DInclinaison.x<<";"<<_3DInclinaison.y<<";"<<_3DInclinaison.z<<endl;
     saveFile << "nickname:"<<_nickname<<endl;
 
     saveFile.close();
@@ -187,7 +194,7 @@ void GameConfiguration::initDefault()
     _3DAutorotation = false;
     _useMouse = false;
     _onlineScore = true;
-    _3DInclinaison = 20.f;
+    _3DInclinaison = sf::Vector3f(0, 0, 0);
     _nickname = "?";
 }
 

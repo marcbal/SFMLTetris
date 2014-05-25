@@ -11,8 +11,7 @@ MenuSettingsGraphic::MenuSettingsGraphic(sf::Vector2i * window_size,char *state,
     _activate3D(Vector2f(_window_size->x/2-250,160), Vector2f(20,20),gameConfig->get3DMode()),
     textActivate3D(),
     _activateAutorotation(Vector2f(_window_size->x/2-250,200), Vector2f(20,20),gameConfig->get3DAutorotation()),
-    _inclinaison(Vector2f(_window_size->x/2-250,280),Vector2f(500,20),gameConfig->get3DInclinaison(),0,360),
-    textInclinaison(),
+    textActivateAutorotation(),
     _onlineScore(Vector2f(_window_size->x/2-250,320), Vector2f(20,20),gameConfig->getOnlineScore()),
     textOnlineScore()
 {
@@ -42,7 +41,7 @@ MenuSettingsGraphic::MenuSettingsGraphic(sf::Vector2i * window_size,char *state,
     textActivateExplosions.setColor(sf::Color::White);
     textActivateExplosions.setFont(*Ressources::getDefaultFont());
     textActivateExplosions.setPosition(_window_size->x/2-210, 80);
-    textActivateExplosions.setString("Effets d'explosion");
+    textActivateExplosions.setString("Effets d'explosion (mode 2D seulement)");
 
     textActivateGhost.setCharacterSize(20);
     textActivateGhost.setColor(sf::Color::White);
@@ -55,7 +54,7 @@ MenuSettingsGraphic::MenuSettingsGraphic(sf::Vector2i * window_size,char *state,
     textActivate3D.setColor(sf::Color::White);
     textActivate3D.setFont(*Ressources::getDefaultFont());
     textActivate3D.setPosition(_window_size->x/2-210, 160);
-    textActivate3D.setString("Activer la 3D");
+    textActivate3D.setString("Activer la matrice 3D");
 
 
     textActivateAutorotation.setCharacterSize(20);
@@ -63,12 +62,6 @@ MenuSettingsGraphic::MenuSettingsGraphic(sf::Vector2i * window_size,char *state,
     textActivateAutorotation.setFont(*Ressources::getDefaultFont());
     textActivateAutorotation.setPosition(_window_size->x/2-210, 200);
     textActivateAutorotation.setString("Rotation automatique de la matrice 3D");
-
-    textInclinaison.setCharacterSize(20);
-    textInclinaison.setColor(sf::Color::White);
-    textInclinaison.setFont(*Ressources::getDefaultFont());
-    textInclinaison.setPosition(_window_size->x/2-250, 240);
-    textInclinaison.setString("Inclinaison de la matrice 3D :");
 
 
     textOnlineScore.setCharacterSize(20);
@@ -83,7 +76,6 @@ MenuSettingsGraphic::MenuSettingsGraphic(sf::Vector2i * window_size,char *state,
 
 void MenuSettingsGraphic::onEvent(Event & event){
     _activate3D.onEvent(event);
-    _inclinaison.onEvent(event);
     _activateAutorotation.onEvent(event);
     _activateExplosions.onEvent(event);
     _activateGhost.onEvent(event);
@@ -92,7 +84,6 @@ void MenuSettingsGraphic::onEvent(Event & event){
 
     _gameConfig->setDrawExplosions(_activateExplosions.getValue());
     _gameConfig->setDrawGhost(_activateGhost.getValue());
-    _gameConfig->set3DInclinaison(_inclinaison.getValue());
     _gameConfig->set3DAutorotation(_activateAutorotation.getValue());
     _gameConfig->set3DMode(_activate3D.getValue());
     _gameConfig->setOnlineScore(_onlineScore.getValue());
@@ -103,8 +94,6 @@ void MenuSettingsGraphic::draw(sf::RenderTarget& target, sf::RenderStates states
     Menu::draw(target,states);
     target.draw(_activate3D,states);
     target.draw(textActivate3D,states);
-    target.draw(_inclinaison,states);
-    target.draw(textInclinaison,states);
     target.draw(textActivateAutorotation,states);
     target.draw(_activateAutorotation,states);
     target.draw(textActivateExplosions,states);
