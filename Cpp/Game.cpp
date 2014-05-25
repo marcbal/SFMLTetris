@@ -220,7 +220,8 @@ void Game::restartGame()
     record.tetrominos = _nb_tetromino;
     record.time = lrint(getGameTime().asSeconds());
     _scores->addScore(record);
-    _scoreSender.addDataToFinishGame(record);
+    if (_gameConfig->getOnlineScore())
+        _scoreSender.addDataToFinishGame(record);
 
     _nb_line = _score = 0;
     _nb_tetromino = 1;

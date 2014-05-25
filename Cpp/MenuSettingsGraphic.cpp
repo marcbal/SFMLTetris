@@ -11,8 +11,10 @@ MenuSettingsGraphic::MenuSettingsGraphic(sf::Vector2i * window_size,char *state,
     _activate3D(Vector2f(_window_size->x/2-250,160), Vector2f(20,20),gameConfig->get3DMode()),
     textActivate3D(),
     _activateAutorotation(Vector2f(_window_size->x/2-250,200), Vector2f(20,20),gameConfig->get3DAutorotation()),
-    _inclinaison(Vector2f(_window_size->x/2-250,290),Vector2f(500,24),gameConfig->get3DInclinaison(),0,360),
-    textInclinaison()
+    _inclinaison(Vector2f(_window_size->x/2-250,280),Vector2f(500,20),gameConfig->get3DInclinaison(),0,360),
+    textInclinaison(),
+    _onlineScore(Vector2f(_window_size->x/2-250,320), Vector2f(20,20),gameConfig->getOnlineScore()),
+    textOnlineScore()
 {
     _gameConfig = gameConfig;
     _oGL = oGL;
@@ -65,8 +67,15 @@ MenuSettingsGraphic::MenuSettingsGraphic(sf::Vector2i * window_size,char *state,
     textInclinaison.setCharacterSize(20);
     textInclinaison.setColor(sf::Color::White);
     textInclinaison.setFont(*Ressources::getDefaultFont());
-    textInclinaison.setPosition(_window_size->x/2-250, 250);
+    textInclinaison.setPosition(_window_size->x/2-250, 240);
     textInclinaison.setString("Inclinaison de la matrice 3D :");
+
+
+    textOnlineScore.setCharacterSize(20);
+    textOnlineScore.setColor(sf::Color::White);
+    textOnlineScore.setFont(*Ressources::getDefaultFont());
+    textOnlineScore.setPosition(_window_size->x/2-210, 320);
+    textOnlineScore.setString("Publier le score en ligne");
 }
 
 
@@ -78,17 +87,15 @@ void MenuSettingsGraphic::onEvent(Event & event){
     _activateAutorotation.onEvent(event);
     _activateExplosions.onEvent(event);
     _activateGhost.onEvent(event);
+    _onlineScore.onEvent(event);
     Menu::onEvent(event);
 
     _gameConfig->setDrawExplosions(_activateExplosions.getValue());
     _gameConfig->setDrawGhost(_activateGhost.getValue());
-
     _gameConfig->set3DInclinaison(_inclinaison.getValue());
-
     _gameConfig->set3DAutorotation(_activateAutorotation.getValue());
-    /* _oGL->...(_activateAutorotation.getValue()) */
-
     _gameConfig->set3DMode(_activate3D.getValue());
+    _gameConfig->setOnlineScore(_onlineScore.getValue());
 }
 
 void MenuSettingsGraphic::draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -104,5 +111,7 @@ void MenuSettingsGraphic::draw(sf::RenderTarget& target, sf::RenderStates states
     target.draw(_activateExplosions,states);
     target.draw(textActivateGhost,states);
     target.draw(_activateGhost,states);
+    target.draw(_onlineScore,states);
+    target.draw(textOnlineScore,states);
 }
 
