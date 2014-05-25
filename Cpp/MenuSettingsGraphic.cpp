@@ -17,6 +17,9 @@ MenuSettingsGraphic::MenuSettingsGraphic(sf::Vector2i * window_size,char *state,
     _gameConfig = gameConfig;
     _oGL = oGL;
 
+
+    titre.setString(L"Paramètres de jeu");
+
     menuElements.push_back(Bouton(sf::Vector2f(50, _window_size->y-120),
                                         sf::Vector2f(200, 30),
                                         18,

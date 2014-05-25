@@ -6,6 +6,8 @@ MenuSettings::MenuSettings(sf::Vector2i * window_size,char * state) :Menu(window
 {
     // création des éléments de menu
 
+    titre.setString(L"Paramètres");
+
     int nbElement = 4;
 
     for (int i=0; i<nbElement; i++)

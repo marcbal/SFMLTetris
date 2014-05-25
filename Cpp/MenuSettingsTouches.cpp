@@ -8,6 +8,9 @@ MenuSettingsTouches::MenuSettingsTouches(sf::Vector2i * window_size,char * state
     _textMouse()
 {
     // création des éléments de menu
+
+    titre.setString("Clavier et souris");
+
     _evenement = evenement;
     _gameConfig = gameConfig;
     _inputKey.push_back(InputKey(Vector2f(500,100),Vector2f(400,40),"Gauche",_evenement));

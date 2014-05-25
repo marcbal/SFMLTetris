@@ -19,11 +19,16 @@ class ScreenScore : public Menu
         virtual void update();
 
 
+
     protected:
     private:
 
         Scores * _scores;
-        vector<sf::Text> scoreTable;
+        vector<vector<sf::Text> > scoreTable;
+        unsigned int _page;
+        unsigned int _max_page;
+        unsigned int nbScorePerPage;
+        char _pageChange;
 
         // sf::Drawable
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

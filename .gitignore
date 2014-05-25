@@ -16,3 +16,4 @@ Cpp/bin/*
 
 Cpp/save/score.bin
 web/include/id_bdd.php
+Cpp/configuration/*
