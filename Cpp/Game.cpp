@@ -107,18 +107,21 @@ void Game::onEvent(sf::Event & event)
 
         break;
         case sf::Event::MouseMoved:
+            if(!_gameConfig->get3DAutorotation() && _gameConfig->get3DMode()){
+                _oGL->onEvent(event);
+                return;
+            }
             if (!_gameConfig->getUseMouse())
                 return;
             matrix.mouseLeftRight(event);
         break;
         case sf::Event::MouseButtonPressed:
-            if (!_gameConfig->getUseMouse())
+            if (!_gameConfig->getUseMouse() || _gameConfig->get3DMode())
                 return;
             switch(event.mouseButton.button)
             {
                 case sf::Mouse::Left:
                     matrix.rotateLeft();
-                    cout << "WHAT !" << endl;
                 break;
                 case sf::Mouse::Right:
                     matrix.rotateRight();

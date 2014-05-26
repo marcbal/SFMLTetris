@@ -37,6 +37,8 @@ Application::Application() :
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluPerspective(90.f, WINDOW_WIDTH/float(WINDOW_HEIGHT), 1.f, 5000.f);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable( GL_BLEND );
 
 }
 

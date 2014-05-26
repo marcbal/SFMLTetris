@@ -5,7 +5,10 @@ OpenGL_Manager::OpenGL_Manager(GameConfiguration* gameConfig){
 
     _gameConfig = gameConfig;
     _tetrisBoard = new int*[BOARD_WIDTH];
-    orientation_progress = 0;
+    orientation_progress = orientation_vitesse = orientation_timeMax = Vector3f(0,0,0);
+    for(int i=0;i<4;i++)
+    color[i]=1.0;
+
 }
 
 void OpenGL_Manager::setTetrisBoard(int tetrisBoard[][BOARD_HEIGHT]){
@@ -22,11 +25,6 @@ void OpenGL_Manager::preDraw(){
         glClear(GL_DEPTH_BUFFER_BIT);
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
-       // glTranslatef(0.f, 0.f, -200.f);
-//        float t=0.5;
-//        glRotatef(t * 50, 1.f, 0.f, 0.f);
-//        glRotatef(t * 30, 0.f, 1.f, 0.f);
-//        glRotatef(t * 90, 0.f, 0.f, 1.f);
 
 
     //glRotatef(10, 0.f, 1.f, 0.f);
@@ -39,23 +37,36 @@ void OpenGL_Manager::preDraw(){
     à 90 et 270 °, la place prise à l'affichage est la plus forte
     donc l'éloignement est la plus élevée
     */
-    float eloignement = _gameConfig->get3DInclinaison();
-    while (eloignement > 180) eloignement -= 180;
-    while (eloignement < 0) eloignement += 180;
-    if (eloignement > 90) eloignement = 180 - eloignement;
+    float eloignement = abs(_gameConfig->get3DInclinaison()-180);
     glTranslatef(-100,0,-1600-(eloignement*2));
 
 
-    glRotatef(-_gameConfig->get3DInclinaison(), 1.f, 0.f, 0.f);
+    glRotatef(orientation_progress.z, 1.f, 0.f, 0.f);
+    glRotatef(orientation_progress.x, 0.f, 1.f, 0.f);
+    glRotatef(orientation_progress.y, 0.f, 0.f, 1.f);
     if (_gameConfig->get3DAutorotation())
     {
-        glRotatef(orientation_progress, 0.f, 1.f, 0.f);
-        glRotatef(orientation_progress, 0.f, 0.f, 1.f);
-        orientation_progress +=0.8;
+
+        if(orientation_timer[0].getElapsedTime().asSeconds()>=orientation_timeMax.x){
+            orientation_vitesse.x = rand_float(10,100);
+            orientation_timeMax.x = rand_float(0.5,3);
+            orientation_timer[0].restart();
+        }
+        if(orientation_timer[1].getElapsedTime().asSeconds()>=orientation_timeMax.y){
+            orientation_vitesse.y = rand_float(10,100);
+            orientation_timeMax.y = rand_float(0.5,3);
+            orientation_timer[1].restart();
+        }
+        if(orientation_timer[2].getElapsedTime().asSeconds()>=orientation_timeMax.z){
+            orientation_vitesse.z = rand_float(10,100);
+            orientation_timeMax.z = rand_float(0.5,3);
+            orientation_timer[2].restart();
+        }
+        orientation_progress += orientation_vitesse*timer.getElapsedTime().asSeconds();
     }
-    else
-        orientation_progress = 0;
+
     glTranslatef(-100.f*(BOARD_WIDTH/2),100.f*(BOARD_HEIGHT/2),0);
+
     for(int i=0;i<BOARD_WIDTH;++i){
             glTranslatef(100.f,0.f,0.f);
         for(int j=0;j<BOARD_HEIGHT;++j){
@@ -66,10 +77,12 @@ void OpenGL_Manager::preDraw(){
                     drawArretes();
             if(_tetrisBoard[i][j]>29 && _tetrisBoard[i][j]<37){
                 sf::Color c = Tetromino::couleurs[_tetrisBoard[i][j]-30];
-                color[0]= c.r/float(255)*(64.0/255);
-                color[1]= c.g/float(255)*(64.0/255);
-                color[2]= c.b/float(255)*(64.0/255);
-                drawShape();
+                color[0]= c.r/float(255);
+                color[1]= c.g/float(255);
+                color[2]= c.b/float(255);
+                color[3]= 64/float(255);
+                drawShapeAlpha(i,j);
+                color[3]=1.0;
             }
             else if(_tetrisBoard[i][j]>19 && _tetrisBoard[i][j]<27){
                 sf::Color c = Tetromino::couleurs[_tetrisBoard[i][j]-20];
@@ -90,6 +103,7 @@ void OpenGL_Manager::preDraw(){
         glTranslatef(0.f,100.f*BOARD_HEIGHT,0.f);
 
     }
+    timer.restart();
     //drawShape(0,0);
 }
 
@@ -175,6 +189,58 @@ void OpenGL_Manager::drawArretes(){
 
 }
 
+void OpenGL_Manager::drawShapeAlpha(int x, int y){
+
+        glBegin(GL_QUADS);
+
+            //FOND
+            setGLColor(-0.4,-0.4,-0.4);
+            glVertex3f(-50.f, -50.f, -50.f);
+            glVertex3f(-50.f,  50.f, -50.f);
+            glVertex3f( 50.f,  50.f, -50.f);
+            glVertex3f( 50.f, -50.f, -50.f);
+            //FACE
+            setGLColor();
+            glVertex3f(-50.f, -50.f, 50.f);
+            glVertex3f(-50.f,  50.f, 50.f);
+            glVertex3f( 50.f,  50.f, 50.f);
+            glVertex3f( 50.f, -50.f, 50.f);
+
+
+            setGLColor(-0.2,-0.2,-0.2);
+            //GAUCHE
+            if(x-1<0||_tetrisBoard[x-1][y]<10){
+            glVertex3f(-50.f, -50.f, -50.f);
+            glVertex3f(-50.f,  50.f, -50.f);
+            glVertex3f(-50.f,  50.f,  50.f);
+            glVertex3f(-50.f, -50.f,  50.f);
+            }
+            //Droite
+            if(x+1>=BOARD_WIDTH||_tetrisBoard[x+1][y]<10){
+            glVertex3f(50.f, -50.f, -50.f);
+            glVertex3f(50.f,  50.f, -50.f);
+            glVertex3f(50.f,  50.f,  50.f);
+            glVertex3f(50.f, -50.f,  50.f);
+            }//*
+            if(y+1>=BOARD_HEIGHT||_tetrisBoard[x][y+1]<10){
+            glVertex3f(-50.f, -50.f,  50.f);
+            glVertex3f(-50.f, -50.f, -50.f);
+            glVertex3f( 50.f, -50.f, -50.f);
+            glVertex3f( 50.f, -50.f,  50.f);
+            }
+            if(y-1<0||_tetrisBoard[x][y-1]<10){
+            //HAUT
+            setGLColor(-0.1,-0.1,-0.1);
+            glVertex3f(-50.f, 50.f,  50.f);
+            glVertex3f(-50.f, 50.f, -50.f);
+            glVertex3f( 50.f, 50.f, -50.f);
+            glVertex3f( 50.f, 50.f,  50.f);
+            }
+            //*/
+        glEnd();
+
+}
+
 OpenGL_Manager::~OpenGL_Manager(){
     delete[] _tetrisBoard;
 }
@@ -193,8 +259,38 @@ void OpenGL_Manager::setGLColor(float r, float g, float b){
         else if(tmp[i]>1)
         tmp[i]=1;
     }
-    glColor3f(tmp[0], tmp[1], tmp[2]);
+    glColor4f(tmp[0], tmp[1], tmp[2],color[3]);
 }
 void OpenGL_Manager::setGLColor(){
     setGLColor(0,0,0);
+}
+
+void OpenGL_Manager::onEvent(sf::Event & event)
+{
+
+    switch(event.type)
+    {
+        case sf::Event::MouseMoved:
+
+            if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+                Vector2i _movement = sf::Mouse::getPosition()-lastMousePos;
+                orientation_progress += Vector3f(_movement.x,orientation_progress.y,_movement.y);
+            }
+            lastMousePos = sf::Mouse::getPosition();
+        break;
+        /*
+        case sf::Event::MouseButtonPressed:
+            if(event.mouseButton.button != sf::Mouse::Left)
+                return;
+            lastMousePos = sf::Mouse::getPosition();
+            _isClicked = true;
+        break;
+        case sf::Event::MouseButtonReleased:
+            if(event.mouseButton.button != sf::Mouse::Left)
+                return;
+
+            _isClicked = false;
+        break; */
+        default: break;
+    }
 }
