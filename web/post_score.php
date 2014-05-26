@@ -62,7 +62,7 @@ $sizeof_data_row = $nbLineDatas['lineSize'] . "\n";
 $nbLineDatas = $nbLineDatas['nbVal'] . "\n";
 
 if ($nbLineDatas != $output_data['tetrominoes'])
-	exit('error_data : number of data rows != dropped tetrominoes number');
+	exit('error_data : number of data rows (' . $nbLineDatas . ') != dropped tetrominoes number (' . $output_data['tetrominoes'] . ')');
 
 
 $datas = substr($datas, 5);
@@ -98,6 +98,9 @@ try {
 } catch(Exception $e) {
     exit('error_db_connect : '.$e->getCode().' ; '.$e->getMessage()."\n");
 }
+
+
+include_once('include/checking.php');
 
 
 $req=$bdd_connexion->prepare($bdd_querry_prepare);

@@ -61,8 +61,6 @@ class ScoreWebSender
 
 
 
-        void clearData();
-
     public:
         ScoreWebSender();
         virtual ~ScoreWebSender();
@@ -79,6 +77,10 @@ class ScoreWebSender
                                   Tetromino tetrominoPlace);// le tétromino tout juste posé (avec son type/orientation/position)
 
         void addDataToFinishGame(RecordLine rL);
+
+
+
+        void clearData();
 
     protected:
 };

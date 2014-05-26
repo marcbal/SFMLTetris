@@ -251,6 +251,8 @@ void Game::restartGame()
     _scores->addScore(record);
     if (_gameConfig->getOnlineScore() && _score > 0)
         _scoreSender.addDataToFinishGame(record);
+    else
+        _scoreSender.clearData();
 
     _nb_line = _score = 0;
     _nb_tetromino = 1;
