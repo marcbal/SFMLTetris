@@ -1,7 +1,7 @@
 <?php
 include_once('include/id_bdd.php');
 
-$bdd_querry_prepare = 'INSERT INTO '.$bdd_table.' VALUES ( null, :name , :score , :time , :lines , :nbtetro , :data , true);';
+$bdd_querry_prepare = 'INSERT INTO '.$bdd_table.' VALUES ( null, :name , :score , :time , :lines , :nbtetro , :data , :valid);';
 
 $min_score_to_saving = 1;
 
@@ -110,7 +110,8 @@ $req->execute(Array(
 	'time' => $output_data['time'],
 	'lines' => $output_data['delLines'],
 	'nbtetro' => $output_data['tetrominoes'],
-	'data' => serialize($output_data['history'])
+	'data' => serialize($output_data['history']),
+	'valid' => $data_valid
 ));
 
 	

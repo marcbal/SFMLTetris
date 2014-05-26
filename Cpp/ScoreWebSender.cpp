@@ -87,7 +87,7 @@ void ScoreWebSender::addDataToFinishGame(RecordLine rL)
 
 
     string g = oss.str();
-    cout << "Envoi de " << g.size() << " octets de donnees au serveur de score" << endl;
+    cout << "Envoi du record de " << rL.points << " points au serveur de score" << endl;
     sf::Thread * th = new sf::Thread(&webSendData, g);
     th->launch();
 
@@ -125,10 +125,10 @@ void webSendData(string& data)
    if (rep.getStatus() == 200 && repData.size() == 2 && repData[0] == "ok")
         if (repData[1] == key)
             cout << "Le score a ete publie avec succes" << endl;
+        else if(rep.getStatus() == 1001)
+           cout << "Connexion impossible : score non envoye !" << endl;
         else
-           cout << "La requete semble etre intercepte par un serveur proxy : score non envoye !" << endl;
-        else
-            cout << "Score non envoye : Code HTTP " << rep.getStatus() << endl << rep.getBody() << endl;
+            cout << "Score non valide ou envoi impossible : Code HTTP " << rep.getStatus() << endl << rep.getBody() << endl;
 
 }
 
