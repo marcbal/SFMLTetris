@@ -35,22 +35,22 @@ void OpenGL_Manager::preDraw(){
 
     glRotatef(orientation_progress.z, 1.f, 0.f, 0.f);
     glRotatef(orientation_progress.x, 0.f, 1.f, 0.f);
-    glRotatef(orientation_progress.y, 0.f, 0.f, 1.f);
+
     if (_gameConfig->get3DAutorotation())
     {
-
+            glRotatef(orientation_progress.y, 0.f, 0.f, 1.f);
         if(orientation_timer[0].getElapsedTime().asSeconds()>=orientation_timeMax.x){
-            orientation_vitesse.x = rand_float(10,100);
+            orientation_vitesse.x = rand_float(5,50);
             orientation_timeMax.x = rand_float(0.5,3);
             orientation_timer[0].restart();
         }
         if(orientation_timer[1].getElapsedTime().asSeconds()>=orientation_timeMax.y){
-            orientation_vitesse.y = rand_float(10,100);
+            orientation_vitesse.y = rand_float(5,50);
             orientation_timeMax.y = rand_float(0.5,3);
             orientation_timer[1].restart();
         }
         if(orientation_timer[2].getElapsedTime().asSeconds()>=orientation_timeMax.z){
-            orientation_vitesse.z = rand_float(10,100);
+            orientation_vitesse.z = rand_float(5,50);
             orientation_timeMax.z = rand_float(0.5,3);
             orientation_timer[2].restart();
         }
@@ -266,7 +266,7 @@ void OpenGL_Manager::onEvent(sf::Event & event)
 
             if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                 Vector2i _movement = sf::Vector2i(event.mouseMove.x,event.mouseMove.y)-lastMousePos;
-                orientation_progress += Vector3f(_movement.x,orientation_progress.y,_movement.y);
+                orientation_progress += Vector3f(_movement.x,0,_movement.y);
                 _gameConfig->set3DInclinaison(orientation_progress);
             }
             lastMousePos = sf::Vector2i(event.mouseMove.x,event.mouseMove.y);

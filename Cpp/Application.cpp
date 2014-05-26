@@ -146,7 +146,6 @@ void Application::processEvents()
 
 void Application::update()
 {
-
     _background.update();
     _screenElement[(int)_state]->update();
     _audio.update();
