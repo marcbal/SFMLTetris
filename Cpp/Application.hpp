@@ -11,7 +11,7 @@
 #include "MenuSettings.hpp"
 #include "MenuSettingsTouches.hpp"
 #include "MenuSettingsAudio.hpp"
-#include "MenuSettingsGraphic.hpp"
+#include "MenuSettingsGame.hpp"
 #include "Game.hpp"
 #include "AudioConfiguration.hpp"
 #include "GameConfiguration.hpp"

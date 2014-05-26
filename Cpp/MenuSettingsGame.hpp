@@ -4,14 +4,16 @@
 #include "headers.hpp"
 #include "Menu.hpp"
 #include "GameConfiguration.hpp"
+
 #include "Application.hpp"
 #include "InputCheck.hpp"
 #include "InputRange.hpp"
+#include "InputText.hpp"
 #include "OpenGL_Manager.hpp"
 #include "Ressources.hpp"
 #include "Game.hpp"
 
-class MenuSettingsGraphic : public Menu{
+class MenuSettingsGame : public Menu{
 
 private :
     OpenGL_Manager * _oGL;
@@ -26,11 +28,15 @@ private :
     sf::Text textActivateAutorotation;
     InputCheck _onlineScore;
     sf::Text textOnlineScore;
+
+    InputText _enterPseudo;
 public :
-    MenuSettingsGraphic(sf::Vector2i * window_size,char *state,OpenGL_Manager * oGL, GameConfiguration* gameConfig);
+    MenuSettingsGame(sf::Vector2i * window_size,char *state,OpenGL_Manager * oGL, GameConfiguration* gameConfig);
     virtual void onEvent(sf::Event & event);
+    virtual void update();
 protected:
      virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+
 };
 
 #endif // _MENU_SETTINGS_GRAPHIC_HPP_

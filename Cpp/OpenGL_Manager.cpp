@@ -271,19 +271,6 @@ void OpenGL_Manager::onEvent(sf::Event & event)
             }
             lastMousePos = sf::Vector2i(event.mouseMove.x,event.mouseMove.y);
         break;
-        /*
-        case sf::Event::MouseButtonPressed:
-            if(event.mouseButton.button != sf::Mouse::Left)
-                return;
-            lastMousePos = sf::Mouse::getPosition();
-            _isClicked = true;
-        break;
-        case sf::Event::MouseButtonReleased:
-            if(event.mouseButton.button != sf::Mouse::Left)
-                return;
-
-            _isClicked = false;
-        break; */
         default: break;
     }
 }

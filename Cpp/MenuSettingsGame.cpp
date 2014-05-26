@@ -1,8 +1,8 @@
-#include "MenuSettingsGraphic.hpp"
+#include "MenuSettingsGame.hpp"
 
 using namespace std;
 using namespace sf;
-MenuSettingsGraphic::MenuSettingsGraphic(sf::Vector2i * window_size,char *state,OpenGL_Manager * oGL, GameConfiguration* gameConfig):
+MenuSettingsGame::MenuSettingsGame(sf::Vector2i * window_size,char *state,OpenGL_Manager * oGL, GameConfiguration* gameConfig):
     Menu(window_size,state),
     _activateExplosions(Vector2f(_window_size->x/2-250,80), Vector2f(20,20),gameConfig->getDrawExplosions()),
     textActivateExplosions(),
@@ -13,7 +13,8 @@ MenuSettingsGraphic::MenuSettingsGraphic(sf::Vector2i * window_size,char *state,
     _activateAutorotation(Vector2f(_window_size->x/2-250,200), Vector2f(20,20),gameConfig->get3DAutorotation()),
     textActivateAutorotation(),
     _onlineScore(Vector2f(_window_size->x/2-250,320), Vector2f(20,20),gameConfig->getOnlineScore()),
-    textOnlineScore()
+    textOnlineScore(),
+    _enterPseudo(Vector2f(_window_size->x/2-250,260),Vector2f(500,40),gameConfig->getNickName())
 {
     _gameConfig = gameConfig;
     _oGL = oGL;
@@ -72,14 +73,17 @@ MenuSettingsGraphic::MenuSettingsGraphic(sf::Vector2i * window_size,char *state,
 }
 
 
+void MenuSettingsGame::update(){
+    _enterPseudo.update();
+}
 
-
-void MenuSettingsGraphic::onEvent(Event & event){
+void MenuSettingsGame::onEvent(Event & event){
     _activate3D.onEvent(event);
     _activateAutorotation.onEvent(event);
     _activateExplosions.onEvent(event);
     _activateGhost.onEvent(event);
     _onlineScore.onEvent(event);
+    _enterPseudo.onEvent(event);
     Menu::onEvent(event);
 
     _gameConfig->setDrawExplosions(_activateExplosions.getValue());
@@ -87,12 +91,14 @@ void MenuSettingsGraphic::onEvent(Event & event){
     _gameConfig->set3DAutorotation(_activateAutorotation.getValue());
     _gameConfig->set3DMode(_activate3D.getValue());
     _gameConfig->setOnlineScore(_onlineScore.getValue());
+    _gameConfig->setNickName(_enterPseudo.getValue());
 }
 
-void MenuSettingsGraphic::draw(sf::RenderTarget& target, sf::RenderStates states) const
+void MenuSettingsGame::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     Menu::draw(target,states);
     target.draw(_activate3D,states);
+    target.draw(_enterPseudo,states);
     target.draw(textActivate3D,states);
     target.draw(textActivateAutorotation,states);
     target.draw(_activateAutorotation,states);
