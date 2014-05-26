@@ -273,7 +273,6 @@ void OpenGL_Manager::onEvent(sf::Event & event)
         case sf::Event::MouseMoved:
 
             if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-            cout << "MIAOU" << endl;
                 Vector2i _movement = sf::Vector2i(event.mouseMove.x,event.mouseMove.y)-lastMousePos;
                 orientation_progress += Vector3f(_movement.x,orientation_progress.y,_movement.y);
             }
