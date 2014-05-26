@@ -3,6 +3,7 @@ SFMLTetris
 
 Projet tutoré pour le semestre 2 en DUT Informatique à l'IUT de Lens, 2013-2014
 
+Site web : http://sfmltetris.no-ip.org/
 
 Contributeurs
 ------------
