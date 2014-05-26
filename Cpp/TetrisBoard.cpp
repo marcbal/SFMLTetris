@@ -3,7 +3,7 @@
 TetrisBoard::TetrisBoard(sf::Vector2i * window_size,OpenGL_Manager * oGL) :
     boardShape(),
     shapeMatrix(BOARD_WIDTH * BOARD_HEIGHT) ,
-    pieceCourrante(rand_int(0, 6), 0, sf::Vector2i(INIT_POS_X, INIT_POS_Y))
+    pieceCourrante(0, 0, sf::Vector2i(INIT_POS_X, INIT_POS_Y))
 {
     clearBoard();
     pieceCouranteActive = true;
@@ -120,7 +120,7 @@ bool TetrisBoard::moveRight()
     }
     return false;
 }
-void TetrisBoard::rotateLeft()
+bool TetrisBoard::rotateLeft()
 {
     int new_rotation = pieceCourrante.getOrientation()+1;
     if (verifierPlacementPiece(pieceCourrante.getPosition(), new_rotation))
@@ -147,8 +147,11 @@ void TetrisBoard::rotateLeft()
         pieceCourrante.setOrientation(new_rotation);
         pieceCourrante.setPosition(pieceCourrante.getPosition()+sf::Vector2i(0, -1));
     }
+    else
+        return false;
+    return true;
 }
-void TetrisBoard::rotateRight()
+bool TetrisBoard::rotateRight()
 {
 
     int new_rotation = pieceCourrante.getOrientation()-1;
@@ -176,35 +179,41 @@ void TetrisBoard::rotateRight()
         pieceCourrante.setOrientation(new_rotation);
         pieceCourrante.setPosition(pieceCourrante.getPosition()+sf::Vector2i(0, -1));
     }
+    else
+        return false;
+    return true;
 }
 
 
 
 
-void TetrisBoard::mouseLeftRight(sf::Event event)
+bool TetrisBoard::mouseLeftRight(sf::Event event)
 {
     if (event.type != sf::Event::MouseMoved)
-        return;
+        return false;
     sf::Vector2f cur_pos(event.mouseMove.x, event.mouseMove.y);
     sf::Vector2f top_left((_window_size->x - BOARD_WIDTH * CEIL_SIZE)/2.0,
                           (_window_size->y - BOARD_HEIGHT * CEIL_SIZE)/2.0);
     sf::Vector2f board_size(BOARD_WIDTH * CEIL_SIZE,
                             BOARD_HEIGHT * CEIL_SIZE);
     if (!pointInRect(top_left, board_size, cur_pos))
-        return;
+        return false;
     cur_pos -= top_left;
     int tetromino_new_pos = (cur_pos.x * BOARD_WIDTH) / board_size.x;
     tetromino_new_pos -= 2; // décalage pour centrer sur la souris
     bool continuer = true;
+    bool hasMove = false;
     while (tetromino_new_pos < pieceCourrante.getPosition().x && continuer)
     {
         continuer = moveLeft();
+        if (continuer) hasMove = true;
     }
     while (tetromino_new_pos > pieceCourrante.getPosition().x && continuer)
     {
         continuer = moveRight();
+        if (continuer) hasMove = true;
     }
-
+    return hasMove;
 }
 
 

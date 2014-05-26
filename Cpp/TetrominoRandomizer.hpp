@@ -16,13 +16,13 @@ class TetrominoRandomizer
         int randTetrominoType[7];
         int nbTetrominoReserve;
 
-        void regen();
 
     public:
         TetrominoRandomizer();
         virtual ~TetrominoRandomizer();
 
         int getTetrominoType();
+        void regen();
 
 };
 
