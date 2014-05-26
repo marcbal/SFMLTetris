@@ -39,7 +39,7 @@
 // Defines
 
 // Game :
-#define POINTS_LEVEL 1000
+#define LEVEL_COEFF 10
 #define SPEED_LEVEL_COEFF 0.15
 
 #define HARD_DROP_BONUS_COEFF 2

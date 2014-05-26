@@ -16,26 +16,33 @@ Game::Game(sf::Vector2i * window_size, char *state,Evenement * evenement, Scores
     _scoreSender(),
     tetrominoRand()
 {
-
+    _score = 0;
     _gameConfig = gameConfig;
     _evenement = evenement;
     _scores = scores;
     _window_size = window_size;
     _state = state;
-    _nb_line = 0;
-    _score = 0;
-    _nb_manual_down = 0;
-    _nb_tetromino = 1;
-    setPause((*state != GAME));
     _oGL = oGL;
+
+
+
     float next_tetromino_top = (window_size->y - (NB_NEXT_TETROMINO * 4 * CEIL_SIZE + (NB_NEXT_TETROMINO - 1) * 50))/ 2.0;
 
     for (int i = 0; i<NB_NEXT_TETROMINO; i++)
     {
         NextTetrominoBoard nextTB(sf::Vector2f(100, next_tetromino_top + (4 * CEIL_SIZE + 50) * i));
-        nextTB.newPiece(*(new Tetromino(tetrominoRand.getTetrominoType(), 0, sf::Vector2i(0, 0))));
+        nextTB.newPiece(*(new Tetromino(0, 0, sf::Vector2i(0, 0))));
         nextTetromino.push_back(nextTB);
     }
+
+
+
+    restartGame();
+
+    setPause((*state != GAME));
+
+
+
 
     scoreInfosBefore.setText(L"Partie précédente :  \nScore : -\nLignes : -\nNiveau : -\nTetrominos : -\nTemps : -");
 
@@ -80,11 +87,13 @@ void Game::onEvent(sf::Event & event)
             }
 
             if(event.key.code == _evenement->getEventKey("Gauche")){
-                    matrix.moveLeft();
+                    if (matrix.moveLeft())
+                        setTimeLastMoveDown();
             }
 
             if(event.key.code == _evenement->getEventKey("Droite")){
-                    matrix.moveRight();
+                    if(matrix.moveRight())
+                        setTimeLastMoveDown();
             }
 
             if(event.key.code == _evenement->getEventKey("Descente Rapide")){
@@ -98,11 +107,13 @@ void Game::onEvent(sf::Event & event)
 
             if(event.key.code == _evenement->getEventKey("Rotation Gauche"))
             {
-                    matrix.rotateLeft();
+                    if(matrix.rotateLeft())
+                        setTimeLastMoveDown();
             }
             if(event.key.code == _evenement->getEventKey("Rotation Droite"))
             {
-                    matrix.rotateRight();
+                    if(matrix.rotateRight())
+                        setTimeLastMoveDown();
             }
 
         break;
@@ -113,7 +124,8 @@ void Game::onEvent(sf::Event & event)
             }
             if (!_gameConfig->getUseMouse())
                 return;
-            matrix.mouseLeftRight(event);
+            if (matrix.mouseLeftRight(event))
+                setTimeLastMoveDown();
         break;
         case sf::Event::MouseButtonPressed:
             if (!_gameConfig->getUseMouse() || _gameConfig->get3DMode())
@@ -121,10 +133,12 @@ void Game::onEvent(sf::Event & event)
             switch(event.mouseButton.button)
             {
                 case sf::Mouse::Left:
-                    matrix.rotateLeft();
+                    if(matrix.rotateLeft())
+                        setTimeLastMoveDown();
                 break;
                 case sf::Mouse::Right:
-                    matrix.rotateRight();
+                    if(matrix.rotateRight())
+                        setTimeLastMoveDown();
                 break;
                 case sf::Mouse::Middle:
                     matrix.MoveDown();
@@ -205,6 +219,11 @@ bool Game::getPause()
 void Game::restartGame()
 {
     matrix.clearBoard();
+
+
+    tetrominoRand.regen();
+
+
     matrix.newPiece(*(new Tetromino(tetrominoRand.getTetrominoType(), 0)));
     if (_score > 0)
         scoreInfosBefore.setText(L"Partie précédente :  \nScore : "+ to_string(_score) +"\n"+
@@ -212,6 +231,13 @@ void Game::restartGame()
                                  "Niveau : "+to_string(getLevel())+"\n"+
                                  "Tetrominos : "+to_string(_nb_tetromino)+"\n"+
                                  "Temps : "+formattedDuration(getGameTime(), 1));
+
+    for (int i=0; i<NB_NEXT_TETROMINO; i++)
+    {
+        nextTetromino[i].newPiece(*(new Tetromino(tetrominoRand.getTetrominoType(), 0, sf::Vector2i(0, 0))));
+    }
+
+
 
     RecordLine record;
     string name = _gameConfig->getNickName();
@@ -223,13 +249,14 @@ void Game::restartGame()
     record.tetrominos = _nb_tetromino;
     record.time = lrint(getGameTime().asSeconds());
     _scores->addScore(record);
-    if (_gameConfig->getOnlineScore())
+    if (_gameConfig->getOnlineScore() && _score > 0)
         _scoreSender.addDataToFinishGame(record);
 
     _nb_line = _score = 0;
     _nb_tetromino = 1;
     gameClock.restart();
     totalPauseTime = sf::Time::Zero;
+
 }
 
 
@@ -305,7 +332,7 @@ void Game::update()
 
 int Game::getLevel()
 {
-    return (_score / POINTS_LEVEL);
+    return (int)(sqrt(_score)/LEVEL_COEFF);
 }
 
 

@@ -30,10 +30,10 @@ class TetrisBoard : public sf::Drawable
         bool MoveDown();
         bool moveLeft();
         bool moveRight();
-        void rotateLeft();
-        void rotateRight();
+        bool rotateLeft();
+        bool rotateRight();
 
-        void mouseLeftRight(sf::Event event);
+        bool mouseLeftRight(sf::Event event);
 
 
         void fixPiece();
