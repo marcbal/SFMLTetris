@@ -100,6 +100,7 @@ void Application::processEvents()
             break;
             case Event::Resized:
                 _resized_window_size = Vector2i(event.size.width, event.size.height);
+                glViewport(0, 0, event.size.width, event.size.height);
             break;
             default:
                 // gestion du redimentionnement dela fenêtre
