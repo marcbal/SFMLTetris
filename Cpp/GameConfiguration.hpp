@@ -27,6 +27,8 @@ class GameConfiguration
         void setNickName(string s);
         bool getUseMouse();
         void setUseMouse(bool b);
+        bool getOnlineScore();
+        void setOnlineScore(bool b);
 
 
 
@@ -42,6 +44,7 @@ class GameConfiguration
         bool _3DMode;
         bool _3DAutorotation;
         bool _useMouse;
+        bool _onlineScore;
         float _3DInclinaison;
         string _nickname;
 

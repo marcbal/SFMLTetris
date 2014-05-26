@@ -25,6 +25,7 @@ bool GameConfiguration::get3DAutorotation(){return _3DAutorotation;}
 float GameConfiguration::get3DInclinaison(){return _3DInclinaison;}
 string GameConfiguration::getNickName(){return _nickname;}
 bool GameConfiguration::getUseMouse(){return _useMouse;}
+bool GameConfiguration::getOnlineScore(){return _onlineScore;}
 
 void GameConfiguration::setDrawExplosions(bool b){
     if (_drawExplosions != b)
@@ -75,6 +76,13 @@ void GameConfiguration::setUseMouse(bool b){
         saveConfigurationFile();
     }
 }
+ void GameConfiguration::setOnlineScore(bool b){
+    if (_onlineScore != b)
+    {
+        _onlineScore = b;
+        saveConfigurationFile();
+    }
+}
 
 
 
@@ -86,8 +94,8 @@ bool GameConfiguration::loadFromFile()
 {
     ifstream saveFile(_config_file.c_str(), ios::in);
 
-    bool ghost, explosion, mode3d, autorotation, inclinaison, nickname, mouse;
-    ghost = explosion = mode3d = autorotation = inclinaison = nickname = mouse = false;
+    bool ghost, explosion, mode3d, autorotation, inclinaison, nickname, mouse, online;
+    ghost = explosion = mode3d = autorotation = inclinaison = nickname = mouse = online = false;
 
     if(!saveFile)
         return false;
@@ -126,6 +134,10 @@ bool GameConfiguration::loadFromFile()
             _3DAutorotation=string_to_int(words[1]) != 0;
             autorotation = true;
         }
+        else if(words[0]=="publish_online"){
+            _onlineScore=string_to_int(words[1]) != 0;
+            online = true;
+        }
         else if(words[0]=="3D_inclinaison"){
             _3DInclinaison=string_to_float(words[1]);
             inclinaison = true;
@@ -157,6 +169,7 @@ bool GameConfiguration::saveConfigurationFile()
     saveFile << "ghost:"<<_drawGhost<<endl;
     saveFile << "explosion:"<<_drawExplosions<<endl;
     saveFile << "use_mouse:"<<_useMouse<<endl;
+    saveFile << "publish_online:"<<_onlineScore<<endl;
     saveFile << "3D:"<<_3DMode<<endl;
     saveFile << "3D_autorotation:"<<_3DAutorotation<<endl;
     saveFile << "3D_inclinaison:"<<_3DInclinaison<<endl;
@@ -173,6 +186,7 @@ void GameConfiguration::initDefault()
     _3DMode = false;
     _3DAutorotation = false;
     _useMouse = false;
+    _onlineScore = true;
     _3DInclinaison = 20.f;
     _nickname = "?";
 }

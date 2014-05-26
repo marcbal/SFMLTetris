@@ -26,6 +26,8 @@ private :
     sf::Text textActivateAutorotation;
     InputRange _inclinaison;
     sf::Text textInclinaison;
+    InputCheck _onlineScore;
+    sf::Text textOnlineScore;
 public :
     MenuSettingsGraphic(sf::Vector2i * window_size,char *state,OpenGL_Manager * oGL, GameConfiguration* gameConfig);
     virtual void onEvent(sf::Event & event);

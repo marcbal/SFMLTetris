@@ -8,6 +8,9 @@ MenuSettingsTouches::MenuSettingsTouches(sf::Vector2i * window_size,char * state
     _textMouse()
 {
     // création des éléments de menu
+
+    titre.setString("Clavier et souris");
+
     _evenement = evenement;
     _gameConfig = gameConfig;
     _inputKey.push_back(InputKey(Vector2f(500,100),Vector2f(400,40),"Gauche",_evenement));
@@ -58,7 +61,7 @@ void MenuSettingsTouches::onEvent(Event & event){
 void MenuSettingsTouches::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     Menu::draw(target,states);
-    for(int i=0;i<_inputKey.size();++i)
+    for(unsigned int i=0;i<_inputKey.size();++i)
         target.draw(_inputKey[i],states);
     target.draw(_checkMouse, states);
     target.draw(_textMouse, states);

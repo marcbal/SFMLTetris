@@ -9,6 +9,8 @@ MenuSettingsAudio::MenuSettingsAudio(Vector2i * window_size,char *state,AudioCon
 {
     _audio=audio;
 
+    titre.setString("Musiques");
+
     menuElements.push_back(Bouton(sf::Vector2f(50, _window_size->y-120),
                                         sf::Vector2f(200, 30),
                                         18,

@@ -111,7 +111,9 @@ void Bouton::onMouseDown(sf::Event & event)
     if (event.type != Event::MouseButtonPressed
         || event.mouseButton.button != sf::Mouse::Left)
         return;
-    _mouseClick = true;
+    _mouseHover = pointInRect(_position,_size,Vector2f(event.mouseButton.x,event.mouseButton.y));
+
+    _mouseClick = _mouseHover;
 }
 
 
@@ -122,11 +124,11 @@ void Bouton::onMouseUp(sf::Event & event)
     if (event.type != Event::MouseButtonReleased
         || event.mouseButton.button != sf::Mouse::Left)
         return;
-    if (_mouseHover)
+    if (_mouseHover && _mouseClick)
         *_state=_action;
 
     _mouseClick = false;
-    _mouseHover = false;
+    //_mouseHover = false;
 }
 
 

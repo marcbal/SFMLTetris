@@ -4,13 +4,19 @@ using namespace std;
 using namespace sf;
 
 Menu::Menu(sf::Vector2i * window_size,char * state) :
-    menuElements()
+    menuElements(),
+    titre()
 {
     _state = state;
     _window_size = window_size;
 
     // création des éléments de menu
     menuElements.clear();
+    titre.setCharacterSize(30);
+    titre.setPosition(50, 20);
+    titre.setFont(*Ressources::getDefaultFont());
+    titre.setColor(sf::Color::White);
+    titre.setString("");
 }
 
 Menu::~Menu() {}
@@ -84,5 +90,6 @@ void Menu::draw(sf::RenderTarget& target, sf::RenderStates states) const
     {
         target.draw(menuElements[i], states);
     }
+    target.draw(titre, states);
 }
 

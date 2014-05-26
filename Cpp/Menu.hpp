@@ -5,6 +5,7 @@
 #include "headers.hpp"
 #include "Bouton.hpp"
 #include "ScreenElement.hpp"
+#include "Ressources.hpp"
 
 using namespace std;
 using namespace sf;
@@ -15,6 +16,8 @@ class Menu : public ScreenElement
 {
     protected:
         vector<Bouton> menuElements;
+
+        sf::Text titre;
 
         char *_state;
         // sf::Drawable
