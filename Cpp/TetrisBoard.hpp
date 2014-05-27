@@ -68,7 +68,10 @@ class TetrisBoard : public sf::Drawable
             0 : vide (les cases de 1 à 9 peuvent être considéré comme vide (pour faciliter les conditions))
             10-16 : les cases fixes
             20-26 : les cases de la pièce en mouvement
+            30-36 : les cases du fantôme de la pièce en mouvement
         */
+        int areasup[BOARD_WIDTH][2];
+        // contient les valeurs des cases cachés au dessus
 
         // sf::Drawable
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

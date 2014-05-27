@@ -64,7 +64,7 @@ Tetromino & TetrisBoard::getPieceCourrante()
 void TetrisBoard::clearBoard()
 {
     for (int i=0; i<BOARD_WIDTH; i++)
-        for (int j=0; j<BOARD_HEIGHT; j++)
+        for (int j=-2; j<BOARD_HEIGHT; j++)
             setBoardData(i, j, 0);
     pieceCouranteActive = false;
 }
@@ -228,7 +228,7 @@ void TetrisBoard::fixPiece()
 
 
     for (int i=0; i<BOARD_WIDTH; i++)
-        for (int j=0; j<BOARD_HEIGHT; j++)
+        for (int j=-2; j<BOARD_HEIGHT; j++)
             if (getBoardData(i, j) >= 20 && getBoardData(i, j) <= 26)
                 setBoardData(i, j, getBoardData(i, j) - 10);
 
@@ -280,21 +280,32 @@ void TetrisBoard::dessinePieceCourrante(bool drawGhost)
 void TetrisBoard::effacePieceCourrante()
 {
     for (int i=0; i<BOARD_WIDTH; i++)
-        for (int j=0; j<BOARD_HEIGHT; j++)
-            if ((area[i][j] >= 20 && area[i][j] <= 26) || (area[i][j] >= 30 && area[i][j] <= 36))
+        for (int j=-2; j<BOARD_HEIGHT; j++)
+            if ((getBoardData(i, j) >= 20 && getBoardData(i, j) <= 26) || (getBoardData(i, j) >= 30 && getBoardData(i, j) <= 36))
                 setBoardData(i, j, 0);
 }
 
 int TetrisBoard::getBoardData(int x, int y)
 {
-    return area[x][y];
+    if (x<0 || x>=BOARD_WIDTH || y<-2 || y>=BOARD_HEIGHT)
+        return 0;
+    if (y<0) return areasup[x][y+2];
+    else return area[x][y];
 }
 
 
 void TetrisBoard::setBoardData(int x, int y, int data)
 {
-    if (x<0 || x>=BOARD_WIDTH || y<0 || y>=BOARD_HEIGHT)
+    if (x<0 || x>=BOARD_WIDTH || y<-2 || y>=BOARD_HEIGHT)
         return;
+
+    if (y<0)
+    {
+        areasup[x][y+2] = data;
+        return;
+    }
+
+
     area[x][y] = data;
 
     if (area[x][y] >= 10 && area[x][y] < 17)
@@ -351,13 +362,13 @@ int TetrisBoard::fullLinesClear(ExplosionManager * explosions)
 
             // on décale tout ce qui se trouve au dessus
 
-            for (int j=i; j>0; j--) // on remonte les lignes
+            for (int j=i; j>-2; j--) // on remonte les lignes
                 for (int k=0; k<BOARD_WIDTH; k++)
                     setBoardData(k, j, getBoardData(k, j-1));
 
             // on efface la ligne tout en haut
             for (int j=0; j<BOARD_WIDTH; j++)
-                setBoardData(j, 0, 0);
+                setBoardData(j, -2, 0);
 
         }
     }
@@ -383,9 +394,9 @@ bool TetrisBoard::verifierPlacementPiece(sf::Vector2i pos, int o)
         {
             sf::Vector2i posB(pos.x + i, pos.y + j);
             if (shape[i][j] &&
-                ((area[posB.x][posB.y] >= 10 && area[posB.x][posB.y] < 20) ||
-                 posB.x < 0 || posB.y < 0 ||
-                 posB.x >= BOARD_WIDTH || posB.y >= BOARD_HEIGHT))
+                (posB.x < 0 || posB.y < -2 ||       // ici, on prends en compte que la matrice a 2 lignes invisibles au dessus
+                 posB.x >= BOARD_WIDTH || posB.y >= BOARD_HEIGHT ||
+                 (area[posB.x][posB.y] >= 10 && area[posB.x][posB.y] < 20)))
             {
                 return false;
             }
