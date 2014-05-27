@@ -30,6 +30,8 @@ Application::Application() :
     _window_setting.antialiasingLevel = 4;
     _window.create(VideoMode(_window_size.x, _window_size.y), L"SFMLTetris", Style::Close | Style::Titlebar | Style::Resize, _window_setting);
 
+    sf::Image * logo = Ressources::getLogoMin();
+    _window.setIcon(logo->getSize().x, logo->getSize().y, logo->getPixelsPtr());
 
     glClearDepth(1.f);
     glClearColor(0.f, 0.f, 0.f, 0.f);

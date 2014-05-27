@@ -7,7 +7,7 @@ MenuIndex::MenuIndex(sf::Vector2i * window_size,char * state) :Menu(window_size,
 {
 
     // tecture et sprite sont pour l'image du jeu
-    texture.loadFromFile("res/Crystal_Clear_app_ksirtet.png");
+    texture.loadFromImage(*Ressources::getLogo(),sf::IntRect(sf::Vector2i(0, 0), (sf::Vector2i)Ressources::getLogo()->getSize()));
     sprite.setTexture(texture);
     sprite.setPosition(sf::Vector2f(75, 100));
     sprite.setScale(1.0/3,1.0/3);
