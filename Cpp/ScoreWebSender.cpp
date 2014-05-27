@@ -87,7 +87,8 @@ void ScoreWebSender::addDataToFinishGame(RecordLine rL)
 
 
     string g = oss.str();
-    cout << "Envoi du record de " << rL.points << " points au serveur de score" << endl;
+    rL.points_u = convert_endianness(rL.points_u, BINARY_NETWORK_BIG_ENDIAN);
+    cout << "Envoi du record de " << rL.points << " points au serveur de score ..." << endl;
     sf::Thread * th = new sf::Thread(&webSendData, g);
     th->launch();
 
@@ -114,21 +115,23 @@ void webSendData(string& data)
     sf::Http http(SERVER_ADDR, SERVER_PORT);
 
     sf::Http::Request req(SERVER_QUERRY, sf::Http::Request::Method::Post);
+    srand(time(NULL));
     string key = to_string(rand_int(100000, 999999));
 
     key = base64_encode((unsigned char*)key.c_str(), key.size(), true);
     req.setBody("data="+base64_encode((unsigned char*)data.c_str(), data.size(), true)+"&key="+key);
 
     sf::Http::Response rep = http.sendRequest(req, sf::Time::Zero);
-   vector<string> repData = explode(rep.getBody(), ':');
+    vector<string> repData = explode(rep.getBody(), ':');
 
-   if (rep.getStatus() == 200 && repData.size() == 2 && repData[0] == "ok")
-        if (repData[1] == key)
-            cout << "Le score a ete publie avec succes" << endl;
-        else if(rep.getStatus() == 1001)
-           cout << "Connexion impossible : score non envoye !" << endl;
-        else
-            cout << "Score non valide ou envoi impossible : Code HTTP " << rep.getStatus() << endl << rep.getBody() << endl;
+    if (rep.getStatus() == 200 && repData.size() == 2 && repData[0] == "ok" && repData[1] == key)
+        cout << "Le score a ete publie avec succes" << endl;
+    else if(rep.getStatus() == 1000)
+        cout << "Reponse du serveur invalide : score potentiellement non envoye !" << endl;
+    else if(rep.getStatus() == 1001)
+        cout << "Connexion impossible : score non envoye !" << endl;
+    else
+        cout << "Score non valide ou envoi impossible : Code HTTP " << rep.getStatus() << endl << rep.getBody() << endl;
 
 }
 

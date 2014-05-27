@@ -298,8 +298,14 @@ foreach($output_data['history'] as $row => $data)
 	
 	for ($i=0; $i<4; $i++)
 		for ($j=0; $j<4; $j++)
-			if ($matrice_piece[$i][$j] == 1 && isset($matrix[$piece_pos_x+$i][$piece_pos_y+$j]))
+			if ($matrice_piece[$i][$j] == 1)
 			{
+				if (!isset($matrix[$piece_pos_x+$i][$piece_pos_y+$j]))
+				{
+					echo 'error_checking : row ' . $row . ' : try to fill outside matrix at position (' . ($piece_pos_x+$i) . ';' . ($piece_pos_y+$j) . ')' . "\n";
+					$data_valid = false;
+					break;
+				}
 				if ($matrix[$piece_pos_x+$i][$piece_pos_y+$j])
 				{
 					echo 'error_checking : row ' . $row . ' : matrix already filled at position (' . ($piece_pos_x+$i) . ';' . ($piece_pos_y+$j) . ')' . "\n";
@@ -315,7 +321,10 @@ foreach($output_data['history'] as $row => $data)
 	
 	// affichage :
 	
-	/*for ($i=0; $i<10; $i++)
+	/* echo $row . ' : ';
+	print_r($data);
+	echo "\n";
+	for ($i=0; $i<10; $i++)
 	{
 		echo '[';
 		for ($j=0; $j<22; $j++)
@@ -357,7 +366,33 @@ foreach($output_data['history'] as $row => $data)
 	}
 	// --------------------------------------------------
 	
+	// on calcule le score nouvellement obtenu
+	$level = (int) (sqrt($checking_score-$data['scoreDiff'])/10);
+	$score_diff = 0;
+	switch ($nb_del_lines)
+	{
+		case 1:
+			$score_diff += 40 * ($level+1);
+		break;
+		case 2:
+			$score_diff += 100 * ($level+1);
+		break;
+		case 3:
+			$score_diff += 300 * ($level+1);
+		break;
+		case 4:
+			$score_diff += 1200 * ($level+1);
+		break;
+	}
+	$score_diff += ($nb_del_lines > 0) ? $data['nbManualDown'] : 0;
+	if ($score_diff != $data['scoreDiff'])
+	{
+		echo 'error_checking : row ' . $row . ' : score increment diff in data. simulated = ' . $score_diff . ' and data = ' . $data['scoreDiff'] . "\n";
+		$data_valid = false;
+		break;
+	}
 	
+	// ---------------------------------------
 	
 	
 	
@@ -365,5 +400,24 @@ foreach($output_data['history'] as $row => $data)
 	
 	if (!$data_valid)
 		break;
+}
+
+
+if ($checking_score != $output_data['score'])
+{
+	echo 'error_checking : score diff in global data. simulated = ' . $checking_score . ' and data = ' . $output_data['score'] . "\n";
+	$data_valid = false;
+}
+
+if ($checking_line != $output_data['delLines'])
+{
+	echo 'error_checking : nb of del lines diff in global data. simulated = ' . $checking_line . ' and data = ' . $output_data['delLines'] . "\n";
+	$data_valid = false;
+}
+
+if ($checking_tetromino != $output_data['tetrominoes'])
+{
+	echo 'error_checking : nb of tetromino diff in global data. simulated = ' . $checking_tetromino . ' and data = ' . $output_data['tetrominoes'] . "\n";
+	$data_valid = false;
 }
 
