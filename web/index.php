@@ -47,7 +47,6 @@ décrivant bon nombre des spécificités de ce guide officiel.</p>
 		Le système de score utilisé est une combinaison entre <a href="http://tetris.wikia.com/wiki/Scoring#Original_Nintendo_Scoring_System">le système de score
 		original de Nintendo</a>(appliqué entièrement) et les bonus appliqués lors de l'utilisation des Soft/Hard Drop (accélération du tétromino), c'est à dire
 		1 point par case descendu manuellement en Soft Drop, et 2 points par cases parcouru en Hard Drop.</li>
-	<li><b>Système de rotation (<a href="http://tetris.wikia.com/wiki/SRS">SRS</a>)</b></li>
 </ul>
 
 

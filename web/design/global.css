@@ -1,4 +1,14 @@
 
+
+@font-face
+{
+	font-family: "Liberation Mono";
+    src: url('LiberationMono-Regular.ttf');
+}
+
+
+
+
 html
 {
 	overflow-y: scroll;
@@ -10,8 +20,8 @@ body
 {
 	background-color: black;
 	color: white;
-	font-size: 18px;
-	font-family: 'Courier New', monospace;
+	font-size: 17px;
+	font-family: 'Liberation Mono', 'Courier New', monospace;
 	text-shadow: 0px 0px 3px #DDF;
 }
 
