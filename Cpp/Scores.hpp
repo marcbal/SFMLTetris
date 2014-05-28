@@ -2,6 +2,7 @@
 #define SCORES_H
 
 #include "headers.hpp"
+#include "fileManager.hpp"
 
 using namespace std;
 

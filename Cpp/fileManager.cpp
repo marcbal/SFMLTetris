@@ -11,3 +11,15 @@ vector<string> listOfFiles(string dir){
         files.push_back(fichierLu->d_name);
     return files;
 }
+
+
+void makeDir(string dir)
+{
+    #if defined(_WIN32)
+        mkdir(dir);
+    #elif defined(__linux__)
+        mkdir(dir.c_str(), 0777);
+    #else
+        cerr << "makeDir() not implemented for this environment.";
+    #endif
+}

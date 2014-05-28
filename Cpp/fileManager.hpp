@@ -8,4 +8,6 @@ using namespace std;
 
 vector<string> listOfFiles(string dir);
 
+void makeDir(string dir);
+
 #endif

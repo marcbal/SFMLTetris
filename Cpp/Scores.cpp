@@ -51,7 +51,7 @@ const string Scores::scoreFile = "save/score.bin";
 Scores::Scores() :
     scoreTable()
 {
-    mkdir("save");
+    makeDir("save");
     loadFromFile();
 }
 

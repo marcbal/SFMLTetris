@@ -14,6 +14,7 @@
 #include <ctime>
 #include <cstdlib>
 #include <dirent.h>
+#include <sys/stat.h>
 #include <fstream>
 
 #ifndef WIN32

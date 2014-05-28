@@ -5,7 +5,7 @@ const string GameConfiguration::_config_file("configuration/game.cfg");
 
 GameConfiguration::GameConfiguration()
 {
-    mkdir("configuration");
+    makeDir("configuration");
     if (!loadFromFile())
         initDefault();
 
