@@ -196,7 +196,7 @@ bool TetrisBoard::mouseLeftRight(sf::Event event)
                           (_window_size->y - BOARD_HEIGHT * CEIL_SIZE)/2.0);
     sf::Vector2f board_size(BOARD_WIDTH * CEIL_SIZE,
                             BOARD_HEIGHT * CEIL_SIZE);
-    if (!pointInRect(top_left, board_size, cur_pos))
+    if (!pointInRect(top_left - sf::Vector2f(CEIL_SIZE, 0), board_size + sf::Vector2f(2*CEIL_SIZE, 0), cur_pos))
         return false;
     cur_pos -= top_left;
     int tetromino_new_pos = (cur_pos.x * BOARD_WIDTH) / board_size.x;
