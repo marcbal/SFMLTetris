@@ -16,7 +16,7 @@ vector<string> listOfFiles(string dir){
 void makeDir(string dir)
 {
     #if defined(_WIN32)
-        mkdir(dir);
+        mkdir(dir.c_str());
     #elif defined(__linux__)
         mkdir(dir.c_str(), 0777);
     #else
