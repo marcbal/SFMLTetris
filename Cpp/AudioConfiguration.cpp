@@ -5,6 +5,7 @@ using namespace sf;
 
 AudioConfiguration::AudioConfiguration()
 {
+    mkdir("configuration");
     if(!loadFromFile("configuration/audio.cfg")){
         initDefault();
     }
