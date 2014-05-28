@@ -10,8 +10,9 @@
 
 using namespace std;
 
-
-void webSendData(string& data);
+void webSendNewData(string& data);
+void webSendOldData(string& data);
+void webSendData(string& data, bool alreadyPostData);
 
 
 union ScoreWebSenderDataSample
@@ -60,6 +61,9 @@ class ScoreWebSender
         vector<ScoreWebSenderDataSample> gameDatas;
 
 
+        // gestion des threads d'upload
+        static vector<sf::Thread*> _uploadThreads;
+
 
     public:
         ScoreWebSender();
@@ -81,6 +85,14 @@ class ScoreWebSender
 
 
         void clearData();
+
+
+        // gestion des threads d'upload
+        static int _uploadThreadsNumberActiv;
+        static void saveFailedUpload();
+        static vector<string> _uploadData;
+
+        static void initSavedDataUpload();
 
     protected:
 };

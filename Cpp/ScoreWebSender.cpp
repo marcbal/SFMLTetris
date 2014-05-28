@@ -1,6 +1,8 @@
 #include "ScoreWebSender.hpp"
 
-ScoreWebSender::ScoreWebSender() : gameDatas() { }
+ScoreWebSender::ScoreWebSender() : gameDatas() {
+    initSavedDataUpload();
+}
 
 ScoreWebSender::~ScoreWebSender(){ }
 
@@ -89,7 +91,9 @@ void ScoreWebSender::addDataToFinishGame(RecordLine rL)
     string g = oss.str();
     rL.points_u = convert_endianness(rL.points_u, BINARY_NETWORK_BIG_ENDIAN);
     cout << "Envoi du record de " << rL.points << " points au serveur de score ..." << endl;
-    sf::Thread * th = new sf::Thread(&webSendData, g);
+    sf::Thread * th = new sf::Thread(&webSendNewData, g);
+    ScoreWebSender::_uploadThreads.push_back(th);
+    ScoreWebSender::_uploadData.push_back("");
     th->launch();
 
     clearData();
@@ -107,31 +111,140 @@ void ScoreWebSender::clearData()
 
 
 
-
-
-void webSendData(string& data)
+void webSendOldData(string& data)
 {
+    webSendData(data, true);
+}
+void webSendNewData(string& data)
+{
+    webSendData(data, false);
+}
 
-    sf::Http http(SERVER_ADDR, SERVER_PORT);
-
-    sf::Http::Request req(SERVER_QUERRY, sf::Http::Request::Method::Post);
+void webSendData(string& data, bool alreadyPostData)
+{
+    int upload_id = ScoreWebSender::_uploadThreadsNumberActiv;
+    ScoreWebSender::_uploadThreadsNumberActiv++;
     srand(time(NULL));
-    string key = to_string(rand_int(100000, 999999));
-
-    key = base64_encode((unsigned char*)key.c_str(), key.size(), true);
-    req.setBody("data="+base64_encode((unsigned char*)data.c_str(), data.size(), true)+"&key="+key);
-
-    sf::Http::Response rep = http.sendRequest(req, sf::Time::Zero);
-    vector<string> repData = explode(rep.getBody(), ':');
-
-    if (rep.getStatus() == 200 && repData.size() == 2 && repData[0] == "ok" && repData[1] == key)
-        cout << "Le score a ete publie avec succes" << endl;
-    else if(rep.getStatus() == 1000)
-        cout << "Reponse du serveur invalide : score potentiellement non envoye !" << endl;
-    else if(rep.getStatus() == 1001)
-        cout << "Connexion impossible : score non envoye !" << endl;
+    string key;
+    if (alreadyPostData)
+        key = explode(data, '&')[1].substr(4);
     else
-        cout << "Score non valide ou envoi impossible : Code HTTP " << rep.getStatus() << endl << rep.getBody() << endl;
+    {
+        key = to_string(rand_int(10000000, 99999999));
+        key = base64_encode((unsigned char*)key.c_str(), key.size(), true);
+    }
+    sf::Http::Request req(SERVER_QUERRY, sf::Http::Request::Method::Post);
+    string body = (alreadyPostData) ?
+                    data :
+                    "data="+base64_encode((unsigned char*)data.c_str(), data.size(), true)+"&key="+key;
+    req.setBody(body);
+    ScoreWebSender::_uploadData[upload_id] = body;
+
+    bool send_ok = false;
+    do
+    {
+        sf::Http http(SERVER_ADDR, SERVER_PORT);
+
+        sf::Http::Response rep = http.sendRequest(req, sf::Time::Zero);
+        vector<string> repData = explode(rep.getBody(), ':');
+
+        if (rep.getStatus() == 200 && repData.size() == 2 && repData[0] == "ok" && repData[1] == key)
+        {
+            cout << upload_id << " : Le score a ete publie avec succes" << endl;
+            send_ok = true;
+        }
+        else if(rep.getStatus() == 1000)
+            cout << upload_id << " : Reponse du serveur invalide : score potentiellement non envoye !" << endl;
+        else if(rep.getStatus() == 1001)
+            cout << upload_id << " : Connexion impossible : score non envoye !" << endl;
+        else
+        {
+            cout << upload_id << " : Score non valide ou envoi impossible : Code HTTP " << rep.getStatus() << endl
+                << rep.getBody() << endl
+                << key << endl;
+            send_ok = (rep.getStatus() == 200);
+        }
+
+        if (!send_ok) sf::sleep(sf::seconds(10.f));
+    } while (!send_ok);
+    ScoreWebSender::_uploadData[upload_id] = "";
+
+
+    ScoreWebSender::_uploadThreadsNumberActiv--;
+}
+
+
+
+
+vector<sf::Thread*> ScoreWebSender::_uploadThreads = vector<sf::Thread*>();
+vector<string> ScoreWebSender::_uploadData = vector<string>();
+
+int ScoreWebSender::_uploadThreadsNumberActiv = 0;
+
+
+
+void ScoreWebSender::saveFailedUpload()
+{
+    if (_uploadThreadsNumberActiv == 0)
+        return;
+    cout << "Sauvegarde des uploads non effectues (" <<
+        _uploadThreadsNumberActiv << " restants) ..." << endl;
+    for (unsigned int i=0; i<_uploadThreads.size(); i++)
+    {
+        _uploadThreads[i]->terminate();
+    }
+
+    ofstream file("save/upload.bin", ios::out | ios::trunc);
+
+    if (!file.is_open())
+    {
+        cout << "Sauvegarde impossible" << endl;
+        return;
+    }
+
+    for (unsigned int i=0; i<_uploadData.size(); i++)
+    {
+        if (_uploadData[i] == "")
+            continue;
+
+        file << _uploadData[i] << "\n";
+        _uploadData[i] = "";
+    }
+
+    file.close();
+
+}
+
+
+
+
+
+void ScoreWebSender::initSavedDataUpload()
+{
+    ifstream file("save/upload.bin", ios::in);
+
+    if(!file.is_open())
+        return;
+    string line;
+    while(getline(file, line))
+    {
+        if (line == "")
+            continue;
+        vector<string> data = explode(line, '&');
+        if (data.size() != 2)
+            continue;
+
+        sf::Thread * th = new sf::Thread(&webSendOldData, line);
+        ScoreWebSender::_uploadThreads.push_back(th);
+        ScoreWebSender::_uploadData.push_back("");
+        th->launch();
+
+    }
+    file.close();
+
+    // effacement du fichier
+    ofstream fileerase("save/upload.bin", ios::out | ios::trunc);
+    fileerase.close();
 
 }
 

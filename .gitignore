@@ -18,3 +18,4 @@ Cpp/save/score.bin
 web/include/id_bdd.php
 Cpp/configuration/*
 *.res
+Cpp/save/upload.bin

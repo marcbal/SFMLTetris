@@ -45,7 +45,10 @@ Application::Application() :
     glViewport(0, 0, WINDOW_WIDTH*0.95, WINDOW_HEIGHT);
 }
 
-Application::~Application(){}
+Application::~Application(){
+    ScoreWebSender::saveFailedUpload();
+
+}
 
 
 

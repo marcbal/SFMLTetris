@@ -99,7 +99,7 @@ void Game::onEvent(sf::Event & event)
             if(event.key.code == _evenement->getEventKey("Descente Rapide")){
                     matrix.MoveDown();
                     _nb_manual_down += SOFT_DROP_BONUS_COEFF;
-                    initTimeoutOnMove();
+                    setTimeLastMoveDown();
             }
             if(event.key.code == _evenement->getEventKey("Descente Instantanee")){
                     _nb_manual_down += HARD_DROP_BONUS_COEFF * matrix.HardDrop();
@@ -143,7 +143,7 @@ void Game::onEvent(sf::Event & event)
                 case sf::Mouse::Middle:
                     matrix.MoveDown();
                     _nb_manual_down += SOFT_DROP_BONUS_COEFF;
-                    initTimeoutOnMove();
+                    setTimeLastMoveDown();
                 break;
                 default: break;
             }
