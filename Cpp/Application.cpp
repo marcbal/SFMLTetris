@@ -104,25 +104,24 @@ void Application::processEvents()
 
             break;
             case Event::Resized:
-                _resized_window_size = Vector2i(event.size.width, event.size.height);
-                glViewport(0, 0, event.size.width*0.95, event.size.height);
+                onResize(event);
             break;
             default:
                 // gestion du redimentionnement dela fenêtre
                 if (event.type == sf::Event::MouseWheelMoved)
                 {
-                    event.mouseWheel.x *= _window_size.x / (float) _resized_window_size.x;
-                    event.mouseWheel.y *= _window_size.y / (float) _resized_window_size.y;
+                    event.mouseWheel.x = _window.mapPixelToCoords(sf::Vector2i(event.mouseWheel.x, event.mouseWheel.y)).x;
+                    event.mouseWheel.y = _window.mapPixelToCoords(sf::Vector2i(event.mouseWheel.x, event.mouseWheel.y)).y;
                 }
                 else if (event.type == sf::Event::MouseButtonPressed || event.type == sf::Event::MouseButtonReleased)
                 {
-                    event.mouseButton.x *= _window_size.x / (float) _resized_window_size.x;
-                    event.mouseButton.y *= _window_size.y / (float) _resized_window_size.y;
+                    event.mouseButton.x = _window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x, event.mouseButton.y)).x;
+                    event.mouseButton.y = _window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x, event.mouseButton.y)).y;
                 }
                 else if (event.type == sf::Event::MouseMoved)
                 {
-                    event.mouseMove.x *= _window_size.x / (float) _resized_window_size.x;
-                    event.mouseMove.y *= _window_size.y / (float) _resized_window_size.y;
+                    event.mouseMove.x = _window.mapPixelToCoords(sf::Vector2i(event.mouseMove.x, event.mouseMove.y)).x;
+                    event.mouseMove.y = _window.mapPixelToCoords(sf::Vector2i(event.mouseMove.x, event.mouseMove.y)).y;
                 }
                 // -----------------------------------------
 
@@ -141,6 +140,53 @@ void Application::processEvents()
 
 
 
+
+
+
+
+void Application::onResize(sf::Event &event)
+{
+    _resized_window_size = Vector2i(event.size.width, event.size.height);
+    sf::FloatRect window_rect;
+    float rapport = _window_size.x / (float)_window_size.y;
+    float new_content_width, view_width, new_content_height, view_height;
+
+    if (_resized_window_size.x / (float)_resized_window_size.y > rapport)
+    {   // la fenêtre est plus large que le rapport largeur/hauteur par défaut
+        new_content_width = _window_size.x * (event.size.height / (float)_window_size.y);
+        view_width = _window_size.x * event.size.width / new_content_width;
+        new_content_height = event.size.height;
+        view_height = _window_size.y;
+        window_rect = sf::FloatRect((_window_size.x - view_width)/2.0, 0,
+                                    view_width, _window_size.y);
+    }
+    else if (_resized_window_size.x / (float) _resized_window_size.y < rapport)
+    {   // la fenêtre est moins large que le rapport largeur/hauteur par défaut
+        new_content_width = event.size.width;
+        view_width = _window_size.x;
+        new_content_height = _window_size.y * (event.size.width / (float)_window_size.x);
+        view_height = _window_size.y * event.size.height / new_content_height;
+        window_rect = sf::FloatRect(0, (_window_size.y - view_height)/2.0,
+                                    _window_size.x, view_height);
+    }
+    else
+    {
+        new_content_width = event.size.width;
+        view_width = _window_size.x;
+        new_content_height = event.size.height;
+        view_height = _window_size.y;
+        window_rect = sf::FloatRect(0, 0, _window_size.x, _window_size.y);
+        cout << "bien" << endl;
+    }
+
+    sf::View view(window_rect);
+    _window.setView(view);
+
+    glViewport((event.size.width - new_content_width)/2.0,
+               (event.size.height - new_content_height)/2.0,
+               new_content_width*0.95,
+               new_content_height);
+}
 
 
 

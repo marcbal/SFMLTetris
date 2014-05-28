@@ -60,6 +60,9 @@ class Application
         void update();
         void render();
 
+
+        void onResize(sf::Event &event);
+
 };
 
 

@@ -1,9 +1,14 @@
 #include "Background.hpp"
 
-Background::Background(sf::Vector2i window_size, unsigned int nb_particules)
+Background::Background(sf::Vector2i window_size, unsigned int nb_particules):
+    bordure(sf::Vector2f(window_size))
 {
     _window_size = window_size;
     addParticule(nb_particules);
+    bordure.setPosition(0, 0);
+    bordure.setFillColor(sf::Color::Transparent);
+    bordure.setOutlineColor(sf::Color::Black);
+    bordure.setOutlineThickness(50);
 }
 
 Background::~Background() {}
@@ -31,6 +36,7 @@ void Background::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     for (unsigned int i=0; i<particules.size(); i++)
         target.draw(particules[i], states);
+    target.draw(bordure, states);
 }
 
 

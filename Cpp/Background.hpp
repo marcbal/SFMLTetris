@@ -16,6 +16,7 @@ class Background : public sf::Drawable
     private:
         vector<Particule> particules;
         sf::Vector2i _window_size;
+        sf::RectangleShape bordure;
 
 
         // sf::Drawable
