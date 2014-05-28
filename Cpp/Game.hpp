@@ -84,6 +84,7 @@ class Game : public Menu
         int getLevel();
 
         void setTimeLastMoveDown();
+        void initTimeoutOnMove();
 
         sf::Time getGameTime();
 

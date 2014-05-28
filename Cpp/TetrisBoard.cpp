@@ -96,6 +96,11 @@ bool TetrisBoard::MoveDown()
         return false;
     }
 }
+bool TetrisBoard::MoveDownCheck()
+{
+    return verifierPlacementPiece(pieceCourrante.getPosition() + sf::Vector2i(0, 1),
+                                  pieceCourrante.getOrientation());
+}
 
 
 bool TetrisBoard::moveLeft()

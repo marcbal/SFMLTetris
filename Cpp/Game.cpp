@@ -88,18 +88,18 @@ void Game::onEvent(sf::Event & event)
 
             if(event.key.code == _evenement->getEventKey("Gauche")){
                     if (matrix.moveLeft())
-                        setTimeLastMoveDown();
+                        initTimeoutOnMove();
             }
 
             if(event.key.code == _evenement->getEventKey("Droite")){
                     if(matrix.moveRight())
-                        setTimeLastMoveDown();
+                        initTimeoutOnMove();
             }
 
             if(event.key.code == _evenement->getEventKey("Descente Rapide")){
                     matrix.MoveDown();
                     _nb_manual_down += SOFT_DROP_BONUS_COEFF;
-                    setTimeLastMoveDown();
+                    initTimeoutOnMove();
             }
             if(event.key.code == _evenement->getEventKey("Descente Instantanee")){
                     _nb_manual_down += HARD_DROP_BONUS_COEFF * matrix.HardDrop();
@@ -108,12 +108,12 @@ void Game::onEvent(sf::Event & event)
             if(event.key.code == _evenement->getEventKey("Rotation Gauche"))
             {
                     if(matrix.rotateLeft())
-                        setTimeLastMoveDown();
+                        initTimeoutOnMove();
             }
             if(event.key.code == _evenement->getEventKey("Rotation Droite"))
             {
                     if(matrix.rotateRight())
-                        setTimeLastMoveDown();
+                        initTimeoutOnMove();
             }
 
         break;
@@ -125,7 +125,7 @@ void Game::onEvent(sf::Event & event)
             if (!_gameConfig->getUseMouse())
                 return;
             if (matrix.mouseLeftRight(event))
-                setTimeLastMoveDown();
+                initTimeoutOnMove();
         break;
         case sf::Event::MouseButtonPressed:
             if (!_gameConfig->getUseMouse() || _gameConfig->get3DMode())
@@ -134,16 +134,16 @@ void Game::onEvent(sf::Event & event)
             {
                 case sf::Mouse::Left:
                     if(matrix.rotateLeft())
-                        setTimeLastMoveDown();
+                        initTimeoutOnMove();
                 break;
                 case sf::Mouse::Right:
                     if(matrix.rotateRight())
-                        setTimeLastMoveDown();
+                        initTimeoutOnMove();
                 break;
                 case sf::Mouse::Middle:
                     matrix.MoveDown();
                     _nb_manual_down += SOFT_DROP_BONUS_COEFF;
-                    setTimeLastMoveDown();
+                    initTimeoutOnMove();
                 break;
                 default: break;
             }
@@ -345,6 +345,12 @@ void Game::setTimeLastMoveDown()
     if (t > getGameTime())
         t = getGameTime();
     timeLastMoveDown = t;
+}
+
+void Game::initTimeoutOnMove()
+{
+    if (!matrix.MoveDownCheck())
+        setTimeLastMoveDown();
 }
 
 

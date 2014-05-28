@@ -28,6 +28,7 @@ class TetrisBoard : public sf::Drawable
         int HardDrop();
 
         bool MoveDown();
+        bool MoveDownCheck();
         bool moveLeft();
         bool moveRight();
         bool rotateLeft();
