@@ -127,65 +127,24 @@ bool TetrisBoard::moveRight()
 }
 bool TetrisBoard::rotateLeft()
 {
-    int new_rotation = pieceCourrante.getOrientation()+1;
-    if (verifierPlacementPiece(pieceCourrante.getPosition(), new_rotation))
-    {
-        pieceCourrante.setOrientation(new_rotation);
-    } // suite : décalage de la pièce pour que la rotation soit effectuée
-    else if (verifierPlacementPiece(pieceCourrante.getPosition()+sf::Vector2i(0, 1), new_rotation))
-    {
-        pieceCourrante.setOrientation(new_rotation);
-        pieceCourrante.setPosition(pieceCourrante.getPosition()+sf::Vector2i(0, 1));
-    }
-    else if (verifierPlacementPiece(pieceCourrante.getPosition()+sf::Vector2i(-1,0), new_rotation))
-    {
-        pieceCourrante.setOrientation(new_rotation);
-        pieceCourrante.setPosition(pieceCourrante.getPosition()+sf::Vector2i(-1,0));
-    }
-    else if (verifierPlacementPiece(pieceCourrante.getPosition()+sf::Vector2i(1, 0), new_rotation))
-    {
-        pieceCourrante.setOrientation(new_rotation);
-        pieceCourrante.setPosition(pieceCourrante.getPosition()+sf::Vector2i(1, 0));
-    }
-    else if (verifierPlacementPiece(pieceCourrante.getPosition()+sf::Vector2i(0, -1), new_rotation))
-    {
-        pieceCourrante.setOrientation(new_rotation);
-        pieceCourrante.setPosition(pieceCourrante.getPosition()+sf::Vector2i(0, -1));
-    }
-    else
+    int new_rotation = (pieceCourrante.getOrientation()+1)%4;
+    sf::Vector3i new_pos = SRSRotate(pieceCourrante.getOrientation(), new_rotation);
+    if (new_pos.z == pieceCourrante.getOrientation())
         return false;
+    pieceCourrante.setOrientation(new_rotation);
+    pieceCourrante.setPosition(pieceCourrante.getPosition()+
+                               sf::Vector2i(new_pos.x, new_pos.y));
     return true;
 }
 bool TetrisBoard::rotateRight()
 {
-
-    int new_rotation = pieceCourrante.getOrientation()-1;
-    if (verifierPlacementPiece(pieceCourrante.getPosition(), new_rotation))
-    {
-        pieceCourrante.setOrientation(new_rotation);
-    } // suite : décalage de la pièce pour que la rotation soit effectuée
-    else if (verifierPlacementPiece(pieceCourrante.getPosition()+sf::Vector2i(0, 1), new_rotation))
-    {
-        pieceCourrante.setOrientation(new_rotation);
-        pieceCourrante.setPosition(pieceCourrante.getPosition()+sf::Vector2i(0, 1));
-    }
-    else if (verifierPlacementPiece(pieceCourrante.getPosition()+sf::Vector2i(-1,0), new_rotation))
-    {
-        pieceCourrante.setOrientation(new_rotation);
-        pieceCourrante.setPosition(pieceCourrante.getPosition()+sf::Vector2i(-1,0));
-    }
-    else if (verifierPlacementPiece(pieceCourrante.getPosition()+sf::Vector2i(1, 0), new_rotation))
-    {
-        pieceCourrante.setOrientation(new_rotation);
-        pieceCourrante.setPosition(pieceCourrante.getPosition()+sf::Vector2i(1, 0));
-    }
-    else if (verifierPlacementPiece(pieceCourrante.getPosition()+sf::Vector2i(0, -1), new_rotation))
-    {
-        pieceCourrante.setOrientation(new_rotation);
-        pieceCourrante.setPosition(pieceCourrante.getPosition()+sf::Vector2i(0, -1));
-    }
-    else
+    int new_rotation = (pieceCourrante.getOrientation()-1)%4;
+    sf::Vector3i new_pos = SRSRotate(pieceCourrante.getOrientation(), new_rotation);
+    if (new_pos.z == pieceCourrante.getOrientation())
         return false;
+    pieceCourrante.setOrientation(new_rotation);
+    pieceCourrante.setPosition(pieceCourrante.getPosition()+
+                               sf::Vector2i(new_pos.x, new_pos.y));
     return true;
 }
 
@@ -414,6 +373,12 @@ bool TetrisBoard::verifierPlacementPiece(sf::Vector2i pos, int o)
 }
 
 
+bool TetrisBoard::verifierDeplacementPiece(sf::Vector2i var_pos, int o)
+{
+    return verifierPlacementPiece(pieceCourrante.getPosition() + var_pos, o);
+}
+
+
 
 void TetrisBoard::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
@@ -421,6 +386,145 @@ void TetrisBoard::draw(sf::RenderTarget& target, sf::RenderStates states) const
     for (int i=0; i< (BOARD_WIDTH*BOARD_HEIGHT); i++)
         target.draw(shapeMatrix[i], states);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// SRS = Super Rotation System
+sf::Vector3i TetrisBoard::SRSRotate(int oldOrient, int newOrient)
+{
+
+
+    // 0 : 0
+    // L : 1
+    // 2 : 2
+    // R : 3
+
+    // pour tout type de pièce, on teste l'orientation sans déplacement
+    // le test réussi forcément pour la piéce O
+    if(pieceCourrante.getTypePiece() == 0 ||
+                verifierDeplacementPiece(sf::Vector2i(0, 0), newOrient))
+        return sf::Vector3i(0, 0, newOrient);
+
+    if (pieceCourrante.getTypePiece() == 1) // I
+    {
+        if ((oldOrient == 2 && newOrient == 3) ||
+            (oldOrient == 1 && newOrient == 0))
+        {
+            if (verifierDeplacementPiece(sf::Vector2i(1, 0), newOrient))
+                return sf::Vector3i(1, 0, newOrient);
+            else if (verifierDeplacementPiece(sf::Vector2i(-2, 0), newOrient))
+                return sf::Vector3i(-2, 0, newOrient);
+            else if (verifierDeplacementPiece(sf::Vector2i(1, 2), newOrient))
+                return sf::Vector3i(1, 2, newOrient);
+            else if (verifierDeplacementPiece(sf::Vector2i(-2, -1), newOrient))
+                return sf::Vector3i(-2, -1, newOrient);
+        }
+        else if ((oldOrient == 3 && newOrient == 0) ||
+            (oldOrient == 2 && newOrient == 1))
+        {
+            if (verifierDeplacementPiece(sf::Vector2i(2, 0), newOrient))
+                return sf::Vector3i(2, 0, newOrient);
+            else if (verifierDeplacementPiece(sf::Vector2i(-1, 0), newOrient))
+                return sf::Vector3i(-1, 0, newOrient);
+            else if (verifierDeplacementPiece(sf::Vector2i(2, -1), newOrient))
+                return sf::Vector3i(2, -1, newOrient);
+            else if (verifierDeplacementPiece(sf::Vector2i(-1, 2), newOrient))
+                return sf::Vector3i(-1, 2, newOrient);
+        }
+        else if ((oldOrient == 3 && newOrient == 2) ||
+            (oldOrient == 0 && newOrient == 1))
+        {
+            if (verifierDeplacementPiece(sf::Vector2i(-1, 0), newOrient))
+                return sf::Vector3i(-1, 0, newOrient);
+            else if (verifierDeplacementPiece(sf::Vector2i(2, 0), newOrient))
+                return sf::Vector3i(2, 0, newOrient);
+            else if (verifierDeplacementPiece(sf::Vector2i(-1, -2), newOrient))
+                return sf::Vector3i(-1, -2, newOrient);
+            else if (verifierDeplacementPiece(sf::Vector2i(2, 1), newOrient))
+                return sf::Vector3i(2, 1, newOrient);
+        }
+        else if ((oldOrient == 0 && newOrient == 3) ||
+            (oldOrient == 1 && newOrient == 2))
+        {
+            if (verifierDeplacementPiece(sf::Vector2i(-2, 0), newOrient))
+                return sf::Vector3i(-2, 0, newOrient);
+            else if (verifierDeplacementPiece(sf::Vector2i(1, 0), newOrient))
+                return sf::Vector3i(1, 0, newOrient);
+            else if (verifierDeplacementPiece(sf::Vector2i(-2, 1), newOrient))
+                return sf::Vector3i(-2, 1, newOrient);
+            else if (verifierDeplacementPiece(sf::Vector2i(1, -2), newOrient))
+                return sf::Vector3i(1, -2, newOrient);
+        }
+    }
+    else  // Z, S, L, J, T
+    {
+        if ((oldOrient == 2 && newOrient == 1) ||
+            (oldOrient == 0 && newOrient == 1))
+        {
+            if (verifierDeplacementPiece(sf::Vector2i(1, 0), newOrient))
+                return sf::Vector3i(1, 0, newOrient);
+            else if (verifierDeplacementPiece(sf::Vector2i(1, -1), newOrient))
+                return sf::Vector3i(1, -1, newOrient);
+            else if (verifierDeplacementPiece(sf::Vector2i(0, 2), newOrient))
+                return sf::Vector3i(0, 2, newOrient);
+            else if (verifierDeplacementPiece(sf::Vector2i(1, 2), newOrient))
+                return sf::Vector3i(1, 2, newOrient);
+        }
+        else if ((oldOrient == 3 && newOrient == 0) ||
+            (oldOrient == 3 && newOrient == 2))
+        {
+            if (verifierDeplacementPiece(sf::Vector2i(1, 0), newOrient))
+                return sf::Vector3i(1, 0, newOrient);
+            else if (verifierDeplacementPiece(sf::Vector2i(1, 1), newOrient))
+                return sf::Vector3i(1, 1, newOrient);
+            else if (verifierDeplacementPiece(sf::Vector2i(0, -2), newOrient))
+                return sf::Vector3i(0, -2, newOrient);
+            else if (verifierDeplacementPiece(sf::Vector2i(1, -2), newOrient))
+                return sf::Vector3i(1, -2, newOrient);
+        }
+        else if ((oldOrient == 0 && newOrient == 3) ||
+            (oldOrient == 2 && newOrient == 3))
+        {
+            if (verifierDeplacementPiece(sf::Vector2i(-1, 0), newOrient))
+                return sf::Vector3i(-1, 0, newOrient);
+            else if (verifierDeplacementPiece(sf::Vector2i(-1, -1), newOrient))
+                return sf::Vector3i(-1, -1, newOrient);
+            else if (verifierDeplacementPiece(sf::Vector2i(0, 2), newOrient))
+                return sf::Vector3i(0, 2, newOrient);
+            else if (verifierDeplacementPiece(sf::Vector2i(-1, 2), newOrient))
+                return sf::Vector3i(-1, 2, newOrient);
+        }
+        else if ((oldOrient == 1 && newOrient == 2) ||
+            (oldOrient == 1 && newOrient == 0))
+        {
+            if (verifierDeplacementPiece(sf::Vector2i(-1, 0), newOrient))
+                return sf::Vector3i(-1, 0, newOrient);
+            else if (verifierDeplacementPiece(sf::Vector2i(-1, 1), newOrient))
+                return sf::Vector3i(-1, 1, newOrient);
+            else if (verifierDeplacementPiece(sf::Vector2i(0, -2), newOrient))
+                return sf::Vector3i(0, -2, newOrient);
+            else if (verifierDeplacementPiece(sf::Vector2i(1, -2), newOrient))
+                return sf::Vector3i(1, -2, newOrient);
+        }
+    }
+    return sf::Vector3i(0, 0, oldOrient);
+}
+
+
+
 
 
 

@@ -34,6 +34,11 @@ class TetrisBoard : public sf::Drawable
         bool rotateLeft();
         bool rotateRight();
 
+        // les valeurs x et y sont les nouvelles coordonnées du tetromino
+        // la valeur z correspond à la nouvelle orientation (0-3)
+        // si z = ancienne orientation, la rotation n'a pas lieu.
+        sf::Vector3i SRSRotate(int oldOrient, int newOrient);
+
         bool mouseLeftRight(sf::Event event);
 
 
@@ -59,7 +64,8 @@ class TetrisBoard : public sf::Drawable
 
         sf::Vector2i * _window_size;
 
-        bool verifierPlacementPiece(sf::Vector2i pos, int o);
+        bool verifierPlacementPiece(sf::Vector2i pos, int o);   // par rapport à la position absolue
+        bool verifierDeplacementPiece(sf::Vector2i var_pos, int o);// par rapport à la position relative
 
         Tetromino pieceCourrante;
         bool pieceCouranteActive;
