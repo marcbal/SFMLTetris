@@ -7,11 +7,16 @@ Game::Game(sf::Vector2i * window_size, char *state,Evenement * evenement, Scores
     Menu(window_size, state),
     matrix(window_size,oGL),
     nextTetromino(),
-    scoreInfos(sf::Vector2f(window_size->x-230, (window_size->y-150)/2.0+100), sf::Vector2f(225, 150), 17, nullptr),
-    scoreInfosBefore(sf::Vector2f(window_size->x-230, (window_size->y-150)/2.0-100), sf::Vector2f(225, 150), 17, nullptr),
+    textTetrominoBoard(),
+    holdedTetromino(sf::Vector2f(0, 0)),
+    hasHoldedTetromino(false),
+    canHoldTetromino(false),
+    scoreInfos(sf::Vector2f(0, 0), sf::Vector2f(0, 0), 17, nullptr),
+    scoreInfosBefore(sf::Vector2f(0, 0), sf::Vector2f(0, 0), 17, nullptr),
+    _replay(0),
     gameClock(),
-    totalPauseTime(sf::seconds(0.0)),
-    lastPauseStartingTime(sf::seconds(0.0)),
+    totalPauseTime(sf::Time::Zero),
+    lastPauseStartingTime(sf::Time::Zero),
     _explosions(window_size),
     _scoreSender(),
     tetrominoRand()
@@ -26,14 +31,63 @@ Game::Game(sf::Vector2i * window_size, char *state,Evenement * evenement, Scores
 
 
 
-    float next_tetromino_top = (window_size->y - (NB_NEXT_TETROMINO * 4 * CEIL_SIZE + (NB_NEXT_TETROMINO - 1) * 50))/ 2.0;
+    int whiteSpaceBorder = (_window_size->y - (4 * (2 * CEIL_SIZE + 30))) / 8;
+    int next_tetromino_top = 3 * whiteSpaceBorder + 2 * CEIL_SIZE + 30;
+
+    holdedTetromino = *(new NextTetrominoBoard(sf::Vector2f(window_size->x - (whiteSpaceBorder + 4*CEIL_SIZE), whiteSpaceBorder + 30)));
+    sf::Text t1;
+    t1.setCharacterSize(15);
+    t1.setColor(sf::Color::White);
+    t1.setFont(*Ressources::getDefaultFont());
+    t1.setString("Hold :");
+    t1.setPosition(window_size->x - (whiteSpaceBorder + 4*CEIL_SIZE), whiteSpaceBorder);
+    textTetrominoBoard.push_back(t1);
 
     for (int i = 0; i<NB_NEXT_TETROMINO; i++)
     {
-        NextTetrominoBoard nextTB(sf::Vector2f(100, next_tetromino_top + (4 * CEIL_SIZE + 50) * i));
+        NextTetrominoBoard nextTB(sf::Vector2f(window_size->x - (whiteSpaceBorder + 4*CEIL_SIZE), next_tetromino_top + (2 * CEIL_SIZE + 30 + 2 * whiteSpaceBorder) * i + 30));
         nextTB.newPiece(*(new Tetromino(0, 0, sf::Vector2i(0, 0))));
         nextTetromino.push_back(nextTB);
+        sf::Text t;
+        t.setCharacterSize(15);
+        t.setColor(sf::Color::White);
+        t.setFont(*Ressources::getDefaultFont());
+        t.setString("Next " + to_string(i+1) + " :");
+        t.setPosition(window_size->x - (whiteSpaceBorder + 4*CEIL_SIZE), next_tetromino_top + (2 * CEIL_SIZE + 30 + 2 * whiteSpaceBorder) * i);
+        textTetrominoBoard.push_back(t);
     }
+    int boutonHeight = 40;
+    int scoreInfosWidth = 225;
+    int scoreInfosHeight = 150;
+
+    scoreInfos.setSize(sf::Vector2f(scoreInfosWidth, scoreInfosHeight));
+    scoreInfosBefore.setSize(sf::Vector2f(scoreInfosWidth, scoreInfosHeight));
+
+    int whiteSpaceScoreInfo = (_window_size->y - (2 * scoreInfosHeight + 2 * boutonHeight + 2 * whiteSpaceBorder)) / 3;
+
+    // sers pour le réglage des viewports :
+    //int tetrisBoardRightLimit = window_size->x - (2 * whiteSpaceBorder + 4 * CEIL_SIZE);
+    //int tetrisBoardLeftLimit = 2 * whiteSpaceBorder + scoreInfosWidth;
+    //cout << window_size->x << " " << tetrisBoardLeftLimit << " " << tetrisBoardRightLimit << endl;
+
+    scoreInfosBefore.setPosition(sf::Vector2f(whiteSpaceBorder, _window_size->y - (whiteSpaceBorder + scoreInfosHeight)));
+    scoreInfos.setPosition(sf::Vector2f(whiteSpaceBorder, whiteSpaceBorder + 2 * whiteSpaceScoreInfo + 2 * boutonHeight));
+
+    menuElements.push_back(Bouton(sf::Vector2f(whiteSpaceBorder, whiteSpaceBorder),
+                                        sf::Vector2f(scoreInfosWidth, boutonHeight),
+                                        18,
+                                        _state));
+    menuElements[0].setAction(INDEX);
+    menuElements[0].setText("Pause");
+
+
+    menuElements.push_back(Bouton(sf::Vector2f(whiteSpaceBorder, whiteSpaceBorder + whiteSpaceScoreInfo + boutonHeight),
+                                        sf::Vector2f(scoreInfosWidth, boutonHeight),
+                                        18,
+                                        &_replay));   // à changer
+    menuElements[1].setAction(1);    // à changer
+    menuElements[1].setText("Rejouer");
+
 
 
 
@@ -48,13 +102,6 @@ Game::Game(sf::Vector2i * window_size, char *state,Evenement * evenement, Scores
 
 
 
-    menuElements.push_back(Bouton(sf::Vector2f(50, 30),
-                                        sf::Vector2f(150, 40),
-                                        18,
-                                        _state));
-
-    menuElements[0].setAction(INDEX);
-    menuElements[0].setText("Pause");
 
 
 }
@@ -115,6 +162,11 @@ void Game::onEvent(sf::Event & event)
                     if(matrix.rotateRight())
                         initTimeoutOnMove();
             }
+            if(event.key.code == sf::Keyboard::Space)   // à définir dans la configuration des touches
+            {
+                if(holdTetromino())
+                    setTimeLastMoveDown();
+            }
 
         break;
         case sf::Event::MouseMoved:
@@ -158,7 +210,7 @@ void Game::onEvent(sf::Event & event)
 }
 
 
-bool Game::nextPiece()
+bool Game::nextPiece(bool cancelCountTetromino = false)
 {
     Tetromino p = nextTetromino[0].getPiece();
 
@@ -167,6 +219,8 @@ bool Game::nextPiece()
         return false;
     }
 
+
+    canHoldTetromino = true;
 
 
     for (int i=0; i<NB_NEXT_TETROMINO; i++)
@@ -182,7 +236,7 @@ bool Game::nextPiece()
     }
 
 
-    _nb_tetromino++;
+    if (!cancelCountTetromino) _nb_tetromino++;
     return true;
 }
 
@@ -259,6 +313,42 @@ void Game::restartGame()
     gameClock.restart();
     totalPauseTime = sf::Time::Zero;
 
+    holdedTetromino.clearPiece();
+    hasHoldedTetromino = false;
+    canHoldTetromino = true;
+    setTimeLastMoveDown();
+
+}
+
+
+
+
+
+bool Game::holdTetromino()
+{
+    if (!canHoldTetromino)
+        return false;
+
+    if (!hasHoldedTetromino)
+    {
+        Tetromino t(matrix.getPieceCourrante().getTypePiece(), 0, sf::Vector2i(INIT_POS_X, INIT_POS_Y));
+        if (!nextPiece(true))
+            return false;
+        holdedTetromino.newPiece(t);
+        hasHoldedTetromino = true;
+    }
+    else
+    {
+        Tetromino t(matrix.getPieceCourrante().getTypePiece(), 0, sf::Vector2i(INIT_POS_X, INIT_POS_Y));
+        Tetromino th = holdedTetromino.getPiece();
+        if (!matrix.newPiece(th))
+            return false;
+        holdedTetromino.newPiece(t);
+    }
+
+
+    canHoldTetromino = false;
+    return true;
 }
 
 
@@ -266,6 +356,14 @@ void Game::restartGame()
 
 void Game::update()
 {
+    if (_replay == 1)
+    {
+        restartGame();
+        _replay = 0;
+    }
+
+
+
     matrix.effacePieceCourrante();
 
     if (getPause())
@@ -372,8 +470,13 @@ void Game::draw(sf::RenderTarget& target, sf::RenderStates states) const
     {
         target.draw(nextTetromino[i], states);
     }
-    target.draw(scoreInfos);
-    target.draw(scoreInfosBefore);
+    for (unsigned int i = 0; i<textTetrominoBoard.size(); i++)
+    {
+        target.draw(textTetrominoBoard[i], states);
+    }
+    target.draw(holdedTetromino, states);
+    target.draw(scoreInfos, states);
+    target.draw(scoreInfosBefore, states);
     if (!_gameConfig->get3DMode() && _gameConfig->getDrawExplosions())
-        target.draw(_explosions);
+        target.draw(_explosions, states);
 }

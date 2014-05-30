@@ -15,8 +15,8 @@ TetrisBoard::TetrisBoard(sf::Vector2i * window_size,OpenGL_Manager * oGL) :
     _window_size = window_size;
 
     // positionnement du tetris board à l'écran
-    sf::Vector2f top_left_pos((window_size->x - BOARD_WIDTH * CEIL_SIZE)/2.0,
-                              (window_size->y - BOARD_HEIGHT * CEIL_SIZE)/2.0);
+    sf::Vector2f top_left_pos(((812 - 285) - BOARD_WIDTH * CEIL_SIZE)/2 + 285,
+                              (window_size->y - BOARD_HEIGHT * CEIL_SIZE)/2);
 
 
     boardShape.setPosition(top_left_pos);
@@ -156,8 +156,8 @@ bool TetrisBoard::mouseLeftRight(sf::Event event)
     if (event.type != sf::Event::MouseMoved)
         return false;
     sf::Vector2f cur_pos(event.mouseMove.x, event.mouseMove.y);
-    sf::Vector2f top_left((_window_size->x - BOARD_WIDTH * CEIL_SIZE)/2.0,
-                          (_window_size->y - BOARD_HEIGHT * CEIL_SIZE)/2.0);
+    sf::Vector2f top_left(((812 - 285) - BOARD_WIDTH * CEIL_SIZE)/2 + 285,
+                              (_window_size->y - BOARD_HEIGHT * CEIL_SIZE)/2);
     sf::Vector2f board_size(BOARD_WIDTH * CEIL_SIZE,
                             BOARD_HEIGHT * CEIL_SIZE);
     if (!pointInRect(top_left - sf::Vector2f(CEIL_SIZE, 0), board_size + sf::Vector2f(2*CEIL_SIZE, 0), cur_pos))

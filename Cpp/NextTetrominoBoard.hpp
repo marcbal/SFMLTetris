@@ -18,10 +18,11 @@ class NextTetrominoBoard : public sf::Drawable
 
         Tetromino getPiece();
 
+        void clearPiece();
+
 
     protected:
         void dessinePiece();
-        void clearPiece();
 
         void setMatrixData(int x, int y, int data);
     private:

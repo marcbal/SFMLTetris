@@ -43,11 +43,17 @@ class Game : public Menu
         OpenGL_Manager * _oGL;
         TetrisBoard matrix;
         vector<NextTetrominoBoard> nextTetromino;
+        vector<sf::Text> textTetrominoBoard;
+
+        NextTetrominoBoard holdedTetromino;
+        bool hasHoldedTetromino;
+        bool canHoldTetromino;
 
         Bouton scoreInfos;
         Bouton scoreInfosBefore;
 
         char * _state;
+        char _replay;
 
         bool _pause;
 
@@ -72,7 +78,9 @@ class Game : public Menu
         TetrominoRandomizer tetrominoRand;
 
 
-        bool nextPiece();
+        bool nextPiece(bool cancelCountTetromino);
+
+        bool holdTetromino();
 
         // sf::Drawable
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

@@ -39,10 +39,10 @@ Application::Application() :
     glDepthMask(GL_TRUE);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(60.f, WINDOW_WIDTH/float(WINDOW_HEIGHT), 1.f, 5000.f);
+    gluPerspective(60.f, (WINDOW_WIDTH*((812.0 - 285.0) / _window_size.x))/float(WINDOW_HEIGHT), 1.f, 5000.f);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable( GL_BLEND );
-    glViewport(0, 0, WINDOW_WIDTH*0.95, WINDOW_HEIGHT);
+    glViewport(285, 0, WINDOW_WIDTH*((812.0 - 285.0) / _window_size.x), WINDOW_HEIGHT);
 }
 
 Application::~Application(){
@@ -182,9 +182,9 @@ void Application::onResize(sf::Event &event)
     sf::View view(window_rect);
     _window.setView(view);
 
-    glViewport((event.size.width - new_content_width)/2.0,
+    glViewport((event.size.width - new_content_width)/2.0 + 285 * (new_content_width / (float)_window_size.x),
                (event.size.height - new_content_height)/2.0,
-               new_content_width*0.95,
+               new_content_width*((812.0 - 285.0) / _window_size.x),
                new_content_height);
 }
 

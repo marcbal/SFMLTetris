@@ -41,7 +41,7 @@
 
 // Game :
 #define LEVEL_COEFF 10
-#define SPEED_LEVEL_COEFF 0.15
+#define SPEED_LEVEL_COEFF 0.10
 
 #define HARD_DROP_BONUS_COEFF 2
 #define SOFT_DROP_BONUS_COEFF 1
