@@ -9,6 +9,8 @@ Application::Application() :
     _window_size(WINDOW_WIDTH, WINDOW_HEIGHT),
     _window(),
     _background(_window_size, 200),
+    _screenDebug(&_window_size),
+    _showDebugScreen(false),
     _gameconfig(),
     _oGL(&_gameconfig),
     _state(INDEX), // correspond à l'état d'affichage (ici, le menu au lancement du programme)
@@ -125,6 +127,14 @@ void Application::processEvents()
                 }
                 // -----------------------------------------
 
+
+                if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::F3)
+                {
+                    _showDebugScreen = !_showDebugScreen;
+                }
+
+
+
                 _screenElement[(int)_state]->onEvent(event);
 
 
@@ -176,7 +186,6 @@ void Application::onResize(sf::Event &event)
         new_content_height = event.size.height;
         view_height = _window_size.y;
         window_rect = sf::FloatRect(0, 0, _window_size.x, _window_size.y);
-        cout << "bien" << endl;
     }
 
     sf::View view(window_rect);
@@ -200,6 +209,7 @@ void Application::update()
     _background.update();
     _screenElement[(int)_state]->update();
     _audio.update();
+    _screenDebug.update();
 }
 
 
@@ -213,6 +223,8 @@ void Application::render()
 	_window.draw(_background);
 
     _window.draw(*_screenElement[(int)_state]);
+    if (_showDebugScreen)
+        _window.draw(_screenDebug);
     _window.popGLStates();
 	_window.display();
 }

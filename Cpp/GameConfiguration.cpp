@@ -107,7 +107,7 @@ bool GameConfiguration::loadFromFile()
     while(getline(saveFile, line)){
         words = explode(line,':');
         if(words.size()!=2){
-            cout << "Erreur de format de la ligne : " << line << " dans le fichier " << _config_file << endl;
+            Console::out("Erreur de format dans le fichier \"" + _config_file + "\"");
             continue;
         }
 
@@ -156,7 +156,7 @@ bool GameConfiguration::loadFromFile()
             nickname = true;
         }
         else{
-            cout << "Erreur de format de la ligne : " << line << " dans le fichier " << _config_file << endl;
+            Console::out("Erreur de format dans le fichier \"" + _config_file + "\"");
         }
     }
 
@@ -198,6 +198,7 @@ void GameConfiguration::initDefault()
     _onlineScore = true;
     _3DInclinaison = sf::Vector3f(0, 0, 0);
     _nickname = "?";
+    Console::out(L"La configuration du jeu a été réinitialisé");
 }
 
 

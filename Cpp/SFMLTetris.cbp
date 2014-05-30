@@ -132,6 +132,12 @@
 		<Unit filename="Collision.hpp">
 			<Option virtualFolder="Non-Class/" />
 		</Unit>
+		<Unit filename="Console.cpp">
+			<Option virtualFolder="Main/" />
+		</Unit>
+		<Unit filename="Console.hpp">
+			<Option virtualFolder="Main/" />
+		</Unit>
 		<Unit filename="Evenement.cpp">
 			<Option virtualFolder="Events/" />
 		</Unit>
@@ -245,6 +251,12 @@
 		</Unit>
 		<Unit filename="Scores.hpp">
 			<Option virtualFolder="Scoring/" />
+		</Unit>
+		<Unit filename="ScreenDebug.cpp">
+			<Option virtualFolder="GUI Parts/" />
+		</Unit>
+		<Unit filename="ScreenDebug.hpp">
+			<Option virtualFolder="GUI Parts/" />
 		</Unit>
 		<Unit filename="ScreenElement.cpp">
 			<Option virtualFolder="GUI Parts/" />

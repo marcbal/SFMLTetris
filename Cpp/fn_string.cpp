@@ -145,6 +145,28 @@ vector<string> explode(const string& str, const char& ch)
 
 
 
+string wordwrap(string str, unsigned int width)
+{
+    if (width == 0)
+        return str;
+
+
+    vector<string> lines = explode(str, '\n');
+    string result = "";
+    for (unsigned int i=0; i<lines.size(); i++)
+    {
+        while (lines[i].size()>width)
+        {
+            result += lines[i].substr(0, width) + "\n";
+            lines[i] = lines[i].substr(width, lines[i].size()-width);
+        }
+        result += lines[i]+"\n";
+    }
+
+    return result.substr(0, result.size()-1); // on retire le dernier \n
+}
+
+
 
 string implode(vector<string> & tabstr, string ch)
 {
@@ -154,7 +176,6 @@ string implode(vector<string> & tabstr, string ch)
 		if (i!=0)
 			out.append(ch);
 		out.append(tabstr[i]);
-		//cout << tabstr[i] << endl;
 	}
 	return out;
 }

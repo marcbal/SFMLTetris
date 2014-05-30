@@ -18,6 +18,7 @@
 #include "Scores.hpp"
 #include "ScreenScore.hpp"
 #include "OpenGL_Manager.hpp"
+#include "ScreenDebug.hpp"
 
 using namespace std;
 using namespace sf;
@@ -37,6 +38,8 @@ class Application
         Evenement _event;
 
         Background _background;
+        ScreenDebug _screenDebug;
+        bool _showDebugScreen;
 
         GameConfiguration _gameconfig;
 

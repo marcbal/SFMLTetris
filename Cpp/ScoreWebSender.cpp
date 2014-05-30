@@ -90,7 +90,7 @@ void ScoreWebSender::addDataToFinishGame(RecordLine rL)
 
     string g = oss.str();
     rL.points_u = convert_endianness(rL.points_u, BINARY_NETWORK_BIG_ENDIAN);
-    cout << "Envoi du record de " << rL.points << " points au serveur de score ..." << endl;
+    Console::out("Envoi du record de " + to_string((int) rL.points) + " points au serveur de score ...");
     sf::Thread * th = new sf::Thread(&webSendNewData, g);
     ScoreWebSender::_uploadThreads.push_back(th);
     ScoreWebSender::_uploadData.push_back("");
@@ -122,7 +122,7 @@ void webSendNewData(string& data)
 
 void webSendData(string& data, bool alreadyPostData)
 {
-    int upload_id = ScoreWebSender::_uploadThreadsNumberActiv;
+    int upload_id = ScoreWebSender::_idUpload++;
     ScoreWebSender::_uploadThreadsNumberActiv++;
     srand(time(NULL));
     string key;
@@ -150,18 +150,17 @@ void webSendData(string& data, bool alreadyPostData)
 
         if (rep.getStatus() == 200 && repData.size() == 2 && repData[0] == "ok" && repData[1] == key)
         {
-            cout << upload_id << " : Le score a ete publie avec succes" << endl;
+            Console::out("[upload thread #" + to_string(upload_id)  + L"] : Le score à été publié avec succès");
             send_ok = true;
         }
         else if(rep.getStatus() == 1000)
-            cout << upload_id << " : Reponse du serveur invalide : score potentiellement non envoye !" << endl;
+            Console::err("[upload thread #" + to_string(upload_id)  + L"] : Réponse du serveur invalide : score potentiellement non envoyé !");
         else if(rep.getStatus() == 1001)
-            cout << upload_id << " : Connexion impossible : score non envoye !" << endl;
+            Console::err("[upload thread #" + to_string(upload_id)  + L"] : Connexion impossible : score non envoyé !");
         else
         {
-            cout << upload_id << " : Score non valide ou envoi impossible : Code HTTP " << rep.getStatus() << endl
-                << rep.getBody() << endl
-                << key << endl;
+            Console::err("[upload thread #" + to_string(upload_id)  + L"] : Score non valide ou erreur côté serveur :\n"+
+                         "Code HTTP : " + to_string(rep.getStatus()) + " - Key sent : " + key + "\n" + (string) rep.getBody());
             send_ok = (rep.getStatus() == 200);
         }
 
@@ -180,6 +179,7 @@ vector<sf::Thread*> ScoreWebSender::_uploadThreads = vector<sf::Thread*>();
 vector<string> ScoreWebSender::_uploadData = vector<string>();
 
 int ScoreWebSender::_uploadThreadsNumberActiv = 0;
+int ScoreWebSender::_idUpload = 0;
 
 
 

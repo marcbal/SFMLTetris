@@ -32,6 +32,7 @@ void Evenement::initDefault(){
     addEventConf("Descente Instantanee",Keyboard::Up);
     addEventConf("Rotation Gauche",Keyboard::Q);
     addEventConf("Rotation Droite",Keyboard::D);
+    Console::out(L"La configuration des touches a été réinitialisé");
 }
 
 bool Evenement::loadFromFile(string file){

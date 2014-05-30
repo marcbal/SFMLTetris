@@ -99,7 +99,7 @@ void Scores::loadFromFile()
 
     if (!file.is_open())
     {
-        cout << "Erreur lors du chargement des scores" << endl;
+        Console::err("Le chargement des scores à échoué : le fichier est réinitialisé");
         return;
     }
 
@@ -111,7 +111,7 @@ void Scores::loadFromFile()
 
     if (fileSize < 6)
     {
-        cout << "Erreur lors du chargement des scores" << endl;
+        Console::err("Le chargement des scores à échoué : le fichier est réinitialisé");
         return;
     }
 
@@ -125,13 +125,13 @@ void Scores::loadFromFile()
 
     if (sizeEnregistrement != sizeof(RecordLine))
     {
-        cout << "Erreur lors du chargement des scores" << endl;
+        Console::err("Le chargement des scores à échoué : le fichier est réinitialisé");
         return;
     }
 
     if (fileSize != (unsigned int) (sizeEnregistrement*nbEnregistrement+6))
     {
-        cout << "Erreur lors du chargement des scores" << endl;
+        Console::err("Le chargement des scores à échoué : le fichier est réinitialisé");
         return;
     }
 
@@ -154,7 +154,7 @@ void Scores::loadFromFile()
     if (sumControlCheck.i != sumControlFile.i)
     {
         r.clear();
-        cout << "Erreur lors du chargement des scores" << endl;
+        Console::err("Le chargement des scores à échoué : le fichier est réinitialisé");
         return;
     }
 
@@ -168,8 +168,7 @@ void Scores::saveToFile()
 
     if (!file.is_open())
     {
-        cout << "Erreur : impossible d'écrire dans le fichier des scores." << endl
-        << "Vérifiez qu'un dossier \"save\" est présent à côté de l'exécutable" << endl;
+        Console::err(L"Impossible d'écrire dans le fichier des scores\nVérifiez la présence d'un dossier \"save\" à côté de l'exécutable");
         return;
     }
 

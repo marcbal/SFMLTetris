@@ -89,6 +89,7 @@ class ScoreWebSender
 
         // gestion des threads d'upload
         static int _uploadThreadsNumberActiv;
+        static int _idUpload;
         static void saveFailedUpload();
         static vector<string> _uploadData;
 

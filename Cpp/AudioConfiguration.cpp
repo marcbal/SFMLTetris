@@ -31,6 +31,7 @@ void AudioConfiguration::initDefault(){
     _play = false;
     _folder="res/music/";
     _volume=100;
+    Console::out(L"La configuration audio a été réinitialisé");
 }
 
 void AudioConfiguration::addMusic(string file){
@@ -75,9 +76,7 @@ bool AudioConfiguration::loadFromFile(string file){
         while(getline(saveFile, line)){
             words = explode(line,':');
             if(words.size()!=2){
-                cout << "Erreur de format de la ligne :" << endl;
-                cout << line << endl;
-                cout << "Dans le fichier configuration/audio.cfg" << endl;
+                Console::out("Erreur de format dans le fichier \"" + file + "\"");
                 continue;
             }
             if(words[0]=="music_search_path"){
@@ -93,9 +92,7 @@ bool AudioConfiguration::loadFromFile(string file){
                 volume = true;
             }
             else{
-                cout << "Erreur de format de la ligne :" << endl;
-                cout << line << endl;
-                cout << "Dans le fichier configuration/audio.cfg" << endl;
+                Console::out("Erreur de format dans le fichier \"" + file + "\"");
             }
         }
 

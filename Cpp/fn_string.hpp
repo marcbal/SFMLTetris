@@ -29,6 +29,8 @@ bool sont_anagramme(string mot1, string mot2);
 
 vector<string> explode(const string& str, const char& ch);
 
+string wordwrap(string str, unsigned int width);
+
 string implode(vector<string> & tabstr, string ch);
 
 int nombre_mot(string & chaine);
