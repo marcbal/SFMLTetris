@@ -22,7 +22,7 @@ ScreenDebug::ScreenDebug(sf::Vector2i* window_size):
 
 ScreenDebug::~ScreenDebug() {}
 
-
+void ScreenDebug::setGamePtr(Game * game){ _game = game;}
 
 
 void ScreenDebug::update()
@@ -42,7 +42,11 @@ void ScreenDebug::update()
 
 
     _debug_info.setString("SFML Tetris - Par Marc Baloup et Louis Behague - http://sfmltetris.no-ip.org/\nUptime : "+
-                          uptime+" - FPS : "+to_string(framerate));
+                          uptime+
+                          " - FPS : "+to_string(framerate) +
+                          "\nPause : " + to_string(_game->getPause()) +
+                          ((!_game->getPause())?(" - Times before down  : "+to_string(((_game->timeLastMoveDown+_game->getTimeAutoMoveDown())-_game->getGameTime()).asSeconds())+""):"")+
+                          L"\nIA : "+to_string(_game->_AIActualPlaying)+" avec "+to_string((int) _game->_AINbTetromino)+" tetromino connu (next : "+to_string(_game->_AIPlay)+")");
 
     _debug_info_background.setSize(sf::Vector2f(_debug_info.getLocalBounds().width+10, _debug_info.getLocalBounds().height+15));
 

@@ -5,12 +5,11 @@
 #include "headers.hpp"
 
 
-
+#include "Menu.hpp"
 #include "Bouton.hpp"
 #include "TetrisBoard.hpp"
 #include "Tetromino.hpp"
 #include "ScreenElement.hpp"
-#include "Application.hpp"
 #include "NextTetrominoBoard.hpp"
 #include "fn_string.hpp"
 #include "fn_time.hpp"
@@ -21,6 +20,7 @@
 #include "ScoreWebSender.hpp"
 #include "OpenGL_Manager.hpp"
 #include "GameConfiguration.hpp"
+#include "TetrisAI.hpp"
 
 
 using namespace std;
@@ -55,7 +55,13 @@ class Game : public Menu
         char * _state;
         char _replay;
 
+
         bool _pause;
+
+    public:
+        bool _AIPlay;
+        bool _AIActualPlaying;
+        unsigned int _AINbTetromino;
 
 
         int _score;
@@ -67,7 +73,7 @@ class Game : public Menu
         sf::Clock gameClock;
         sf::Time totalPauseTime;
         sf::Time lastPauseStartingTime;
-
+    private:
         ExplosionManager _explosions;
 
         Scores * _scores;

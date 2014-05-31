@@ -22,6 +22,9 @@ Game::Game(sf::Vector2i * window_size, char *state,Evenement * evenement, Scores
     tetrominoRand()
 {
     _score = 0;
+    _AIPlay = false;
+    _AIActualPlaying = false;
+    _AINbTetromino = 2;
     _gameConfig = gameConfig;
     _evenement = evenement;
     _scores = scores;
@@ -128,44 +131,68 @@ void Game::onEvent(sf::Event & event)
     switch(event.type)
     {
         case sf::Event::KeyPressed:
-            if(event.key.code == _evenement->getEventKey("Pause")){
+            if (!_AIActualPlaying)
+            {
+                if(event.key.code == _evenement->getEventKey("Pause")){
                     setPause(true);
                     *_state = INDEX;
-            }
+                }
 
-            if(event.key.code == _evenement->getEventKey("Gauche")){
+                if(event.key.code == _evenement->getEventKey("Gauche")){
                     if (matrix.moveLeft())
                         initTimeoutOnMove();
-            }
+                }
 
-            if(event.key.code == _evenement->getEventKey("Droite")){
+                if(event.key.code == _evenement->getEventKey("Droite")){
                     if(matrix.moveRight())
                         initTimeoutOnMove();
-            }
+                }
 
-            if(event.key.code == _evenement->getEventKey("Descente Rapide")){
+                if(event.key.code == _evenement->getEventKey("Descente Rapide")){
                     matrix.MoveDown();
                     _nb_manual_down += SOFT_DROP_BONUS_COEFF;
                     setTimeLastMoveDown();
-            }
-            if(event.key.code == _evenement->getEventKey("Descente Instantanee")){
+                }
+                if(event.key.code == _evenement->getEventKey("Descente Instantanee")){
                     _nb_manual_down += HARD_DROP_BONUS_COEFF * matrix.HardDrop();
-            }
+                }
 
-            if(event.key.code == _evenement->getEventKey("Rotation Gauche"))
-            {
+                if(event.key.code == _evenement->getEventKey("Rotation Gauche"))
+                {
                     if(matrix.rotateLeft())
                         initTimeoutOnMove();
-            }
-            if(event.key.code == _evenement->getEventKey("Rotation Droite"))
-            {
+                }
+                if(event.key.code == _evenement->getEventKey("Rotation Droite"))
+                {
                     if(matrix.rotateRight())
                         initTimeoutOnMove();
+                }
+                if(event.key.code == sf::Keyboard::Space)   // à définir dans la configuration des touches
+                {
+                    if(holdTetromino())
+                        setTimeLastMoveDown();
+                }
             }
-            if(event.key.code == sf::Keyboard::Space)   // à définir dans la configuration des touches
+
+            if(event.key.code == sf::Keyboard::F8)
             {
-                if(holdTetromino())
-                    setTimeLastMoveDown();
+                _AIPlay = !_AIPlay;
+            }
+            if(event.key.code == sf::Keyboard::F9)
+            {
+                _AINbTetromino = 1;
+            }
+            if(event.key.code == sf::Keyboard::F10)
+            {
+                _AINbTetromino = 2;
+            }
+            if(event.key.code == sf::Keyboard::F11)
+            {
+                _AINbTetromino = 3;
+            }
+            if(event.key.code == sf::Keyboard::F12)
+            {
+                _AINbTetromino = 4;
             }
 
         break;
@@ -316,6 +343,7 @@ void Game::restartGame()
     holdedTetromino.clearPiece();
     hasHoldedTetromino = false;
     canHoldTetromino = true;
+    _AIActualPlaying = _AIPlay;
     setTimeLastMoveDown();
 
 }
@@ -369,6 +397,13 @@ void Game::update()
     if (getPause())
         setPause(false);
 
+    if (_AIActualPlaying)
+    {
+        TetrisAI ai((LogicalTetrisBoard) matrix);
+        for (unsigned int i=0; i<_AINbTetromino-1 && i<nextTetromino.size(); i++)
+            ai.addNextTetromino(nextTetromino[i].getPiece());
+        Tetromino result = ai.getTetrominoWithBestPosition();
+    }
 
     if (!matrix.pieceIsActive())
     {   // passage à la pièce suivante
@@ -387,10 +422,11 @@ void Game::update()
         if (new_del_line > 0)
             _score += _nb_manual_down; // ajoute le bonus pour l'accelération
 
-        _scoreSender.addDataInfoNextPiece(_score, _score - old_score, _nb_tetromino,
-                                          getGameTime(), _nb_line,
-                                          new_del_line, _nb_manual_down,
-                                          matrix.getPieceCourrante());
+        if (!_AIActualPlaying)
+            _scoreSender.addDataInfoNextPiece(_score, _score - old_score, _nb_tetromino,
+                                              getGameTime(), _nb_line,
+                                              new_del_line, _nb_manual_down,
+                                              matrix.getPieceCourrante());
 
         // on tente de placer la piece suivante
         if (!nextPiece())

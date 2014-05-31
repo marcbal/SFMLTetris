@@ -12,13 +12,13 @@
 #include "MenuSettingsTouches.hpp"
 #include "MenuSettingsAudio.hpp"
 #include "MenuSettingsGame.hpp"
-#include "Game.hpp"
 #include "AudioConfiguration.hpp"
 #include "GameConfiguration.hpp"
 #include "Scores.hpp"
 #include "ScreenScore.hpp"
 #include "OpenGL_Manager.hpp"
 #include "ScreenDebug.hpp"
+#include "Game.hpp"
 
 using namespace std;
 using namespace sf;

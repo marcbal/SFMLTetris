@@ -187,8 +187,6 @@ void ScoreWebSender::saveFailedUpload()
 {
     if (_uploadThreadsNumberActiv == 0)
         return;
-    cout << "Sauvegarde des uploads non effectues (" <<
-        _uploadThreadsNumberActiv << " restants) ..." << endl;
     for (unsigned int i=0; i<_uploadThreads.size(); i++)
     {
         _uploadThreads[i]->terminate();
@@ -198,7 +196,6 @@ void ScoreWebSender::saveFailedUpload()
 
     if (!file.is_open())
     {
-        cout << "Sauvegarde impossible" << endl;
         return;
     }
 

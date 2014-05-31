@@ -19,13 +19,18 @@ Application::Application() :
 
     _resized_window_size = _window_size;
 
+    Game * screenGame = new Game(&_window_size,&_state,&_event,&_scores,&_oGL,&_gameconfig);
+
     _screenElement[INDEX]= new MenuIndex(&_window_size,&_state);
-    _screenElement[GAME]= new Game(&_window_size,&_state,&_event,&_scores,&_oGL,&_gameconfig);
+    _screenElement[GAME]= screenGame;
     _screenElement[SCORE]= new ScreenScore(&_window_size,&_state,&_scores);
     _screenElement[SETTINGS]= new MenuSettings(&_window_size,&_state);
     _screenElement[SETTINGSTOUCHES]= new MenuSettingsTouches(&_window_size,&_state,&_event,&_gameconfig);
     _screenElement[SETTINGSAUDIO]= new MenuSettingsAudio(&_window_size,&_state,&_audio);
     _screenElement[SETTINGSGRAPHIC]= new MenuSettingsGame(&_window_size,&_state,&_oGL,&_gameconfig);
+
+    _screenDebug.setGamePtr(screenGame);
+
 	_window.setFramerateLimit(FPS_MAX);
 	_window.setKeyRepeatEnabled(false);
 	_window_setting.depthBits = 24;

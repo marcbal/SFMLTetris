@@ -4,7 +4,7 @@ OpenGL_Manager::OpenGL_Manager(GameConfiguration* gameConfig){
     //_tetrisBoard = NULL;
 
     _gameConfig = gameConfig;
-    _tetrisBoard = new int*[BOARD_WIDTH];
+    _tetrisBoard = new uint8_t*[BOARD_WIDTH];
     orientation_vitesse = orientation_timeMax = Vector3f(0,0,0);
     orientation_progress = _gameConfig->get3DInclinaison();
     for(int i=0;i<4;i++)
@@ -12,7 +12,7 @@ OpenGL_Manager::OpenGL_Manager(GameConfiguration* gameConfig){
 
 }
 
-void OpenGL_Manager::setTetrisBoard(int tetrisBoard[][BOARD_HEIGHT]){
+void OpenGL_Manager::setTetrisBoard(uint8_t tetrisBoard[][BOARD_HEIGHT]){
     for(int i=0;i<BOARD_WIDTH;++i)
             _tetrisBoard[i]=tetrisBoard[i];
 
