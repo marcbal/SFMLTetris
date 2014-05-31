@@ -249,7 +249,7 @@ void TetrisBoard::effacePieceCourrante()
                 setBoardData(i, j, 0);
 }
 
-int TetrisBoard::getBoardData(int x, int y)
+int TetrisBoard::getBoardData(int x, int y) const
 {
     if (x<0 || x>=BOARD_WIDTH || y<-2 || y>=BOARD_HEIGHT)
         return 0;
@@ -347,7 +347,7 @@ int TetrisBoard::fullLinesClear(ExplosionManager * explosions)
 bool TetrisBoard::verifierPlacementPiece(sf::Vector2i pos, int o)
 {
     // tests si la forme sors totalement de l'écran
-    if (pos.x > BOARD_WIDTH || pos.y > BOARD_HEIGHT || pos.y+4 < 0 || pos.x+4 < 0)
+    if (pos.x > BOARD_WIDTH || pos.y > BOARD_HEIGHT || pos.y+4 < -2 || pos.x+4 < 0)
         return false;
     // crée un tetromino de test qui correspond à la position/orientation/forme testée
     Tetromino pieceTest(pieceCourrante.getTypePiece(), o, pos);
@@ -360,7 +360,7 @@ bool TetrisBoard::verifierPlacementPiece(sf::Vector2i pos, int o)
             if (shape[i][j] &&
                 (posB.x < 0 || posB.y < -2 ||       // ici, on prends en compte que la matrice a 2 lignes invisibles au dessus
                  posB.x >= BOARD_WIDTH || posB.y >= BOARD_HEIGHT ||
-                 (area[posB.x][posB.y] >= 10 && area[posB.x][posB.y] < 20)))
+                 (getBoardData(posB.x,posB.y) >= 10 && getBoardData(posB.x,posB.y) < 20)))
             {
                 return false;
             }
@@ -368,7 +368,6 @@ bool TetrisBoard::verifierPlacementPiece(sf::Vector2i pos, int o)
         }
 
     }
-
     return true;
 }
 

@@ -51,7 +51,7 @@ class TetrisBoard : public sf::Drawable
 
         bool pieceIsActive();
 
-        int getBoardData(int x, int y);
+        int getBoardData(int x, int y) const;
         void setBoardData(int x, int y, int data);
 
 
