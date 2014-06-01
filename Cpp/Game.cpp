@@ -133,11 +133,6 @@ void Game::onEvent(sf::Event & event)
         case sf::Event::KeyPressed:
             if (!_AIActualPlaying)
             {
-                if(event.key.code == _evenement->getEventKey("Pause")){
-                    setPause(true);
-                    *_state = INDEX;
-                }
-
                 if(event.key.code == _evenement->getEventKey("Gauche")){
                     if (matrix.moveLeft())
                         initTimeoutOnMove();
@@ -174,6 +169,14 @@ void Game::onEvent(sf::Event & event)
                 }
             }
 
+            if(event.key.code == _evenement->getEventKey("Pause")){
+                setPause(true);
+                *_state = INDEX;
+            }
+            if(event.key.code == sf::Keyboard::Return)   // à définir dans la configuration des touches
+            {
+                _replay = 1;
+            }
             if(event.key.code == sf::Keyboard::F8)
             {
                 _AIPlay = !_AIPlay;
@@ -186,14 +189,6 @@ void Game::onEvent(sf::Event & event)
             {
                 _AINbTetromino = 2;
             }
-            if(event.key.code == sf::Keyboard::F11)
-            {
-                _AINbTetromino = 3;
-            }
-            if(event.key.code == sf::Keyboard::F12)
-            {
-                _AINbTetromino = 4;
-            }
 
         break;
         case sf::Event::MouseMoved:
@@ -201,13 +196,13 @@ void Game::onEvent(sf::Event & event)
                 _oGL->onEvent(event);
                 return;
             }
-            if (!_gameConfig->getUseMouse())
+            if (!_gameConfig->getUseMouse() || _AIActualPlaying)
                 return;
             if (matrix.mouseLeftRight(event))
                 initTimeoutOnMove();
         break;
         case sf::Event::MouseButtonPressed:
-            if (!_gameConfig->getUseMouse() || _gameConfig->get3DMode())
+            if (!_gameConfig->getUseMouse() || _gameConfig->get3DMode() || _AIActualPlaying)
                 return;
             switch(event.mouseButton.button)
             {
@@ -330,7 +325,7 @@ void Game::restartGame()
     record.tetrominos = _nb_tetromino;
     record.time = lrint(getGameTime().asSeconds());
     _scores->addScore(record);
-    if (_gameConfig->getOnlineScore() && _score > 0)
+    if (_gameConfig->getOnlineScore() && _score > 0 && !_AIActualPlaying)
         _scoreSender.addDataToFinishGame(record);
     else
         _scoreSender.clearData();
@@ -403,11 +398,20 @@ void Game::update()
         for (unsigned int i=0; i<_AINbTetromino-1 && i<nextTetromino.size(); i++)
             ai.addNextTetromino(nextTetromino[i].getPiece());
         Tetromino result = ai.getTetrominoWithBestPosition();
+        matrix.newPiece(result, false);
+        cout << matrix.getHigherFilledCell() << " " << matrix.getNbrOfEmptyField() << endl;
+        matrix.dessinePieceCourrante(false);
+        matrix.fixPiece();
+
     }
 
     if (!matrix.pieceIsActive())
     {   // passage à la pièce suivante
-        int new_del_line = matrix.fullLinesClear(&_explosions);
+        int new_del_line;
+        if (_AIActualPlaying)
+            new_del_line = matrix.fullLinesClear(nullptr);
+        else
+            new_del_line = matrix.fullLinesClear(&_explosions);
         int old_score = _score;
         _nb_line += new_del_line;
         switch (new_del_line)
@@ -453,7 +457,7 @@ void Game::update()
                        "Temps : "+formattedDuration(getGameTime(), 1)+"");
     _explosions.update();
 
-    matrix.dessinePieceCourrante(_gameConfig->getDrawGhost());
+    matrix.dessinePieceCourrante(_gameConfig->getDrawGhost() && !_AIActualPlaying);
 
     if(_gameConfig->get3DMode())
         _oGL->preDraw();//Pré-dessinage de la scène 3D

@@ -1,9 +1,9 @@
 #include "TetrisBoard.hpp"
 
 TetrisBoard::TetrisBoard(sf::Vector2i * window_size,OpenGL_Manager * oGL) :
-    shapeMatrix(BOARD_WIDTH * BOARD_HEIGHT),
+    LogicalTetrisBoard(),
     boardShape(),
-    LogicalTetrisBoard()
+    shapeMatrix(BOARD_WIDTH * BOARD_HEIGHT)
 {
     _oGL = oGL;
     _oGL->setTetrisBoard(area);
@@ -121,7 +121,8 @@ int TetrisBoard::fullLinesClear(ExplosionManager * explosions)
             for (int j=0; j<BOARD_WIDTH; j++)
             {
                 sf::RectangleShape r = shapeMatrix[j*BOARD_HEIGHT+i];
-                explosions->addExplosion(RectangleExplosion(_window_size,
+                if (explosions != nullptr)
+                    explosions->addExplosion(RectangleExplosion(_window_size,
                                                           sf::FloatRect(r.getPosition(), r.getSize()),
                                                           20,
                                                           6.0,

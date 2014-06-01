@@ -10,7 +10,7 @@ class LogicalTetrisBoard
         LogicalTetrisBoard();
         virtual ~LogicalTetrisBoard();
 
-        bool newPiece(Tetromino & p, bool init_pos = true); // place la nouvelle pièce en haut
+        bool newPiece(Tetromino p, bool init_pos = true); // place la nouvelle pièce en haut
         Tetromino & getPieceCourrante();
 
         void clearBoard();
@@ -42,6 +42,12 @@ class LogicalTetrisBoard
 
         int getBoardData(int x, int y) const;
         virtual void setBoardData(int x, int y, int data);
+
+        int getHigherFilledCell() const;
+
+        int getNbrOfEmptyField() const;
+
+        void drawConsole();
 
 
 

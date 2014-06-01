@@ -33,6 +33,10 @@ class TetrisAI
     protected:
     private:
 
+        void setValueForBoardState(BoardState & state, const BoardState & previous_state, int nbDelLines);
+
+
+
         vector<Tetromino> tetrominoQueue;
 
         vector<vector<BoardState> > boardDatas;

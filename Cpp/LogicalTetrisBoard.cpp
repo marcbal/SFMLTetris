@@ -11,7 +11,7 @@ LogicalTetrisBoard::~LogicalTetrisBoard() {}
 
 
 
-bool LogicalTetrisBoard::newPiece(Tetromino & p, bool init_pos)
+bool LogicalTetrisBoard::newPiece(Tetromino p, bool init_pos)
 {
     pieceCouranteActive = true;
     pieceCourrante = p;
@@ -45,14 +45,24 @@ void LogicalTetrisBoard::clearBoard()
 
 int LogicalTetrisBoard::HardDrop()
 {
-    bool continuer;
-    int nb_down = -1;
-    do
+    int nb_down = 0;
+    // ancienne implémentation : difficilement optimisable mais très facile à comprendre
+    //while(MoveDown()) nb_down++;
+
+    // nouvelle implémentation : tentative d'optimisation
+    sf::Vector2i new_pos = pieceCourrante.getPosition();
+    sf::Clock c;
+    while (verifierPlacementPiece(new_pos + sf::Vector2i(0, 1), pieceCourrante.getOrientation()))
     {
-        continuer = MoveDown();
         nb_down++;
+        new_pos.y++;
     }
-    while (continuer);
+    effacePieceCourrante();
+    pieceCourrante.setPosition(new_pos);
+    dessinePieceCourrante(false);
+    fixPiece();
+
+    // ------------------------------
     return nb_down;
 }
 
@@ -428,4 +438,56 @@ sf::Vector3i LogicalTetrisBoard::SRSRotate(int oldOrient, int newOrient)
     return sf::Vector3i(0, 0, oldOrient);
 }
 
+
+
+
+
+
+
+
+void LogicalTetrisBoard::drawConsole()
+{
+    for (int i=0; i<BOARD_HEIGHT; i++)
+    {
+        cout << "[";
+        for (int j=0; j<BOARD_WIDTH; j++)
+        {
+            if (j!=0)
+                cout << "|";
+            cout << to_string(getBoardData(j, i), 2);
+        }
+        cout << "]" << endl;
+    }
+}
+
+
+
+
+int LogicalTetrisBoard::getHigherFilledCell() const
+{
+    int height = 0;
+    for (int i=-2; i<BOARD_HEIGHT; i++)
+        for (int j=0; j<BOARD_WIDTH; j++)
+            if (getBoardData(j, i)>=10 && BOARD_HEIGHT-i > height)
+                height = BOARD_HEIGHT-i;
+    return height;
+}
+
+
+
+int LogicalTetrisBoard::getNbrOfEmptyField() const
+{
+    int nb = 0;
+    for (int i=0; i<BOARD_WIDTH; i++)
+    {
+        bool canCount = false;
+        for (int j=-2; j<BOARD_HEIGHT; j++)
+        {
+            bool b = getBoardData(i, j) >= 10;
+            if (b) canCount = true;
+            else if (canCount) nb++;
+        }
+    }
+    return nb;
+}
 
