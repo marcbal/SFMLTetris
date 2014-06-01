@@ -24,7 +24,7 @@ struct BoardState
 class TetrisAI
 {
     public:
-        TetrisAI(LogicalTetrisBoard initial_board);
+        TetrisAI(LogicalTetrisBoard initial_board, bool type_AI);
         virtual ~TetrisAI();
 
         void addNextTetromino(Tetromino t);
@@ -33,13 +33,15 @@ class TetrisAI
     protected:
     private:
 
-        void setValueForBoardState(BoardState & state, const BoardState & previous_state, int nbDelLines);
+        void setValueForBoardState(BoardState & state, const BoardState & previous_state);
 
 
 
         vector<Tetromino> tetrominoQueue;
 
         vector<vector<BoardState> > boardDatas;
+
+        bool _typeAI_perso;
 };
 
 #endif // TETRISAI_H

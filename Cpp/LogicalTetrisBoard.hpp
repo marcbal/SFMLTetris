@@ -37,6 +37,10 @@ class LogicalTetrisBoard
 
 
         int fullLinesClear();
+        int getNbPieceCellsEliminated();
+        int getTransitionCountForRow(int y);
+        int getTransitionCountForColumn(int x);
+        int getAllWellsForColumn(int x);
 
         bool pieceIsActive();
 

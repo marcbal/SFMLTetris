@@ -67,6 +67,31 @@ void Tetromino::setPosition(sf::Vector2i pos)
     position = pos;
 }
 
+
+
+
+float Tetromino::getVerticalMidpoint()
+{
+    MatrixShape shape = getMatrixShape();
+    int min = -1, max = 0;
+    for (int j=0; j<4; j++)
+        for (int i=0; i<4; i++)
+            if (shape[i][j])
+            {
+                max = j;
+                if (min == -1)
+                    min = j;
+            }
+    return BOARD_HEIGHT - (position.y + (max - min)/2.f) - 1;
+
+}
+
+
+
+
+
+
+
 sf::Color Tetromino::getColor()
 {
     return couleur;

@@ -1,8 +1,9 @@
 #include "TetrisAI.hpp"
 
-TetrisAI::TetrisAI(LogicalTetrisBoard initial_board):
+TetrisAI::TetrisAI(LogicalTetrisBoard initial_board, bool type_AI):
     tetrominoQueue()
 {
+    _typeAI_perso = type_AI;
     BoardState init;
     init.board = initial_board;
     init.tetrominos.clear();
@@ -70,8 +71,6 @@ Tetromino TetrisAI::getTetrominoWithBestPosition()
 
                     boardTestPosition.HardDrop();
 
-                    int nbDelLines = boardTestPosition.fullLinesClear();
-
 
                     BoardState state;
                     state.board = boardTestPosition;
@@ -80,7 +79,8 @@ Tetromino TetrisAI::getTetrominoWithBestPosition()
 
 
                     // calcul de la valeur de l'état en cours
-                    setValueForBoardState(state, previous_state, nbDelLines);
+                    // et en profite pour fullLinesClear() sur le board
+                    setValueForBoardState(state, previous_state);
 
                     if (p==tetrominoQueue.size()-1)
                     {
@@ -108,22 +108,150 @@ Tetromino TetrisAI::getTetrominoWithBestPosition()
 
 
 
-void TetrisAI::setValueForBoardState(BoardState & state, const BoardState & previous_state, int nbDelLines)
+void TetrisAI::setValueForBoardState(BoardState & state, const BoardState & previous_state)
 {
-    state.value = previous_state.value;
+    // une ancienne implémentation de ma part, elle pouvait faire une centaine de lignes à peu près, en utilisant
+    // la pièce suivante
+    if (_typeAI_perso)
+    {
+        int nbDelLines = state.board.fullLinesClear();
+
+        state.value = previous_state.value;
+        state.value -= 1000 * (state.board.getHigherFilledCell() - previous_state.board.getHigherFilledCell());
+        state.value -= 50 * (state.board.getNbrOfEmptyField() - previous_state.board.getNbrOfEmptyField());
+        state.value += 10 * nbDelLines;
+        state.value += 5 * state.tetrominos[0].getPosition().y;
+
+        return;
+    }
 
 
-    state.value -= 1000 * (state.board.getHigherFilledCell() - previous_state.board.getHigherFilledCell());
-
-    state.value -= 50 * (state.board.getNbrOfEmptyField() - previous_state.board.getNbrOfEmptyField());
-
-
-    state.value += 10 * nbDelLines;
-
-    state.value += 5 * state.tetrominos[0].getPosition().y;
 
 
 
+
+
+
+
+
+
+    /*
+    Le code qui suit est basé sur la fonction d'évaluation codé initialement par
+    Pierre Dellacherie (France) (E-mail : dellache@club-internet.fr) en Pascal, puis adapté
+    en C++ par Colin Fahey (http://www.colinfahey.com/tetris/tetris.html). Je me suis basé sur la version c++.
+    L'algorithme de Pierre Dellacherie est connu pour être un des plus efficace au monde, avec en moyenne
+    650 000 lignes complétés par parties.
+
+    Il est important ici de préciser que seul la partie "évaluation d'un état" (c'est à dire ce qui suit)
+    est basé sur cet algorithme.
+
+    L'évaluation ne se fait que sur la pièce courrante, mais le fait de prendre toutes les pièces en compte
+    est important car il peut y avoir des résultats inatendu par rapport à mon code.
+
+
+    Le mémoire de Christophe Thiery intitulé "Contrôle optimal stochastique et le jeu Tetris"
+        http://hal.archives-ouvertes.fr/docs/00/17/32/48/PDF/rapport_master_tetris.pdf (page 8-9)
+    explique, dans un tableau synthétique, les critères de selections utilisés par Dellacherie.
+
+    */
+
+
+    int   erodedPieceCellsMetric = 0;
+    int   boardRowTransitions    = 0;
+    int   boardColTransitions    = 0;
+    int   boardBuriedHoles       = 0;
+    int   boardWells             = 0;
+
+
+
+
+    // hauteur de la pièce posée (la moyenne entre la case la plus haute et la plus basse)
+    double landingHeight = state.board.getPieceCourrante().getVerticalMidpoint();
+
+
+
+
+
+
+    // ici, on s'attaque aux lignes détruites
+    // et au nombre de case détruites appartenant à la dernière pièce posée
+    LogicalTetrisBoard boardBeforeDelLines = state.board;
+    int completedRows = state.board.fullLinesClear();
+    if (completedRows > 0)
+    {
+        int pieceCellsEliminated = boardBeforeDelLines.getNbPieceCellsEliminated();
+        erodedPieceCellsMetric = completedRows * pieceCellsEliminated;
+    }
+
+
+
+
+    // on s'occupe ici des transitions : cases vides / cases pleines
+    // d'abord ligne par ligne
+    boardRowTransitions = 2 * (BOARD_HEIGHT - state.board.getHigherFilledCell());
+    for (int y = BOARD_HEIGHT - 1; y >= BOARD_HEIGHT - state.board.getHigherFilledCell(); y--)
+        boardRowTransitions += state.board.getTransitionCountForRow(y);
+    // puis colonnes par colonnes
+    for (int x = 0; x < BOARD_WIDTH; x++)
+        boardColTransitions += state.board.getTransitionCountForColumn(x);
+
+
+
+
+
+    // on compte maintenant le nombre de cases vides
+    boardBuriedHoles = state.board.getNbrOfEmptyField();
+
+
+
+
+    // finalement, on s'occupe des puits profonds :
+    /* "Un puits est une succession de cellules vides et non recouvertes dans la même colonne
+        et telles quel leurs cases voisines à gauche et à droite soient toutes les deux pleines.
+        Les puits profonds sont pénalisants car ils obligent à attendre une barre verticale."
+        (Extrait de Contrôle optimal stochastique et le jeu de Tetris, de Christophe Thiery,
+         annotation 1 page 33) */
+
+    for (int x = 0; x < BOARD_WIDTH; x++)
+        boardWells += state.board.getAllWellsForColumn(x);
+
+
+
+    state.board.drawConsole();
+    // rassemblement des résultats
+    state.value  =  0.0;    // à changer pour prendre en compte les pièces précédentes
+    cout << state.value << endl;
+    state.value += -1.0 * landingHeight;
+    cout << "          hauteur piece " << landingHeight << endl;
+    state.value +=  1.0 * erodedPieceCellsMetric;
+    cout << "nbligne * nb cell piece " << erodedPieceCellsMetric << endl;
+    state.value += -1.0 * boardRowTransitions;
+    cout << "         row transition " << boardRowTransitions << endl;
+    state.value += -1.0 * boardColTransitions;
+    cout << "      column transition " << boardColTransitions << endl;
+    state.value += -4.0 * boardBuriedHoles;
+    cout << "               nb trous " << boardBuriedHoles << endl;
+    state.value += -1.0 * boardWells;
+    cout << "          hauteur puits " << boardWells << endl;
+    cout << "---------- Sous Total : " << state.value << endl;
+
+
+    /* l'algorithme de Dellacherie gère un système de priorité, dans le cas ou on a des
+     valeurs identiques : ici, pour l'adapter à notre code, on multiplie par 1000 la
+     valueur totale obtenu au dessus, puis on ajoute à cette valeur le niveau de
+     priorité, d'un ordre de grandeur bien plus faible */
+
+    state.value *= 1000.0;
+    cout << "--- 1000 * Sous Total : " << state.value << endl;
+
+    int priority = 100 * abs(state.board.getPieceCourrante().getPosition().x - INIT_POS_X);
+    if (state.board.getPieceCourrante().getPosition().x < INIT_POS_X)
+        priority += 10;
+    priority -= state.board.getPieceCourrante().getOrientation();
+    cout << "               priority " << priority << endl;
+
+    state.value += priority;
+    cout << "--------------  TOTAL : " << state.value << endl;
 
 
 }

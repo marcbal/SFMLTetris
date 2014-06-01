@@ -274,6 +274,105 @@ int LogicalTetrisBoard::fullLinesClear()
 }
 
 
+int LogicalTetrisBoard::getNbPieceCellsEliminated()
+{
+    int nbr_cells = 0;
+    MatrixShape pieceShape = pieceCourrante.getMatrixShape();
+    for (int i=0; i<BOARD_HEIGHT; i++)
+    {   // on parcours les lignes de haut en bas
+        bool full = true;
+        // on vérifie si la ligne est complète
+        for (int j=0; j<BOARD_WIDTH && full; j++)
+            if (getBoardData(j, i) < 10)
+                full = false;
+
+        if (full && i>=pieceCourrante.getPosition().y && i<pieceCourrante.getPosition().y+4)
+        {
+            int piecePosX = i-pieceCourrante.getPosition().y;
+            for (int j=0; j<BOARD_WIDTH; j++)
+            {
+                int piecePosY = j-pieceCourrante.getPosition().x;
+                if (piecePosY >= 0 && piecePosY < 4 && pieceShape[piecePosX][piecePosY])
+                    nbr_cells++;
+            }
+        }
+    }
+    return nbr_cells;
+}
+
+
+int LogicalTetrisBoard::getTransitionCountForRow(int y)
+{
+    if (y < -2 || y >= BOARD_HEIGHT)
+        return 0;
+    int transitionCount = 0;
+    for (int i=0; i<BOARD_WIDTH-1; i++)
+    {
+        if ((getBoardData(i, y) >= 10 && getBoardData(i+1, y) < 10)
+            || (getBoardData(i, y) < 10 && getBoardData(i+1, y) >= 10))
+            transitionCount++;
+    }
+    if (getBoardData(0, y) < 10)  // l'extérieur à gauche est supposé pleine
+        transitionCount++;
+    if (getBoardData(BOARD_WIDTH-1, y) < 10)  // l'extérieur à droite est supposé pleine
+        transitionCount++;
+    return transitionCount;
+}
+
+
+
+
+int LogicalTetrisBoard::getTransitionCountForColumn(int x)
+{
+    if (x < 0 || x >= BOARD_WIDTH)
+        return 0;
+    int transitionCount = 0;
+    for (int j=-2; j<BOARD_HEIGHT-1; j++)
+    {
+        if ((getBoardData(x, j) >= 10 && getBoardData(x, j+1) < 10)
+            || (getBoardData(x, j) < 10 && getBoardData(x, j+1) >= 10))
+            transitionCount++;
+    }
+    if (getBoardData(x, -2) >= 10)  // l'extérieur au dessus est supposé vide
+        transitionCount++;
+    if (getBoardData(x, BOARD_HEIGHT-1) < 10)  // l'extérieur en dessous est supposé pleine
+        transitionCount++;
+    return transitionCount;
+}
+
+
+
+
+
+int LogicalTetrisBoard::getAllWellsForColumn(int x)
+{
+    if (x < 0 || x >= BOARD_WIDTH)
+        return 0;
+    int valeurPuit = 0;
+    for (int j=-2; j<BOARD_HEIGHT-1; j++)
+    {
+        bool left = true, right = true;
+        // on récupère
+        if (x >= 1)
+            left = (getBoardData(x-1, j) >= 10);
+        if (x < BOARD_WIDTH-1)
+            right = (getBoardData(x+1, j) >= 10);
+
+        if (left && right)
+        {
+
+            for (int k=j; k<BOARD_HEIGHT-1; k++)
+            {
+                if (getBoardData(x, k) >= 10)
+                    valeurPuit++;
+                else
+                    break;
+            }
+        }
+    }
+    return valeurPuit;
+}
+
 
 
 bool LogicalTetrisBoard::verifierPlacementPiece(sf::Vector2i pos, int o)

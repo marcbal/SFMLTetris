@@ -394,12 +394,11 @@ void Game::update()
 
     if (_AIActualPlaying)
     {
-        TetrisAI ai((LogicalTetrisBoard) matrix);
+        TetrisAI ai((LogicalTetrisBoard) matrix, (_AINbTetromino >= 2));
         for (unsigned int i=0; i<_AINbTetromino-1 && i<nextTetromino.size(); i++)
             ai.addNextTetromino(nextTetromino[i].getPiece());
         Tetromino result = ai.getTetrominoWithBestPosition();
         matrix.newPiece(result, false);
-        cout << matrix.getHigherFilledCell() << " " << matrix.getNbrOfEmptyField() << endl;
         matrix.dessinePieceCourrante(false);
         matrix.fixPiece();
 
