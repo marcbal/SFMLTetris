@@ -10,12 +10,14 @@ sf::Mutex Console::_threadLock;
 #ifdef SFML_STRING_HPP
 void Console::out(sf::String message)
 {
-    string s = message.toAnsiString();
+    wstring ws = message.toWideString();
+    string s(ws.begin(), ws.end());
     add_message(s, 'o');
 }
 void Console::err(sf::String message)
 {
-    string s = message.toAnsiString();
+    wstring ws = message.toWideString();
+    string s(ws.begin(), ws.end());
     add_message(s, 'e');
 }
 #else
