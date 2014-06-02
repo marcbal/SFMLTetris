@@ -16,6 +16,13 @@ void Console::err(sf::String message)
 }
 
 
+void Console::err(sf::String message, string file, int line)
+{
+    add_message(message, 'e');
+    add_message("-> in \"" + file + "\" line " + to_string(line), 'e');
+}
+
+
 
 void Console::add_message(sf::String message, char out)
 {

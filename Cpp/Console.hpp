@@ -22,6 +22,7 @@ class Console
 
         static void out(sf::String message);
         static void err(sf::String message);
+        static void err(sf::String message, string file, int line);
 
         static vector<sf::String> getLogMessages();
 };

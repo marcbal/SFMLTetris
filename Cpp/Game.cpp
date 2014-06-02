@@ -162,7 +162,7 @@ void Game::onEvent(sf::Event & event)
                     if(matrix.rotateRight())
                         initTimeoutOnMove();
                 }
-                if(event.key.code == sf::Keyboard::Space)   // à définir dans la configuration des touches
+                if(event.key.code == _evenement->getEventKey("Hold Piece"))
                 {
                     if(holdTetromino())
                         setTimeLastMoveDown();
@@ -173,19 +173,19 @@ void Game::onEvent(sf::Event & event)
                 setPause(true);
                 *_state = INDEX;
             }
-            if(event.key.code == sf::Keyboard::Return)   // à définir dans la configuration des touches
+            if(event.key.code == _evenement->getEventKey("Recommencer"))
             {
                 _replay = 1;
             }
-            if(event.key.code == sf::Keyboard::F8)
+            if(event.key.code == _evenement->getEventKey("Activation IA"))
             {
                 _AIPlay = !_AIPlay;
             }
-            if(event.key.code == sf::Keyboard::F9)
+            if(event.key.code == _evenement->getEventKey("IA P. Dellacherie"))
             {
                 _AINbTetromino = 1;
             }
-            if(event.key.code == sf::Keyboard::F10)
+            if(event.key.code == _evenement->getEventKey("IA fait maison"))
             {
                 _AINbTetromino = 2;
             }

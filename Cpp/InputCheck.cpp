@@ -12,7 +12,7 @@ InputCheck::InputCheck(sf::Vector2f pos, sf::Vector2f taille,bool val){
     checkCase.setOutlineColor(sf::Color::White);
     checkCase.setOutlineThickness(-2);
     checkCase.setFillColor(Color(0, 0, 0, 192));
-    checkedRectangle.setFillColor(Color(160, 160, 160));
+    checkedRectangle.setFillColor(sf::Color::White);
 
     updateGraphic();
 }
@@ -63,8 +63,8 @@ void InputCheck::updateGraphic(){
     checkCase.setPosition(_pos);
     checkCase.setFillColor((_mouseClick)?Color(160, 160, 160):((_mouseHover)?Color(128, 128, 128):Color(0, 0, 0)));
 
-    checkedRectangle.setSize(_size-sf::Vector2f(8, 8));
-    checkedRectangle.setPosition(_pos+sf::Vector2f(4, 4));
+    checkedRectangle.setSize(sf::Vector2f(((_size.x-4)-2*(int)((_size.x-4)/4)), ((_size.y-4)-2*(int)((_size.y-4)/4))));
+    checkedRectangle.setPosition(_pos+sf::Vector2f((int)((_size.x-4)/4 + 2), (int)((_size.y-4)/4 + 2)));
 }
 
 void InputCheck::draw(sf::RenderTarget& target, sf::RenderStates states) const

@@ -133,7 +133,7 @@ void Application::processEvents()
                 // -----------------------------------------
 
 
-                if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::F3)
+                if (event.type == sf::Event::KeyPressed && event.key.code == _event.getEventKey("Ecran Debug"))
                 {
                     _showDebugScreen = !_showDebugScreen;
                 }
