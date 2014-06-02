@@ -28,11 +28,15 @@ void ScreenDebug::setGamePtr(Game * game){ _game = game;}
 void ScreenDebug::update()
 {
     // récupération des messages de la console
-    vector<string> console_message = Console::getLogMessages();
+    vector<sf::String> console_message = Console::getLogMessages();
     for (unsigned int i=0; i<console_message.size();i++)
         _console_lines.push_back(console_message[i]);
     while (_console_lines.size()>DEBUG_NB_CHAR_HEIGHT)
         _console_lines.erase(_console_lines.begin());    // efface le premier élément et décale le reste (je viens d'apprendre ça)
+
+
+
+
 
     int framerate = 1 / _FPSclock.restart().asSeconds();
 
@@ -51,7 +55,7 @@ void ScreenDebug::update()
 
     _debug_info_background.setSize(sf::Vector2f(_debug_info.getLocalBounds().width+10, _debug_info.getLocalBounds().height+15));
 
-    _console_text.setString(implode(_console_lines, "\n"));
+    _console_text.setString(implode(_console_lines, L"\n"));
 
     _console_text.setPosition(10, _window_size->y - (10 + _console_text.getLocalBounds().height));
     _console_text_background.setPosition(_console_text.getPosition()-sf::Vector2f(5, 5));

@@ -18,7 +18,7 @@ class ScreenDebug : public ScreenElement
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     private:
 
-        vector<string> _console_lines;
+        vector<sf::String> _console_lines;
 
         sf::Clock _FPSclock;
         sf::Clock _clock;
