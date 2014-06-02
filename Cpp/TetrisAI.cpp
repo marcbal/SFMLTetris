@@ -216,42 +216,29 @@ void TetrisAI::setValueForBoardState(BoardState & state, const BoardState & prev
         boardWells += state.board.getAllWellsForColumn(x);
 
 
-
-    state.board.drawConsole();
     // rassemblement des résultats
-    state.value  =  0.0;    // à changer pour prendre en compte les pièces précédentes
-    cout << state.value << endl;
+    state.value  =  0.0;
     state.value += -1.0 * landingHeight;
-    cout << "          hauteur piece " << landingHeight << endl;
     state.value +=  1.0 * erodedPieceCellsMetric;
-    cout << "nbligne * nb cell piece " << erodedPieceCellsMetric << endl;
     state.value += -1.0 * boardRowTransitions;
-    cout << "         row transition " << boardRowTransitions << endl;
     state.value += -1.0 * boardColTransitions;
-    cout << "      column transition " << boardColTransitions << endl;
     state.value += -4.0 * boardBuriedHoles;
-    cout << "               nb trous " << boardBuriedHoles << endl;
     state.value += -1.0 * boardWells;
-    cout << "          hauteur puits " << boardWells << endl;
-    cout << "---------- Sous Total : " << state.value << endl;
 
 
     /* l'algorithme de Dellacherie gère un système de priorité, dans le cas ou on a des
-     valeurs identiques : ici, pour l'adapter à notre code, on multiplie par 1000 la
+     valeurs identiques : ici, pour l'adapter à notre code, on multiplie par 10000 la
      valueur totale obtenu au dessus, puis on ajoute à cette valeur le niveau de
      priorité, d'un ordre de grandeur bien plus faible */
 
-    state.value *= 1000.0;
-    cout << "--- 1000 * Sous Total : " << state.value << endl;
+    state.value *= 10000.0;
 
     int priority = 100 * abs(state.board.getPieceCourrante().getPosition().x - INIT_POS_X);
     if (state.board.getPieceCourrante().getPosition().x < INIT_POS_X)
         priority += 10;
     priority -= state.board.getPieceCourrante().getOrientation();
-    cout << "               priority " << priority << endl;
 
     state.value += priority;
-    cout << "--------------  TOTAL : " << state.value << endl;
 
 
 }

@@ -124,7 +124,7 @@ int TetrisBoard::fullLinesClear(ExplosionManager * explosions)
                 if (explosions != nullptr)
                     explosions->addExplosion(RectangleExplosion(_window_size,
                                                           sf::FloatRect(r.getPosition(), r.getSize()),
-                                                          20,
+                                                          (ExplosionManager::_nbParticules>500)?4:20,
                                                           6.0,
                                                           r.getFillColor()));
                 setBoardData(j, i, 0);

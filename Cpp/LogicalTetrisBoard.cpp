@@ -288,11 +288,10 @@ int LogicalTetrisBoard::getNbPieceCellsEliminated()
 
         if (full && i>=pieceCourrante.getPosition().y && i<pieceCourrante.getPosition().y+4)
         {
-            int piecePosX = i-pieceCourrante.getPosition().y;
-            for (int j=0; j<BOARD_WIDTH; j++)
+            int piecePosY = i-pieceCourrante.getPosition().y;
+            for (int j=0; j<4; j++)
             {
-                int piecePosY = j-pieceCourrante.getPosition().x;
-                if (piecePosY >= 0 && piecePosY < 4 && pieceShape[piecePosX][piecePosY])
+                if (pieceShape[j][piecePosY])
                     nbr_cells++;
             }
         }
@@ -349,7 +348,7 @@ int LogicalTetrisBoard::getAllWellsForColumn(int x)
     if (x < 0 || x >= BOARD_WIDTH)
         return 0;
     int valeurPuit = 0;
-    for (int j=-2; j<BOARD_HEIGHT-1; j++)
+    for (int j=-2; j<BOARD_HEIGHT; j++)
     {
         bool left = true, right = true;
         // on récupère
@@ -358,15 +357,11 @@ int LogicalTetrisBoard::getAllWellsForColumn(int x)
         if (x < BOARD_WIDTH-1)
             right = (getBoardData(x+1, j) >= 10);
 
-        if (left && right)
+        if (left && right && getBoardData(x, j) < 10)
         {
-
-            for (int k=j; k<BOARD_HEIGHT-1; k++)
+            for (int k=j; k<BOARD_HEIGHT && getBoardData(x, k) < 10; k++)
             {
-                if (getBoardData(x, k) >= 10)
-                    valeurPuit++;
-                else
-                    break;
+                valeurPuit++;
             }
         }
     }

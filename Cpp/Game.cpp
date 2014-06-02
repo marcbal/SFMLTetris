@@ -407,10 +407,10 @@ void Game::update()
     if (!matrix.pieceIsActive())
     {   // passage à la pièce suivante
         int new_del_line;
-        if (_AIActualPlaying)
-            new_del_line = matrix.fullLinesClear(nullptr);
-        else
+        if (_gameConfig->getDrawExplosions() && !_gameConfig->get3DMode())
             new_del_line = matrix.fullLinesClear(&_explosions);
+        else
+            new_del_line = matrix.fullLinesClear(nullptr);
         int old_score = _score;
         _nb_line += new_del_line;
         switch (new_del_line)
@@ -424,6 +424,10 @@ void Game::update()
 
         if (new_del_line > 0)
             _score += _nb_manual_down; // ajoute le bonus pour l'accelération
+
+
+        if (_score > 1999999999)
+            _score = 1999999999;
 
         if (!_AIActualPlaying)
             _scoreSender.addDataInfoNextPiece(_score, _score - old_score, _nb_tetromino,

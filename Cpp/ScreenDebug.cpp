@@ -44,6 +44,7 @@ void ScreenDebug::update()
     _debug_info.setString("SFML Tetris - Par Marc Baloup et Louis Behague - http://sfmltetris.no-ip.org/\nUptime : "+
                           uptime+
                           " - FPS : "+to_string(framerate) +
+                          " - Particules : "+ to_string(ExplosionManager::_nbParticules) +
                           "\nPause : " + to_string(_game->getPause()) +
                           ((!_game->getPause())?(" - Times before down  : "+to_string(((_game->timeLastMoveDown+_game->getTimeAutoMoveDown())-_game->getGameTime()).asSeconds())+""):"")+
                           L"\nIA : "+to_string(_game->_AIActualPlaying)+" avec "+to_string((int) _game->_AINbTetromino)+" tetromino connu (next : "+to_string(_game->_AIPlay)+")");
