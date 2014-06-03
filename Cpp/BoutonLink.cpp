@@ -6,9 +6,11 @@ void launch_external_navigator(string link)
     Console::out("Ouverture de " + link);
     #ifdef _WIN32
     system(("start " + link).c_str());
+    #elif defined(__GNUC__)
+    system(("xdg-open " + link).c_str());
     #else
     Console::err(L"L'ouverture d'une URI n'est pas encore implémenté pour votre système", __FILE__, __LINE__);
-    #endif // _WIN32
+    #endif
 }
 
 
