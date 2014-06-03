@@ -6,6 +6,7 @@
 #include "fn_time.hpp"
 #include "Menu.hpp"
 #include "Bouton.hpp"
+#include "BoutonLink.hpp"
 #include "Scores.hpp"
 
 
@@ -18,6 +19,7 @@ class ScreenScore : public Menu
 
         virtual void update();
 
+        virtual void onEvent(sf::Event & event);
 
 
     protected:
@@ -25,6 +27,7 @@ class ScreenScore : public Menu
 
         Scores * _scores;
         vector<vector<sf::Text> > scoreTable;
+        BoutonLink lien;
         unsigned int _page;
         unsigned int _max_page;
         unsigned int nbScorePerPage;

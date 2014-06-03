@@ -30,19 +30,11 @@ MenuSettingsTouches::MenuSettingsTouches(sf::Vector2i * window_size,char * state
     _inputKey.push_back(InputKey(Vector2f(505,400),Vector2f(405,35),"Hold Piece",_evenement));
 
 
-    menuElements.push_back(Bouton(sf::Vector2f(505, _window_size->y-70),
-                                        sf::Vector2f(177, 30),
-                                        18,
-                                        _state));
-
+    menuElements.push_back(Bouton(sf::Vector2f(505, _window_size->y-70), sf::Vector2f(177, 30), 18, _state));
     menuElements[0].setAction(SETTINGS);
     menuElements[0].setText(L"Retour");
 
-    menuElements.push_back(Bouton(sf::Vector2f(278, _window_size->y-70),
-                                        sf::Vector2f(177, 30),
-                                        18,
-                                        _state));
-
+    menuElements.push_back(Bouton(sf::Vector2f(278, _window_size->y-70), sf::Vector2f(177, 30), 18, _state));
     menuElements[1].setAction(INDEX);
     menuElements[1].setText(L"Menu Principal");
 

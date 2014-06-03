@@ -126,6 +126,12 @@
 		<Unit filename="Bouton.hpp">
 			<Option virtualFolder="GUI Parts/Inputs/" />
 		</Unit>
+		<Unit filename="BoutonLink.cpp">
+			<Option virtualFolder="GUI Parts/Inputs/" />
+		</Unit>
+		<Unit filename="BoutonLink.hpp">
+			<Option virtualFolder="GUI Parts/Inputs/" />
+		</Unit>
 		<Unit filename="Collision.cpp">
 			<Option virtualFolder="Non-Class/" />
 		</Unit>
@@ -220,6 +226,12 @@
 			<Option virtualFolder="GUI Parts/Menu/" />
 		</Unit>
 		<Unit filename="MenuSettingsGame.hpp">
+			<Option virtualFolder="GUI Parts/Menu/" />
+		</Unit>
+		<Unit filename="MenuSettingsGraphics.cpp">
+			<Option virtualFolder="GUI Parts/Menu/" />
+		</Unit>
+		<Unit filename="MenuSettingsGraphics.hpp">
 			<Option virtualFolder="GUI Parts/Menu/" />
 		</Unit>
 		<Unit filename="MenuSettingsTouches.cpp">

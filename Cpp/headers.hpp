@@ -72,7 +72,8 @@
 #define SETTINGSTOUCHES 4
 #define SETTINGSAUDIO 5
 #define SCORE 6
-#define SETTINGSGRAPHIC 7
+#define SETTINGSGAME 7
+#define SETTINGSGRAPHIC 8
 
 
 // TetrisBoard :

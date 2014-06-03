@@ -5,9 +5,19 @@
 
 ScreenScore::ScreenScore(sf::Vector2i * window_size, char *state, Scores * scores) :
     Menu(window_size, state),
-    scoreTable(255/20+1)
+    scoreTable(255/20+1),
+    lien(sf::Text(), "http://sfmltetris.no-ip.org/SFMLTetris/scores.php")
 {
     _scores = scores;
+
+
+
+    lien.getText().setCharacterSize(20);
+    lien.getText().setFont(*Ressources::getDefaultFont());
+    lien.getText().setPosition(300, 490);
+    lien.getText().setString("Scores sur le site web");
+
+
 
     _page = 0;
 
@@ -55,6 +65,14 @@ ScreenScore::~ScreenScore()
 
 
 
+void ScreenScore::onEvent(sf::Event & event)
+{
+    Menu::onEvent(event);
+    lien.onEvent(event);
+}
+
+
+
 
 void ScreenScore::update()
 {
@@ -98,6 +116,7 @@ void ScreenScore::draw(sf::RenderTarget& target, sf::RenderStates states) const
         target.draw(menuElements[1], states);
         if (_page < _max_page - 1)
         target.draw(menuElements[2], states);
+        target.draw(lien, states);
 
     for (unsigned int i=0; i<scoreTable[_page].size(); i++)
         target.draw(scoreTable[_page][i], states);

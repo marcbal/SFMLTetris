@@ -27,7 +27,8 @@ Application::Application() :
     _screenElement[SETTINGS]= new MenuSettings(&_window_size,&_state);
     _screenElement[SETTINGSTOUCHES]= new MenuSettingsTouches(&_window_size,&_state,&_event,&_gameconfig);
     _screenElement[SETTINGSAUDIO]= new MenuSettingsAudio(&_window_size,&_state,&_audio);
-    _screenElement[SETTINGSGRAPHIC]= new MenuSettingsGame(&_window_size,&_state,&_oGL,&_gameconfig);
+    _screenElement[SETTINGSGAME]= new MenuSettingsGame(&_window_size,&_state,&_oGL,&_gameconfig);
+    _screenElement[SETTINGSGRAPHIC]= new MenuSettingsGraphics(&_window_size,&_state,&_gameconfig);
 
     _screenDebug.setGamePtr(screenGame);
 
