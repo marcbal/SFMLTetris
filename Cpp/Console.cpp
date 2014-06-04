@@ -4,6 +4,22 @@
 vector<sf::String> Console::buffer_to_debugger;
 sf::Clock Console::_clock;
 sf::Mutex Console::_threadLock;
+ofstream * Console::_logfile = nullptr;
+
+
+
+void Console::initLogFile()
+{
+    makeDir("logs");
+    if (_logfile == nullptr)
+    {
+        _logfile = new ofstream(("logs/"+to_string((int)time(NULL))+".log").c_str(), ios::out | ios::trunc);
+        if (!_logfile->is_open())
+            Console::err(L"Impossible d'accéder au fichier log pour écriture.");
+    }
+}
+
+
 
 
 void Console::out(sf::String message)
@@ -45,6 +61,9 @@ void Console::add_message(sf::String message, char out)
         }
         else if (out == 'e')
             cerr << init_out.toAnsiString() << lines[i].toAnsiString() << endl;
+
+        if (_logfile != nullptr && _logfile->is_open())
+            (*_logfile) << init_out.toAnsiString() << lines[i].toAnsiString() << endl;
     }
 
     _threadLock.unlock();

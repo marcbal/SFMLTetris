@@ -5,6 +5,7 @@
 
 #include "headers.hpp"
 #include "fn_string.hpp"
+#include "fileManager.hpp"
 
 using namespace std;
 using namespace sf;
@@ -17,6 +18,8 @@ class Console
         static sf::Clock _clock;
         static sf::Mutex _threadLock;
 
+        static ofstream * _logfile;
+
         static void add_message(sf::String message, char out);
     public :
 
@@ -25,6 +28,8 @@ class Console
         static void err(sf::String message, string file, int line);
 
         static vector<sf::String> getLogMessages();
+
+        static void initLogFile();
 };
 
 #endif // CONSOLE_H
