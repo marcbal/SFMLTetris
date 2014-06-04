@@ -202,25 +202,33 @@ void Game::onEvent(sf::Event & event)
                 initTimeoutOnMove();
         break;
         case sf::Event::MouseButtonPressed:
-            if (!_gameConfig->getUseMouse() || _gameConfig->get3DMode() || _AIActualPlaying)
+            if (!_gameConfig->getUseMouse() || _gameConfig->get3DMode())
                 return;
-            switch(event.mouseButton.button)
+            if (_AIActualPlaying)
             {
-                case sf::Mouse::Left:
-                    if(matrix.rotateLeft())
-                        initTimeoutOnMove();
-                break;
-                case sf::Mouse::Right:
-                    if(matrix.rotateRight())
-                        initTimeoutOnMove();
-                break;
-                case sf::Mouse::Middle:
-                    matrix.MoveDown();
-                    _nb_manual_down += SOFT_DROP_BONUS_COEFF;
-                    setTimeLastMoveDown();
-                break;
-                default: break;
+                matrix.mouseIADisturb(event);
             }
+            else
+            {
+                switch(event.mouseButton.button)
+                {
+                    case sf::Mouse::Left:
+                        if(matrix.rotateLeft())
+                            initTimeoutOnMove();
+                    break;
+                    case sf::Mouse::Right:
+                        if(matrix.rotateRight())
+                            initTimeoutOnMove();
+                    break;
+                    case sf::Mouse::Middle:
+                        matrix.MoveDown();
+                        _nb_manual_down += SOFT_DROP_BONUS_COEFF;
+                        setTimeLastMoveDown();
+                    break;
+                    default: break;
+                }
+            }
+
         break;
         default: break;
     }

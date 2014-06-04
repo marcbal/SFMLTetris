@@ -134,7 +134,6 @@ void InputText::onTextEntered(Event & event){
              _val = _val.substr(1,_val.size()-1);
     }
 
-    cout << _cursorPosition << endl;
     _cursorClocker.restart();
     _affCursor = true;
 

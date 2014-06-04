@@ -252,6 +252,7 @@ void GameConfiguration::applyGraphicsSettings(sf::RenderWindow & window, sf::Vec
         sf::ContextSettings s = window.getSettings();
         s.antialiasingLevel = _graphicsAntialiasing;
         window.create(sf::VideoMode(window_size.x, window_size.y), L"SFML Tetris", Style::Close | Style::Titlebar | Style::Resize, s);
+        changeAntialias = false;
     }
 }
 

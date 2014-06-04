@@ -39,6 +39,38 @@ TetrisBoard::~TetrisBoard(){}
 
 
 
+void TetrisBoard::mouseIADisturb(sf::Event & event)
+{
+    sf::FloatRect rect = boardShape.getGlobalBounds();
+    if (event.type != sf::Event::MouseButtonPressed)
+        return;
+    sf::Vector2f cur_pos(event.mouseButton.x, event.mouseButton.y);
+    if (!rect.contains(cur_pos))
+        return;
+    sf::Vector2f local_cur_pos = cur_pos - boardShape.getPosition();
+
+    sf::Vector2i matrixPos((int)((local_cur_pos.x/(float)rect.width)*BOARD_WIDTH),
+                           (int)((local_cur_pos.y/(float)rect.height)*BOARD_HEIGHT));
+
+    if (event.mouseButton.button == sf::Mouse::Left
+        && getBoardData(matrixPos.x, matrixPos.y) < 10)
+        setBoardData(matrixPos.x, matrixPos.y, rand_int(10, 16));
+    else if (event.mouseButton.button == sf::Mouse::Right
+             && getBoardData(matrixPos.x, matrixPos.y) >= 10
+             && getBoardData(matrixPos.x, matrixPos.y) < 20)
+        setBoardData(matrixPos.x, matrixPos.y, 0);
+
+
+
+}
+
+
+
+
+
+
+
+
 bool TetrisBoard::mouseLeftRight(sf::Event event)
 {
     if (event.type != sf::Event::MouseMoved)

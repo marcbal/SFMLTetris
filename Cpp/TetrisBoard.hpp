@@ -26,6 +26,8 @@ class TetrisBoard : public LogicalTetrisBoard, public sf::Drawable
 
         void setBoardData(int x, int y, int data);
 
+        void mouseIADisturb(sf::Event & event);
+
 
 
     private:
