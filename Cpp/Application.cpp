@@ -28,15 +28,15 @@ Application::Application() :
     _screenElement[SETTINGSTOUCHES]= new MenuSettingsTouches(&_window_size,&_state,&_event,&_gameconfig);
     _screenElement[SETTINGSAUDIO]= new MenuSettingsAudio(&_window_size,&_state,&_audio);
     _screenElement[SETTINGSGAME]= new MenuSettingsGame(&_window_size,&_state,&_oGL,&_gameconfig);
-    _screenElement[SETTINGSGRAPHIC]= new MenuSettingsGraphics(&_window_size,&_state,&_gameconfig);
+    _screenElement[SETTINGSGRAPHIC]= new MenuSettingsGraphics(&_window_size,&_state,&_gameconfig,&_window);
 
     _screenDebug.setGamePtr(screenGame);
 
-	_window.setFramerateLimit(FPS_MAX);
+	_window.setFramerateLimit(_gameconfig.getFPS());
 	_window.setKeyRepeatEnabled(false);
 	_window_setting.depthBits = 24;
     _window_setting.antialiasingLevel = 4;
-    _window.create(VideoMode(_window_size.x, _window_size.y), L"SFMLTetris", Style::Close | Style::Titlebar | Style::Resize, _window_setting);
+    _window.create(VideoMode(_window_size.x, _window_size.y), L"SFML Tetris", Style::Close | Style::Titlebar | Style::Resize, _window_setting);
 
     sf::Image * logo = Ressources::getLogoMin();
     _window.setIcon(logo->getSize().x, logo->getSize().y, logo->getPixelsPtr());

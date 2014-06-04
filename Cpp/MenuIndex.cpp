@@ -36,10 +36,10 @@ MenuIndex::MenuIndex(sf::Vector2i * window_size,char * state) :
     menuElements[3].setText(L"Quitter");
 
 
-    lien.getText().setCharacterSize(20);
+    lien.getText().setCharacterSize(30);
     lien.getText().setFont(*Ressources::getDefaultFont());
-    lien.getText().setPosition(300, 480);
-    lien.getText().setString("Site web : sfmltetris.no-ip.org");
+    lien.getText().setPosition(364, 460);
+    lien.getText().setString("Site internet");
 }
 
 

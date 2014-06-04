@@ -84,7 +84,7 @@ void InputRange::updateVal(){
         return;
     }
 
-    val=((_positionMouse.x-_position.x)/_size.x)*(valMax-valMin);
+    val=((_positionMouse.x-_position.x)/_size.x)*(valMax-valMin)+valMin;
 
     majGraphique();
 }

@@ -5,6 +5,8 @@ const string GameConfiguration::_config_file("configuration/game.cfg");
 
 GameConfiguration::GameConfiguration()
 {
+    changeAntialias = false;
+    changeFPS = false;
     makeDir("configuration");
     if (!loadFromFile())
         initDefault();
@@ -27,6 +29,8 @@ sf::Vector3f GameConfiguration::get3DInclinaison(){return _3DInclinaison;}
 string GameConfiguration::getNickName(){return _nickname;}
 bool GameConfiguration::getUseMouse(){return _useMouse;}
 bool GameConfiguration::getOnlineScore(){return _onlineScore;}
+unsigned int GameConfiguration::getFPS(){return _graphicsFPS;}
+unsigned int GameConfiguration::getAntialiasing(){return _graphicsAntialiasing;}
 
 void GameConfiguration::setDrawExplosions(bool b){
     if (_drawExplosions != b)
@@ -78,10 +82,28 @@ void GameConfiguration::setUseMouse(bool b){
         saveConfigurationFile();
     }
 }
- void GameConfiguration::setOnlineScore(bool b){
+void GameConfiguration::setOnlineScore(bool b){
     if (_onlineScore != b)
     {
         _onlineScore = b;
+        saveConfigurationFile();
+    }
+}
+
+void GameConfiguration::setFPS(unsigned int i){
+    if (_graphicsFPS != i)
+    {
+        changeFPS = true;
+        _graphicsFPS = i;
+        saveConfigurationFile();
+    }
+}
+
+void GameConfiguration::setAntialiasing(unsigned int i){
+    if (_graphicsAntialiasing != i)
+    {
+        changeAntialias = true;
+        _graphicsAntialiasing = i;
         saveConfigurationFile();
     }
 }
@@ -96,8 +118,8 @@ bool GameConfiguration::loadFromFile()
 {
     ifstream saveFile(_config_file.c_str(), ios::in);
 
-    bool ghost, explosion, mode3d, autorotation, inclinaison, nickname, mouse, online;
-    ghost = explosion = mode3d = autorotation = inclinaison = nickname = mouse = online = false;
+    bool ghost, explosion, mode3d, autorotation, inclinaison, nickname, mouse, online, fps, antialias;
+    ghost = explosion = mode3d = autorotation = inclinaison = nickname = mouse = online = fps = antialias = false;
 
     if(!saveFile)
         return false;
@@ -140,6 +162,14 @@ bool GameConfiguration::loadFromFile()
             _onlineScore=string_to_int(words[1]) != 0;
             online = true;
         }
+        else if(words[0]=="graphics_antialiasing"){
+            _graphicsAntialiasing=string_to_int(words[1]);
+            antialias = true;
+        }
+        else if(words[0]=="graphics_FPS"){
+            _graphicsFPS=string_to_int(words[1]);
+            fps = true;
+        }
         else if(words[0]=="3D_inclinaison"){
             vector<string> axes = explode(words[1], ';');
             if (axes.size() == 3)
@@ -164,7 +194,7 @@ bool GameConfiguration::loadFromFile()
 
     saveFile.close();
 
-    if(ghost&&explosion&&mode3d&&autorotation&&inclinaison&&nickname&&mouse)
+    if(ghost&&explosion&&mode3d&&autorotation&&inclinaison&&nickname&&mouse&&fps&&antialias)
     return true;
 
     return false;
@@ -183,6 +213,8 @@ bool GameConfiguration::saveConfigurationFile()
     saveFile << "3D_autorotation:"<<_3DAutorotation<<endl;
     saveFile << "3D_inclinaison:"<<_3DInclinaison.x<<";"<<_3DInclinaison.y<<";"<<_3DInclinaison.z<<endl;
     saveFile << "nickname:"<<_nickname<<endl;
+    saveFile << "graphics_antialiasing:"<<_graphicsAntialiasing<<endl;
+    saveFile << "graphics_FPS:"<<_graphicsFPS<<endl;
 
     saveFile.close();
 
@@ -197,10 +229,31 @@ void GameConfiguration::initDefault()
     _useMouse = false;
     _onlineScore = true;
     _3DInclinaison = sf::Vector3f(0, 0, 0);
-    _nickname = "?";
-    Console::out(L"La configuration du jeu a été réinitialisé");
+    _nickname = "Pseudo";
+    _graphicsAntialiasing = 0;
+    _graphicsFPS = FPS_MAX;
+    Console::out(L"La configuration du jeu a été réinitialisée");
 }
 
+
+
+
+
+
+void GameConfiguration::applyGraphicsSettings(sf::RenderWindow & window, sf::Vector2i window_size)
+{
+    if (changeFPS)
+    {
+        window.setFramerateLimit(getFPS());
+        changeFPS = false;
+    }
+    if (changeAntialias)
+    {
+        sf::ContextSettings s = window.getSettings();
+        s.antialiasingLevel = _graphicsAntialiasing;
+        window.create(sf::VideoMode(window_size.x, window_size.y), L"SFML Tetris", Style::Close | Style::Titlebar | Style::Resize, s);
+    }
+}
 
 
 

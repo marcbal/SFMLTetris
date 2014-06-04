@@ -31,7 +31,7 @@ void AudioConfiguration::initDefault(){
     _play = false;
     _folder="res/music/";
     _volume=100;
-    Console::out(L"La configuration audio a été réinitialisé");
+    Console::out(L"La configuration audio a été réinitialisée");
 }
 
 void AudioConfiguration::addMusic(string file){

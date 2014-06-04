@@ -3,12 +3,14 @@
 
 #include "Menu.hpp"
 #include "GameConfiguration.hpp"
+#include "InputRange.hpp"
+#include "Bouton.hpp"
 
 
 class MenuSettingsGraphics : public Menu
 {
     public:
-        MenuSettingsGraphics(sf::Vector2i * window_size,char * state,GameConfiguration * gameConfig);
+        MenuSettingsGraphics(sf::Vector2i * window_size,char * state,GameConfiguration * gameConfig, sf::RenderWindow * window);
         virtual ~MenuSettingsGraphics();
         virtual void onEvent(sf::Event & event);
         virtual void update();
@@ -17,6 +19,15 @@ class MenuSettingsGraphics : public Menu
     private:
 
         GameConfiguration * _gameConfig;
+
+
+        InputRange _antialias;
+        sf::Text textAntialias;
+        InputRange _FPS;
+        sf::Text textFPS;
+
+        sf::RenderWindow * _window;
+        char appliquer;
 };
 
 #endif // MENUSETTINGSGRAPHICS_HPP

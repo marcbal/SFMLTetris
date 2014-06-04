@@ -30,9 +30,13 @@ class GameConfiguration
         void setUseMouse(bool b);
         bool getOnlineScore();
         void setOnlineScore(bool b);
+        unsigned int getFPS();
+        void setFPS(unsigned int i);
+        unsigned int getAntialiasing();
+        void setAntialiasing(unsigned int i);
 
 
-
+        void applyGraphicsSettings(sf::RenderWindow & window, sf::Vector2i window_size);
 
 
     protected:
@@ -48,6 +52,13 @@ class GameConfiguration
         bool _onlineScore;
         sf::Vector3f _3DInclinaison;
         string _nickname;
+
+
+        unsigned int _graphicsAntialiasing;
+        unsigned int _graphicsFPS;
+
+        bool changeAntialias;
+        bool changeFPS;
 
 
         static const string _config_file;

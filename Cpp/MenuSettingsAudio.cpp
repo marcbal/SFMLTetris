@@ -31,7 +31,7 @@ MenuSettingsAudio::MenuSettingsAudio(Vector2i * window_size,char *state,AudioCon
     textVolume.setColor(sf::Color::White);
     textVolume.setFont(*Ressources::getDefaultFont());
     textVolume.setPosition(50, 200);
-    textVolume.setString("Volume de la musique");
+    textVolume.setString("Volume de la musique : "+to_string((int) _audio->getVolume())+"%");
 }
 
 
@@ -43,6 +43,7 @@ void MenuSettingsAudio::onEvent(Event & event){
     Menu::onEvent(event);
     _audio->setVolume(_volume.getValue());
     _audio->setPlay(_play.getValue());
+    textVolume.setString("Volume de la musique : "+to_string((int) _audio->getVolume())+"%");
 }
 
 void MenuSettingsAudio::draw(sf::RenderTarget& target, sf::RenderStates states) const
