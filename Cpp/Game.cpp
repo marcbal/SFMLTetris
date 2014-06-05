@@ -310,10 +310,10 @@ void Game::restartGame()
 
     matrix.newPiece(*(new Tetromino(tetrominoRand.getTetrominoType(), 0)));
     if (_score > 0)
-        scoreInfosBefore.setText(L"Partie précédente :  \nScore : "+ to_string(_score) +"\n"+
-                                 "Lignes : "+to_string(_nb_line)+"\n"+
-                                 "Niveau : "+to_string(getLevel())+"\n"+
-                                 "Tetrominos : "+to_string(_nb_tetromino)+"\n"+
+        scoreInfosBefore.setText(L"Partie précédente :  \nScore : "+ to_string(_score, " ") +"\n"+
+                                 "Lignes : "+to_string(_nb_line, " ")+"\n"+
+                                 "Niveau : "+to_string(getLevel(), " ")+"\n"+
+                                 "Tetrominos : "+to_string(_nb_tetromino, " ")+"\n"+
                                  "Temps : "+formattedDuration(getGameTime(), 1));
 
     for (int i=0; i<NB_NEXT_TETROMINO; i++)
@@ -433,7 +433,6 @@ void Game::update()
         if (new_del_line > 0)
             _score += _nb_manual_down; // ajoute le bonus pour l'accelération
 
-
         if (_score > 1999999999)
             _score = 1999999999;
 
@@ -461,10 +460,10 @@ void Game::update()
 
 
 
-    scoreInfos.setText("Partie en cours :    \nScore : "+to_string(_score)+"\n"+
-                       "Lignes : "+to_string(_nb_line)+"\n"+
-                       "Niveau : "+to_string(getLevel())+"\n"+
-                       "Tetrominos : "+to_string(_nb_tetromino)+"\n"+
+    scoreInfos.setText("Partie en cours :    \nScore : "+to_string(_score, " ")+"\n"+
+                       "Lignes : "+to_string(_nb_line, " ")+"\n"+
+                       "Niveau : "+to_string(getLevel(), " ")+"\n"+
+                       "Tetrominos : "+to_string(_nb_tetromino, " ")+"\n"+
                        "Temps : "+formattedDuration(getGameTime(), 1)+"");
     _explosions.update();
 

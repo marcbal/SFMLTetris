@@ -43,6 +43,30 @@ string to_string( int Value, unsigned int nb_car )
     return nb;
 }
 
+string to_string( int Value, string separateur_millier )
+{
+    std::ostringstream oss;
+    oss << Value;
+    string nb = oss.str();
+    vector<string> milliers;
+    while (nb.size()>3)
+    {
+        milliers.push_back(nb.substr(nb.size()-3));
+        nb = nb.substr(0, nb.size()-3);
+    }
+    milliers.push_back(nb);
+
+    int i=0, j=milliers.size()-1;
+    while (i<j)
+    {
+        swap(milliers[i], milliers[j]);
+        i++; j--;
+    }
+
+    nb = implode(milliers, separateur_millier);
+    return nb;
+}
+
 
 
 string to_string( long long Value )

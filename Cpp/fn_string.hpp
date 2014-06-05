@@ -17,6 +17,8 @@ string to_string( int Value );
 
 string to_string( int Value, unsigned int nb_car );
 
+string to_string( int Value, string separateur_millier );
+
 string to_string( long long Value );
 
 string to_string( double Value );
