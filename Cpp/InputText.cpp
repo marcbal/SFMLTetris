@@ -10,6 +10,7 @@ InputText::InputText(sf::Vector2f pos, sf::Vector2f taille,sf::String val){
     _pos = pos;
     _size = taille;
     _val = val;
+    _cursorPosition = _val.size();
     textArea.setOutlineColor(sf::Color::White);
     textArea.setOutlineThickness(-2);
     textArea.setFillColor(Color(0, 0, 0, 192));
@@ -28,6 +29,28 @@ InputText::InputText(sf::Vector2f pos, sf::Vector2f taille,sf::String val){
     updateGraphic();
 }
 
+void InputText::onKeyPressed(sf::Event & event){
+    if(!_active)
+        return;
+
+    switch(event.key.code){
+        case Keyboard::Left:
+            if(_cursorPosition > 0)
+            _cursorPosition--;
+        break;
+        case Keyboard::Right:
+            if(_cursorPosition < _val.size())
+            _cursorPosition ++;
+        break;
+        default:
+        break;
+
+    }
+
+    _cursorClocker.restart();
+    _affCursor = true;
+}
+
 void InputText::onEvent(Event & event){
     switch(event.type)
     {
@@ -40,6 +63,9 @@ void InputText::onEvent(Event & event){
         case sf::Event::TextEntered:
             onTextEntered(event);
         break;
+        case sf::Event::KeyPressed:
+            onKeyPressed(event);
+        break;
         default:
         break;
     }
@@ -50,6 +76,23 @@ void InputText::onMouseUp(Event & event){
     if (event.mouseButton.button != sf::Mouse::Left)
         return;
     _active = _mouseHover;
+    if(_active){
+        if(_val.size()==0){
+            _cursorPosition=0;
+            return;
+        }
+        int relative = event.mouseButton.x - _text.getPosition().x +_text.getGlobalBounds().width/2;
+        if(relative>0)
+        _cursorPosition = relative/(_text.getGlobalBounds().width/_val.size());
+        else
+        _cursorPosition = 0;
+
+        if(_cursorPosition>_val.size())
+            _cursorPosition = _val.size();
+
+        _cursorClocker.restart();
+        _affCursor = true;
+    }
 }
 
 void InputText::update(){
@@ -67,13 +110,31 @@ void InputText::onTextEntered(Event & event){
 
     if(!_active)
         return;
+    if(event.text.unicode > 31 && event.text.unicode < 127 && _val.size()<29){
+        if(_cursorPosition != _val.size())
+            _val = _val.substr(0,_cursorPosition)+event.text.unicode+_val.substr(_cursorPosition,_val.size()-1);
+        else
+            _val += event.text.unicode;
+        _cursorPosition ++;
 
-    if(event.text.unicode > 31 && event.text.unicode < 127 && _val.size()<29)
-        _val += event.text.unicode;
+    }
 
-    else if(event.text.unicode == 8)
-        _val =  _val.substr(0,_val.size()-1);
+    else if(event.text.unicode == 8 && _cursorPosition>0){
+        if(_cursorPosition != _val.size())
+            _val =  _val.substr(0,_cursorPosition-1)+_val.substr(_cursorPosition,_val.size()-1);
+        else
+             _val = _val.substr(0,_val.size()-1);
 
+        _cursorPosition --;
+    }
+    else if(event.text.unicode == 127 && _cursorPosition<_val.size()){
+        if(_cursorPosition != 0)
+            _val =  _val.substr(0,_cursorPosition)+_val.substr(_cursorPosition+1,_val.size()-1);
+        else
+             _val = _val.substr(1,_val.size()-1);
+    }
+
+    cout << _cursorPosition << endl;
     _cursorClocker.restart();
     _affCursor = true;
 
@@ -103,9 +164,16 @@ void InputText::updateGraphic(){
 
     _text.setString(_val);
     updateTextPosition();
+    Vector2f cursorPosition;
+    cursorPosition.x =(_text.getPosition().x-_text.getGlobalBounds().width/2);
+    if(_val.size()>0)
+    cursorPosition.x +=(_cursorPosition*_text.getGlobalBounds().width/_val.size());
+    else
+    cursorPosition.x += _text.getGlobalBounds().width;
 
-    textCursor.setPosition(Vector2f(_text.getPosition().x+_text.getGlobalBounds().width/2,
-                                    textArea.getPosition().y-10+textArea.getGlobalBounds().height/2));
+    cursorPosition.y = textArea.getPosition().y-10+textArea.getGlobalBounds().height/2;
+
+    textCursor.setPosition(cursorPosition);
 }
 
 void InputText::draw(sf::RenderTarget& target, sf::RenderStates states) const

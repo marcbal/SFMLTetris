@@ -15,7 +15,7 @@ class InputText : public sf::Drawable
 
     sf::Vector2f _pos;
     sf::Vector2f _size;
-
+    unsigned int _cursorPosition;
 
     std::string _val;
     sf::Text _text;
@@ -26,6 +26,7 @@ class InputText : public sf::Drawable
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     virtual void onMouseMove(sf::Event & event);
     virtual void onMouseUp(sf::Event & event);
+    virtual void onKeyPressed(sf::Event & event);
     virtual void onTextEntered(sf::Event & event);
     virtual void updateTextPosition();
     sf::RectangleShape textArea;
