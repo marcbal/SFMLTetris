@@ -31,6 +31,9 @@ bool GameConfiguration::getUseMouse(){return _useMouse;}
 bool GameConfiguration::getOnlineScore(){return _onlineScore;}
 unsigned int GameConfiguration::getFPS(){return _graphicsFPS;}
 unsigned int GameConfiguration::getAntialiasing(){return _graphicsAntialiasing;}
+unsigned int GameConfiguration::getBGParticules(){return _BGParticules;}
+float GameConfiguration::getBGSpeed(){return _BGSpeed;}
+float GameConfiguration::getBGPartSize(){return _BGPartSize;}
 
 void GameConfiguration::setDrawExplosions(bool b){
     if (_drawExplosions != b)
@@ -108,6 +111,30 @@ void GameConfiguration::setAntialiasing(unsigned int i){
     }
 }
 
+void GameConfiguration::setBGParticules(unsigned int i){
+    if (_BGParticules != i)
+    {
+        _BGParticules = i;
+        saveConfigurationFile();
+    }
+}
+
+void GameConfiguration::setBGSpeed(float f){
+    if (_BGSpeed != f)
+    {
+        _BGSpeed = f;
+        saveConfigurationFile();
+    }
+}
+
+void GameConfiguration::setBGPartSize(float f){
+    if (_BGPartSize != f)
+    {
+        _BGPartSize = f;
+        saveConfigurationFile();
+    }
+}
+
 
 
 
@@ -118,8 +145,8 @@ bool GameConfiguration::loadFromFile()
 {
     ifstream saveFile(_config_file.c_str(), ios::in);
 
-    bool ghost, explosion, mode3d, autorotation, inclinaison, nickname, mouse, online, fps, antialias;
-    ghost = explosion = mode3d = autorotation = inclinaison = nickname = mouse = online = fps = antialias = false;
+    bool ghost, explosion, mode3d, autorotation, inclinaison, nickname, mouse, online, fps, antialias, bgpart, bgspeed, bgpsize;
+    ghost = explosion = mode3d = autorotation = inclinaison = nickname = mouse = online = fps = antialias = bgpart = bgspeed = bgpsize = false;
 
     if(!saveFile)
         return false;
@@ -170,6 +197,18 @@ bool GameConfiguration::loadFromFile()
             _graphicsFPS=string_to_int(words[1]);
             fps = true;
         }
+        else if(words[0]=="BG_speed"){
+            _BGSpeed=string_to_float(words[1]);
+            bgspeed = true;
+        }
+        else if(words[0]=="BG_particules_size"){
+            _BGPartSize=string_to_float(words[1]);
+            bgpsize = true;
+        }
+        else if(words[0]=="BG_particules"){
+            _BGParticules=string_to_int(words[1]);
+            bgpart = true;
+        }
         else if(words[0]=="3D_inclinaison"){
             vector<string> axes = explode(words[1], ';');
             if (axes.size() == 3)
@@ -194,7 +233,7 @@ bool GameConfiguration::loadFromFile()
 
     saveFile.close();
 
-    if(ghost&&explosion&&mode3d&&autorotation&&inclinaison&&nickname&&mouse&&fps&&antialias)
+    if(ghost&&explosion&&mode3d&&autorotation&&inclinaison&&nickname&&mouse&&fps&&antialias&&bgspeed&&bgpart&&bgpsize)
     return true;
 
     return false;
@@ -215,6 +254,9 @@ bool GameConfiguration::saveConfigurationFile()
     saveFile << "nickname:"<<_nickname<<endl;
     saveFile << "graphics_antialiasing:"<<_graphicsAntialiasing<<endl;
     saveFile << "graphics_FPS:"<<_graphicsFPS<<endl;
+    saveFile << "BG_speed:"<<_BGSpeed<<endl;
+    saveFile << "BG_particules:"<<_BGParticules<<endl;
+    saveFile << "BG_particules_size:"<<_BGPartSize<<endl;
 
     saveFile.close();
 
@@ -232,6 +274,8 @@ void GameConfiguration::initDefault()
     _nickname = "Pseudo";
     _graphicsAntialiasing = 0;
     _graphicsFPS = FPS_MAX;
+    _BGSpeed = 0.3f;
+    _BGParticules = 100;
     Console::out(L"La configuration du jeu a été réinitialisée");
 }
 

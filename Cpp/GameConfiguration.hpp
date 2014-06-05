@@ -34,6 +34,12 @@ class GameConfiguration
         void setFPS(unsigned int i);
         unsigned int getAntialiasing();
         void setAntialiasing(unsigned int i);
+        unsigned int getBGParticules();
+        void setBGParticules(unsigned int i);
+        float getBGSpeed();
+        void setBGSpeed(float f);
+        float getBGPartSize();
+        void setBGPartSize(float f);
 
 
         void applyGraphicsSettings(sf::RenderWindow & window, sf::Vector2i window_size);
@@ -59,6 +65,10 @@ class GameConfiguration
 
         bool changeAntialias;
         bool changeFPS;
+
+        unsigned int _BGParticules;
+        float _BGSpeed;
+        float _BGPartSize;
 
 
         static const string _config_file;

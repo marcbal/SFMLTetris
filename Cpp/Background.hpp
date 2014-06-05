@@ -4,6 +4,7 @@
 
 #include "headers.hpp"
 
+#include "GameConfiguration.hpp"
 #include "fn_random.hpp"
 
 using namespace std;
@@ -18,16 +19,16 @@ class Background : public sf::Drawable
         sf::Vector2i _window_size;
         sf::RectangleShape bordure;
 
+        GameConfiguration * _gameConfig;
+
 
         // sf::Drawable
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 
     public:
-        Background(sf::Vector2i window_size, unsigned int nb_particules);
+        Background(sf::Vector2i window_size, GameConfiguration * gameConfig);
         virtual ~Background();
-
-        void addParticule(unsigned int nb_new_particule);
 
         void update();
 
@@ -42,12 +43,17 @@ class Particule : public sf::Drawable
         sf::CircleShape shape;
         sf::Vector2f speed;
         sf::Vector2i _window_size;
+        float _radius_base;
+
+        sf::Clock _cl;
+
+        GameConfiguration * _gameConfig;
 
         // sf::Drawable
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
     public:
-        Particule(sf::Vector2i window_size);
+        Particule(sf::Vector2i window_size, GameConfiguration * gameConfig);
 
         void update();
 

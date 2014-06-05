@@ -8,10 +8,10 @@ using namespace sf;
 Application::Application() :
     _window_size(WINDOW_WIDTH, WINDOW_HEIGHT),
     _window(),
-    _background(_window_size, 200),
+    _gameconfig(),
+    _background(_window_size, &_gameconfig),
     _screenDebug(&_window_size),
     _showDebugScreen(false),
-    _gameconfig(),
     _oGL(&_gameconfig),
     _state(INDEX), // correspond à l'état d'affichage (ici, le menu au lancement du programme)
     _scores()

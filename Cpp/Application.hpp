@@ -38,11 +38,12 @@ class Application
 
         Evenement _event;
 
+        GameConfiguration _gameconfig;
+
         Background _background;
         ScreenDebug _screenDebug;
         bool _showDebugScreen;
 
-        GameConfiguration _gameconfig;
 
         OpenGL_Manager _oGL;
 

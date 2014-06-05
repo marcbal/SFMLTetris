@@ -18,12 +18,8 @@ class MenuSettingsGame : public Menu{
 private :
     OpenGL_Manager * _oGL;
     GameConfiguration * _gameConfig;
-    InputCheck _activateExplosions;
-    sf::Text textActivateExplosions;
     InputCheck _activateGhost;
     sf::Text textActivateGhost;
-    InputCheck _activate3D;
-    sf::Text textActivate3D;
     InputCheck _activateAutorotation;
     sf::Text textActivateAutorotation;
     InputCheck _onlineScore;

@@ -4,6 +4,7 @@
 #include "Menu.hpp"
 #include "GameConfiguration.hpp"
 #include "InputRange.hpp"
+#include "InputCheck.hpp"
 #include "Bouton.hpp"
 
 
@@ -25,6 +26,18 @@ class MenuSettingsGraphics : public Menu
         sf::Text textAntialias;
         InputRange _FPS;
         sf::Text textFPS;
+        InputRange _BGPart;
+        sf::Text textBGPart;
+        InputRange _BGSpeed;
+        sf::Text textBGSpeed;
+        InputRange _BGPSize;
+        sf::Text textBGPSize;
+
+
+        InputCheck _activateExplosions;
+        sf::Text textActivateExplosions;
+        InputCheck _activate3D;
+        sf::Text textActivate3D;
 
         sf::RenderWindow * _window;
         char appliquer;
