@@ -5,9 +5,7 @@
 #include "ScreenElement.hpp"
 #include "Ressources.hpp"
 #include "fn_time.hpp"
-
-
-
+#include "Game.hpp"
 
 class ScreenDebug : public ScreenElement
 {
@@ -15,11 +13,12 @@ class ScreenDebug : public ScreenElement
         ScreenDebug(sf::Vector2i* window_size);
         virtual ~ScreenDebug();
         virtual void update();
+        void setGamePtr(Game * game);
     protected:
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     private:
 
-        vector<string> _console_lines;
+        vector<sf::String> _console_lines;
 
         sf::Clock _FPSclock;
         sf::Clock _clock;
@@ -30,7 +29,7 @@ class ScreenDebug : public ScreenElement
         sf::Text _console_text;
         sf::RectangleShape _console_text_background;
 
-
+        Game * _game;
 
 };
 

@@ -4,17 +4,17 @@ using namespace std;
 using namespace sf;
 MenuSettingsGame::MenuSettingsGame(sf::Vector2i * window_size,char *state,OpenGL_Manager * oGL, GameConfiguration* gameConfig):
     Menu(window_size,state),
-    _activateExplosions(Vector2f(_window_size->x/2-250,80), Vector2f(20,20),gameConfig->getDrawExplosions()),
+    _activateExplosions(Vector2f(50,160), Vector2f(20,20),gameConfig->getDrawExplosions()),
     textActivateExplosions(),
-    _activateGhost(Vector2f(_window_size->x/2-250,120), Vector2f(20,20),gameConfig->getDrawGhost()),
+    _activateGhost(Vector2f(50,200), Vector2f(20,20),gameConfig->getDrawGhost()),
     textActivateGhost(),
-    _activate3D(Vector2f(_window_size->x/2-250,160), Vector2f(20,20),gameConfig->get3DMode()),
+    _activate3D(Vector2f(50,240), Vector2f(20,20),gameConfig->get3DMode()),
     textActivate3D(),
-    _activateAutorotation(Vector2f(_window_size->x/2-250,200), Vector2f(20,20),gameConfig->get3DAutorotation()),
+    _activateAutorotation(Vector2f(50,280), Vector2f(20,20),gameConfig->get3DAutorotation()),
     textActivateAutorotation(),
-    _onlineScore(Vector2f(_window_size->x/2-250,320), Vector2f(20,20),gameConfig->getOnlineScore()),
+    _onlineScore(Vector2f(505,200), Vector2f(20,20),gameConfig->getOnlineScore()),
     textOnlineScore(),
-    _enterPseudo(Vector2f(_window_size->x/2-250,260),Vector2f(500,40),gameConfig->getNickName())
+    _enterPseudo(Vector2f(505,240),Vector2f(405,30),gameConfig->getNickName())
 {
     _gameConfig = gameConfig;
     _oGL = oGL;
@@ -22,53 +22,48 @@ MenuSettingsGame::MenuSettingsGame(sf::Vector2i * window_size,char *state,OpenGL
 
     titre.setString(L"Paramètres de jeu");
 
-    menuElements.push_back(Bouton(sf::Vector2f(50, _window_size->y-120),
-                                        sf::Vector2f(200, 30),
-                                        18,
-                                        _state));
 
+    menuElements.push_back(Bouton(sf::Vector2f(505, _window_size->y-70), sf::Vector2f(177, 30), 18, _state));
     menuElements[0].setAction(SETTINGS);
-    menuElements[0].setText("Retour");
+    menuElements[0].setText(L"Retour");
 
-    menuElements.push_back(Bouton(sf::Vector2f(50, _window_size->y-80),
-                                        sf::Vector2f(200, 30),
-                                        18,
-                                        _state));
-
+    menuElements.push_back(Bouton(sf::Vector2f(278, _window_size->y-70), sf::Vector2f(177, 30), 18, _state));
     menuElements[1].setAction(INDEX);
-    menuElements[1].setText("Menu Principal");
+    menuElements[1].setText(L"Menu Principal");
 
-    textActivateExplosions.setCharacterSize(20);
+
+
+    textActivateExplosions.setCharacterSize(16);
     textActivateExplosions.setColor(sf::Color::White);
     textActivateExplosions.setFont(*Ressources::getDefaultFont());
-    textActivateExplosions.setPosition(_window_size->x/2-210, 80);
+    textActivateExplosions.setPosition(85, 160);
     textActivateExplosions.setString("Effets d'explosion (mode 2D seulement)");
 
-    textActivateGhost.setCharacterSize(20);
+    textActivateGhost.setCharacterSize(16);
     textActivateGhost.setColor(sf::Color::White);
     textActivateGhost.setFont(*Ressources::getDefaultFont());
-    textActivateGhost.setPosition(_window_size->x/2-210, 120);
+    textActivateGhost.setPosition(85, 200);
     textActivateGhost.setString(L"Afficher le fantôme du tetromino");
 
 
-    textActivate3D.setCharacterSize(20);
+    textActivate3D.setCharacterSize(16);
     textActivate3D.setColor(sf::Color::White);
     textActivate3D.setFont(*Ressources::getDefaultFont());
-    textActivate3D.setPosition(_window_size->x/2-210, 160);
+    textActivate3D.setPosition(85, 240);
     textActivate3D.setString("Activer la matrice 3D");
 
 
-    textActivateAutorotation.setCharacterSize(20);
+    textActivateAutorotation.setCharacterSize(16);
     textActivateAutorotation.setColor(sf::Color::White);
     textActivateAutorotation.setFont(*Ressources::getDefaultFont());
-    textActivateAutorotation.setPosition(_window_size->x/2-210, 200);
+    textActivateAutorotation.setPosition(85, 280);
     textActivateAutorotation.setString("Rotation automatique de la matrice 3D");
 
 
-    textOnlineScore.setCharacterSize(20);
+    textOnlineScore.setCharacterSize(16);
     textOnlineScore.setColor(sf::Color::White);
     textOnlineScore.setFont(*Ressources::getDefaultFont());
-    textOnlineScore.setPosition(_window_size->x/2-210, 320);
+    textOnlineScore.setPosition(540, 200);
     textOnlineScore.setString("Publier le score en ligne");
 }
 

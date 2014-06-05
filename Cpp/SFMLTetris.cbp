@@ -6,7 +6,7 @@
 		<Option platforms="Windows;Unix;" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
-		<Option virtualFolders="GUI Parts\;GUI Parts\Menu\;GUI Parts\Inputs\;GUI Parts\OpenGL\;Main\;Audio\;Non-Class\;Events\;Tetris Elements\;Scoring\;GUI Parts\Ressources\;" />
+		<Option virtualFolders="GUI Parts\;GUI Parts\Menu\;GUI Parts\Inputs\;GUI Parts\OpenGL\;Main\;Audio\;Non-Class\;Events\;Tetris Elements\;Scoring\;GUI Parts\Ressources\;IA\;" />
 		<Build>
 			<Target title="Debug_linux64">
 				<Option platforms="Unix;" />
@@ -126,6 +126,12 @@
 		<Unit filename="Bouton.hpp">
 			<Option virtualFolder="GUI Parts/Inputs/" />
 		</Unit>
+		<Unit filename="BoutonLink.cpp">
+			<Option virtualFolder="GUI Parts/Inputs/" />
+		</Unit>
+		<Unit filename="BoutonLink.hpp">
+			<Option virtualFolder="GUI Parts/Inputs/" />
+		</Unit>
 		<Unit filename="Collision.cpp">
 			<Option virtualFolder="Non-Class/" />
 		</Unit>
@@ -186,6 +192,12 @@
 		<Unit filename="InputText.hpp">
 			<Option virtualFolder="GUI Parts/Inputs/" />
 		</Unit>
+		<Unit filename="LogicalTetrisBoard.cpp">
+			<Option virtualFolder="Tetris Elements/" />
+		</Unit>
+		<Unit filename="LogicalTetrisBoard.hpp">
+			<Option virtualFolder="Tetris Elements/" />
+		</Unit>
 		<Unit filename="Menu.cpp">
 			<Option virtualFolder="GUI Parts/Menu/" />
 		</Unit>
@@ -214,6 +226,12 @@
 			<Option virtualFolder="GUI Parts/Menu/" />
 		</Unit>
 		<Unit filename="MenuSettingsGame.hpp">
+			<Option virtualFolder="GUI Parts/Menu/" />
+		</Unit>
+		<Unit filename="MenuSettingsGraphics.cpp">
+			<Option virtualFolder="GUI Parts/Menu/" />
+		</Unit>
+		<Unit filename="MenuSettingsGraphics.hpp">
 			<Option virtualFolder="GUI Parts/Menu/" />
 		</Unit>
 		<Unit filename="MenuSettingsTouches.cpp">
@@ -269,6 +287,12 @@
 		</Unit>
 		<Unit filename="ScreenScore.hpp">
 			<Option virtualFolder="GUI Parts/" />
+		</Unit>
+		<Unit filename="TetrisAI.cpp">
+			<Option virtualFolder="IA/" />
+		</Unit>
+		<Unit filename="TetrisAI.hpp">
+			<Option virtualFolder="IA/" />
 		</Unit>
 		<Unit filename="TetrisBoard.cpp">
 			<Option virtualFolder="Tetris Elements/" />

@@ -4,6 +4,7 @@
 
 #include "headers.hpp"
 #include "Bouton.hpp"
+#include "BoutonLink.hpp"
 #include "ScreenElement.hpp"
 #include "Application.hpp"
 #include "Menu.hpp"
@@ -17,12 +18,14 @@ class MenuIndex : public Menu
     private:
         sf::Texture texture;
         sf::Sprite sprite;
+        BoutonLink lien;
         // sf::Drawable
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     public:
 
 
 
+        virtual void onEvent(sf::Event & event);
 
         MenuIndex(sf::Vector2i * window_size,char *state);
 

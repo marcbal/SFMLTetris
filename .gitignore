@@ -14,7 +14,8 @@ Cpp/bin/*
 *.layout
 *.depend
 
-Cpp/save/score.bin
+Cpp/save/*
+Cpp/logs/*
 web/include/id_bdd.php
 Cpp/configuration/*
 *.res

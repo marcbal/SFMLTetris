@@ -10,7 +10,7 @@ class OpenGL_Manager
 {
     public:
         OpenGL_Manager(GameConfiguration* _gameConfig);
-        void setTetrisBoard(int tetrisBoard[][BOARD_HEIGHT]);
+        void setTetrisBoard(uint8_t tetrisBoard[][BOARD_HEIGHT]);
         void preDraw();
         void drawShape();
         void drawShapeAlpha(int x, int y);
@@ -21,7 +21,7 @@ class OpenGL_Manager
         ~OpenGL_Manager();
 
     private:
-        int ** _tetrisBoard;
+        uint8_t ** _tetrisBoard;
         sf::Vector3f orientation_progress;
         sf::Vector3f orientation_vitesse;
         sf::Vector3f orientation_timeMax;

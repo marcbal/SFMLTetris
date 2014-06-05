@@ -13,26 +13,38 @@ const std::string Evenement::KeyName[] = {"A", "B", "C", "D", "E", "F", "G", "H"
 								 "Ctrl Gauche", "Shift Gauche", "Alt Gauche", "System Gauche",
 								 "Ctrl Droit", "Shift Droit", "Alt Droit", "System Droit", "Menu",
 								 "[", "]", ";", ",", ".", "'", "/", "\\", "~", "=", "-", "Espace",
-								 "Entrée", "Retour arrière", "Tabulation", "Page suiv.", "Page prec.",
-								 "Fin", "Début", "Insert", "Suppr", "+ Numpad", "- Numpad", "* Numpad", "/ Numpad", "Gauche", "Droite", "Haut",
+								 "Entree", "Retour arriere", "Tabulation", "Page suiv.", "Page prec.",
+								 "Fin", "Debut", "Insert", "Suppr", "+ Numpad", "- Numpad", "* Numpad", "/ Numpad", "Gauche", "Droite", "Haut",
 								 "Bas", "0 Numpad", "1 Numpad", "2 Numpad", "3 Numpad", "4 Numpad", "5 Numpad", "6 Numpad", "7 Numpad", "8 Numpad", "9  Numpad",
 								 "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12", "F13", "F14", "F15", "Pause"};
 
 Evenement::Evenement(){
     makeDir("configuration");
+    initDefault();
+    /* on charge d'abord la configuration par défaut avant de l'écraser par celle présente
+    dans le fichier (évite les problèmes de touches non configurés à cause du fichier modifié à la main) */
     if(!loadFromFile("configuration/keyboard.cfg"))
-        initDefault();
+    {
+        Console::err("Erreur de chargement du fichier de configuration des touches.");
+        Console::out("La configuration des touches a été réinitialisée.");
+        saveConfigurationFile();
+    }
 }
 
 void Evenement::initDefault(){
     addEventConf("Gauche",Keyboard::Left);
     addEventConf("Droite",Keyboard::Right);
-    addEventConf("Pause",Keyboard::Escape);
-    addEventConf("Descente Rapide",Keyboard::Down);
-    addEventConf("Descente Instantanee",Keyboard::Up);
     addEventConf("Rotation Gauche",Keyboard::Q);
     addEventConf("Rotation Droite",Keyboard::D);
-    Console::out(L"La configuration des touches a été réinitialisé");
+    addEventConf("Descente Rapide",Keyboard::Down);
+    addEventConf("Descente Instantanee",Keyboard::Up);
+    addEventConf("Pause",Keyboard::Escape);
+    addEventConf("Recommencer",Keyboard::Return);
+    addEventConf("Hold Piece",Keyboard::Space);
+    addEventConf("Ecran Debug",Keyboard::F3);
+    addEventConf("Activation IA",Keyboard::F8);
+    addEventConf("IA P. Dellacherie",Keyboard::F9);
+    addEventConf("IA fait maison",Keyboard::F10);
 }
 
 bool Evenement::loadFromFile(string file){
@@ -50,7 +62,7 @@ bool Evenement::loadFromFile(string file){
             if(words.size()!=2)
                 return false;
 
-            _eventconf[words[0]] = (sf::Keyboard::Key)string_to_int(words[1]);
+            addEventConf(words[0], (sf::Keyboard::Key)string_to_int(words[1]));
         }
 
 
@@ -78,8 +90,11 @@ bool Evenement::saveConfigurationFile(){
 
 void Evenement::addEventConf(string str,Keyboard::Key key)
 {
-    _eventconf[str] = key;    //On crée ou met à jour la touche associée à un événement 'str'. Cette touche sera maintenant 'key'
-    saveConfigurationFile();
+    if(_eventconf.find(str)==_eventconf.end() || _eventconf[str] != key)
+    {   // cette condition réduit le nombre d'écriture dans le fichier
+        _eventconf[str] = key;    //On crée ou met à jour la touche associée à un événement 'str'. Cette touche sera maintenant 'key'
+        saveConfigurationFile();
+    }
 }
 
 bool Evenement::getEventState(std::string str)
@@ -91,7 +106,10 @@ Keyboard::Key Evenement::getEventKey(string str){
     if(_eventconf.find(str)!=_eventconf.end())
         return _eventconf[str];
     else
+    {
+        Console::err(L"L'évènement demandé \"" + str + L"\" n'a pas été trouvé dans le gestionnaire d'évènement", __FILE__, __LINE__);
         return Keyboard::Key::Unknown;
+    }
 }
 
 string Evenement::keyToString(Keyboard::Key key){

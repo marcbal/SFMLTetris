@@ -167,6 +167,57 @@ string wordwrap(string str, unsigned int width)
 }
 
 
+vector<sf::String> explode(const sf::String& str, wchar_t ch)
+{
+    sf::String suivant;
+    vector<sf::String> result;
+
+    // pour chaque caractère dans la chaine
+    for (unsigned int i = 0; i != str.getSize(); i++) {
+        // si on rencontre la chaine de séparation
+        if (str[i] == ch) {
+            // si on a eu des caractères depuis la précédente rencontre du caractère séparateur
+            if (!suivant.isEmpty()) {
+                // on ajoute au résultat de la fonction
+                result.push_back(suivant);
+                suivant.clear();
+            }
+        } else {
+            // on ajoute le caractère courant dans le résultat
+            suivant += str[i];
+        }
+    }
+    if (!suivant.isEmpty())
+         result.push_back(suivant);
+    return result;
+}
+
+
+
+sf::String wordwrap(sf::String str, unsigned int width)
+{
+    if (width == 0)
+        return str;
+
+
+    vector<sf::String> lines = explode(str, (wchar_t) L'\n');
+    sf::String result = "";
+    for (unsigned int i=0; i<lines.size(); i++)
+    {
+        while (lines[i].getSize()>width)
+        {
+            result += lines[i].toWideString().substr(0, width) + "\n";
+            lines[i] = lines[i].toWideString().substr(width, lines[i].getSize()-width);
+        }
+        result += lines[i]+"\n";
+    }
+
+    return (sf::String)(result.toWideString().substr(0, result.getSize()-1)); // on retire le dernier \n
+}
+
+
+
+
 
 string implode(vector<string> & tabstr, string ch)
 {
@@ -176,6 +227,19 @@ string implode(vector<string> & tabstr, string ch)
 		if (i!=0)
 			out.append(ch);
 		out.append(tabstr[i]);
+	}
+	return out;
+}
+
+
+sf::String implode(vector<sf::String> & tabstr, sf::String ch)
+{
+	sf::String out;
+	for (unsigned int i=0; i<tabstr.size(); i++)
+	{
+		if (i!=0)
+			out += ch;
+		out += tabstr[i];
 	}
 	return out;
 }

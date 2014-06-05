@@ -8,6 +8,7 @@ using namespace sf;
 int main()
 {
     srand(time(NULL));
+    Console::initLogFile();
     Application app;
     app.run();
 

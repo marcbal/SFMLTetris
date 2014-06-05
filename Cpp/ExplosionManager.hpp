@@ -19,6 +19,7 @@ class ExplosionManager : public sf::Drawable
         sf::Vector2i * _window_size;
 
 
+
         vector<RectangleExplosion> explosions;
 
 
@@ -34,6 +35,9 @@ class ExplosionManager : public sf::Drawable
 
 
         void addExplosion(RectangleExplosion explosion);
+
+
+        static int _nbParticules;
 };
 
 
@@ -73,6 +77,8 @@ class ExplosionParticle : public sf::Drawable
         sf::Vector2i * _window_size;
 
         sf::CircleShape _shape;
+
+        sf::Clock _cl;
 
         // sf::Drawable
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

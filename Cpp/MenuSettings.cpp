@@ -8,20 +8,20 @@ MenuSettings::MenuSettings(sf::Vector2i * window_size,char * state) :Menu(window
 
     titre.setString(L"Paramètres");
 
-    int nbElement = 4;
-
-    for (int i=0; i<nbElement; i++)
-    {
-        menuElements.push_back(Bouton(sf::Vector2f(_window_size->x/2 - 250,
-                                                         (_window_size->y-nbElement*50)/2+50*i),
-                                            sf::Vector2f(500, 40),25,_state));
-    }
+    menuElements.push_back(Bouton(sf::Vector2f(50, 200), sf::Vector2f(405, 40), 25, _state));
     menuElements[0].setAction(SETTINGSTOUCHES);
     menuElements[0].setText(L"Clavier et souris");
+    menuElements.push_back(Bouton(sf::Vector2f(50, 260), sf::Vector2f(405, 40), 25, _state));
     menuElements[1].setAction(SETTINGSAUDIO);
-    menuElements[1].setText(L"Musiques");
-    menuElements[2].setAction(SETTINGSGRAPHIC);
+    menuElements[1].setText(L"Paramètres audio");
+    menuElements.push_back(Bouton(sf::Vector2f(505, 200), sf::Vector2f(405, 40), 25, _state));
+    menuElements[2].setAction(SETTINGSGAME);
     menuElements[2].setText(L"Paramètres de jeu");
-    menuElements[3].setAction(INDEX);
-    menuElements[3].setText(L"Retour");
+    menuElements.push_back(Bouton(sf::Vector2f(505, 260), sf::Vector2f(405, 40), 25, _state));
+    menuElements[3].setAction(SETTINGSGRAPHIC);
+    menuElements[3].setText(L"Paramètres graphiques");
+
+    menuElements.push_back(Bouton(sf::Vector2f(278, _window_size->y-70), sf::Vector2f(404, 30), 18, _state));
+    menuElements[4].setAction(INDEX);
+    menuElements[4].setText(L"Retour");
 }

@@ -22,6 +22,9 @@ Game::Game(sf::Vector2i * window_size, char *state,Evenement * evenement, Scores
     tetrominoRand()
 {
     _score = 0;
+    _AIPlay = false;
+    _AIActualPlaying = false;
+    _AINbTetromino = 2;
     _gameConfig = gameConfig;
     _evenement = evenement;
     _scores = scores;
@@ -128,44 +131,63 @@ void Game::onEvent(sf::Event & event)
     switch(event.type)
     {
         case sf::Event::KeyPressed:
-            if(event.key.code == _evenement->getEventKey("Pause")){
-                    setPause(true);
-                    *_state = INDEX;
-            }
-
-            if(event.key.code == _evenement->getEventKey("Gauche")){
+            if (!_AIActualPlaying)
+            {
+                if(event.key.code == _evenement->getEventKey("Gauche")){
                     if (matrix.moveLeft())
                         initTimeoutOnMove();
-            }
+                }
 
-            if(event.key.code == _evenement->getEventKey("Droite")){
+                if(event.key.code == _evenement->getEventKey("Droite")){
                     if(matrix.moveRight())
                         initTimeoutOnMove();
-            }
+                }
 
-            if(event.key.code == _evenement->getEventKey("Descente Rapide")){
+                if(event.key.code == _evenement->getEventKey("Descente Rapide")){
                     matrix.MoveDown();
                     _nb_manual_down += SOFT_DROP_BONUS_COEFF;
                     setTimeLastMoveDown();
-            }
-            if(event.key.code == _evenement->getEventKey("Descente Instantanee")){
+                }
+                if(event.key.code == _evenement->getEventKey("Descente Instantanee")){
                     _nb_manual_down += HARD_DROP_BONUS_COEFF * matrix.HardDrop();
-            }
+                }
 
-            if(event.key.code == _evenement->getEventKey("Rotation Gauche"))
-            {
+                if(event.key.code == _evenement->getEventKey("Rotation Gauche"))
+                {
                     if(matrix.rotateLeft())
                         initTimeoutOnMove();
-            }
-            if(event.key.code == _evenement->getEventKey("Rotation Droite"))
-            {
+                }
+                if(event.key.code == _evenement->getEventKey("Rotation Droite"))
+                {
                     if(matrix.rotateRight())
                         initTimeoutOnMove();
+                }
+                if(event.key.code == _evenement->getEventKey("Hold Piece"))
+                {
+                    if(holdTetromino())
+                        setTimeLastMoveDown();
+                }
             }
-            if(event.key.code == sf::Keyboard::Space)   // à définir dans la configuration des touches
+
+            if(event.key.code == _evenement->getEventKey("Pause")){
+                setPause(true);
+                *_state = INDEX;
+            }
+            if(event.key.code == _evenement->getEventKey("Recommencer"))
             {
-                if(holdTetromino())
-                    setTimeLastMoveDown();
+                _replay = 1;
+            }
+            if(event.key.code == _evenement->getEventKey("Activation IA"))
+            {
+                _AIPlay = !_AIPlay;
+            }
+            if(event.key.code == _evenement->getEventKey("IA P. Dellacherie"))
+            {
+                _AINbTetromino = 1;
+            }
+            if(event.key.code == _evenement->getEventKey("IA fait maison"))
+            {
+                _AINbTetromino = 2;
             }
 
         break;
@@ -174,13 +196,13 @@ void Game::onEvent(sf::Event & event)
                 _oGL->onEvent(event);
                 return;
             }
-            if (!_gameConfig->getUseMouse())
+            if (!_gameConfig->getUseMouse() || _AIActualPlaying)
                 return;
             if (matrix.mouseLeftRight(event))
                 initTimeoutOnMove();
         break;
         case sf::Event::MouseButtonPressed:
-            if (!_gameConfig->getUseMouse() || _gameConfig->get3DMode())
+            if (!_gameConfig->getUseMouse() || _gameConfig->get3DMode() || _AIActualPlaying)
                 return;
             switch(event.mouseButton.button)
             {
@@ -303,7 +325,7 @@ void Game::restartGame()
     record.tetrominos = _nb_tetromino;
     record.time = lrint(getGameTime().asSeconds());
     _scores->addScore(record);
-    if (_gameConfig->getOnlineScore() && _score > 0)
+    if (_gameConfig->getOnlineScore() && _score > 0 && !_AIActualPlaying)
         _scoreSender.addDataToFinishGame(record);
     else
         _scoreSender.clearData();
@@ -316,6 +338,7 @@ void Game::restartGame()
     holdedTetromino.clearPiece();
     hasHoldedTetromino = false;
     canHoldTetromino = true;
+    _AIActualPlaying = _AIPlay;
     setTimeLastMoveDown();
 
 }
@@ -369,10 +392,25 @@ void Game::update()
     if (getPause())
         setPause(false);
 
+    if (_AIActualPlaying)
+    {
+        TetrisAI ai((LogicalTetrisBoard) matrix, (_AINbTetromino >= 2));
+        for (unsigned int i=0; i<_AINbTetromino-1 && i<nextTetromino.size(); i++)
+            ai.addNextTetromino(nextTetromino[i].getPiece());
+        Tetromino result = ai.getTetrominoWithBestPosition();
+        matrix.newPiece(result, false);
+        matrix.dessinePieceCourrante(false);
+        matrix.fixPiece();
+
+    }
 
     if (!matrix.pieceIsActive())
     {   // passage à la pièce suivante
-        int new_del_line = matrix.fullLinesClear(&_explosions);
+        int new_del_line;
+        if (_gameConfig->getDrawExplosions() && !_gameConfig->get3DMode())
+            new_del_line = matrix.fullLinesClear(&_explosions);
+        else
+            new_del_line = matrix.fullLinesClear(nullptr);
         int old_score = _score;
         _nb_line += new_del_line;
         switch (new_del_line)
@@ -387,10 +425,15 @@ void Game::update()
         if (new_del_line > 0)
             _score += _nb_manual_down; // ajoute le bonus pour l'accelération
 
-        _scoreSender.addDataInfoNextPiece(_score, _score - old_score, _nb_tetromino,
-                                          getGameTime(), _nb_line,
-                                          new_del_line, _nb_manual_down,
-                                          matrix.getPieceCourrante());
+
+        if (_score > 1999999999)
+            _score = 1999999999;
+
+        if (!_AIActualPlaying)
+            _scoreSender.addDataInfoNextPiece(_score, _score - old_score, _nb_tetromino,
+                                              getGameTime(), _nb_line,
+                                              new_del_line, _nb_manual_down,
+                                              matrix.getPieceCourrante());
 
         // on tente de placer la piece suivante
         if (!nextPiece())
@@ -417,7 +460,7 @@ void Game::update()
                        "Temps : "+formattedDuration(getGameTime(), 1)+"");
     _explosions.update();
 
-    matrix.dessinePieceCourrante(_gameConfig->getDrawGhost());
+    matrix.dessinePieceCourrante(_gameConfig->getDrawGhost() && !_AIActualPlaying);
 
     if(_gameConfig->get3DMode())
         _oGL->preDraw();//Pré-dessinage de la scène 3D

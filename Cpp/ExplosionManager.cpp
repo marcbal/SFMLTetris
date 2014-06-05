@@ -1,5 +1,9 @@
 #include "ExplosionManager.hpp"
 
+
+
+int ExplosionManager::_nbParticules = 0;
+
 ExplosionManager::ExplosionManager(sf::Vector2i * window_size) :
     _window_size(window_size),
     explosions()
@@ -17,6 +21,7 @@ ExplosionManager::~ExplosionManager()
 void ExplosionManager::update()
 {
     unsigned int i=0;
+    _nbParticules = 0;
     while (i<explosions.size())
     {
         if (!explosions[i].update())
@@ -36,6 +41,10 @@ void ExplosionManager::deleteExplosion(unsigned int i)
     swap(explosions[i], explosions[explosions.size()-1]);
     explosions.pop_back();
 }
+
+
+
+
 
 
 
@@ -151,14 +160,16 @@ ExplosionParticle::~ExplosionParticle() {}
 bool ExplosionParticle::update()
 {
     sf::FloatRect win_rect(sf::Vector2f(0, 0), sf::Vector2f(*_window_size));
-
+    sf::Time elapsed = _cl.restart();
     _speed.x += _gravity.x * (1.0/FPS_MAX);
     _speed.y += _gravity.y * (1.0/FPS_MAX); // je sais que les opérateurs * et += sont surchargés pour les Vector2f, mais ça marche pas ici
     _shape.setPosition(_shape.getPosition() + sf::Vector2f(_speed.x*(1.0/FPS_MAX), _speed.y*(1.0/FPS_MAX)));
-    _shape.setRadius(_shape.getRadius() - 1.0/FPS_MAX);
+    _shape.setRadius(_shape.getRadius() - elapsed.asSeconds());
     if (_shape.getRadius() <= 0 ||
         !win_rect.contains(_shape.getPosition()))
         return false;
+
+    ExplosionManager::_nbParticules++;
     return true;
 }
 

@@ -31,7 +31,13 @@ vector<string> explode(const string& str, const char& ch);
 
 string wordwrap(string str, unsigned int width);
 
+vector<sf::String> explode(const sf::String& str, wchar_t ch);
+
+sf::String wordwrap(sf::String str, unsigned int width);
+
 string implode(vector<string> & tabstr, string ch);
+
+sf::String implode(vector<sf::String> & tabstr, sf::String ch);
 
 int nombre_mot(string & chaine);
 
