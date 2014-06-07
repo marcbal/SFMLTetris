@@ -6,6 +6,9 @@
 #include "fn_random.hpp"
 #include "fn_string.hpp"
 
+using namespace std;
+using namespace sf;
+
 class AudioConfiguration
 {
     public:
@@ -18,18 +21,21 @@ class AudioConfiguration
         bool getPlay();
         void setVolume(float volume);
         float getVolume();
+        void changeMusic(int i);
+        vector<string> getMusicList();
+        int getMusicPlayingId();
 
     protected:
         void loadFromFolder(std::string folder);
         void clearMusics();
-        void changeMusic(int i);
         void addMusic(std::string file);
-        bool loadFromFile(std::string file);
+        bool loadConfigFromFile(std::string file);
         bool saveConfigurationFile();
         void initDefault();
 
     private:
         std::vector<sf::Music*> _musics;
+        vector<string> musicNames;
         bool _play;
         float _volume;
         int musicPlayed;

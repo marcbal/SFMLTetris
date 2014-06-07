@@ -186,6 +186,12 @@
 		<Unit filename="InputRange.hpp">
 			<Option virtualFolder="GUI Parts/Inputs/" />
 		</Unit>
+		<Unit filename="InputSelect.cpp">
+			<Option virtualFolder="GUI Parts/Inputs/" />
+		</Unit>
+		<Unit filename="InputSelect.hpp">
+			<Option virtualFolder="GUI Parts/Inputs/" />
+		</Unit>
 		<Unit filename="InputText.cpp">
 			<Option virtualFolder="GUI Parts/Inputs/" />
 		</Unit>

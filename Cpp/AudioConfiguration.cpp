@@ -6,19 +6,24 @@ using namespace sf;
 AudioConfiguration::AudioConfiguration()
 {
     makeDir("configuration");
-    if(!loadFromFile("configuration/audio.cfg")){
+    musicPlayed=-1;
+    if(!loadConfigFromFile("configuration/audio.cfg")){
         initDefault();
     }
-
-
-
+    int conf_music_played = musicPlayed; // musicPlayed est réinitialisé dans loadFromFolder()
     loadFromFolder(_folder.c_str());
 
+    musicPlayed = conf_music_played;
 
-    if(_musics.size()>0)
-        musicPlayed = 0;
-    else
+    if(_musics.size()==0 || musicPlayed >= _musics.size() || musicPlayed < 0)
+    {
         musicPlayed = -1;
+        saveConfigurationFile();
+    }
+    else
+    {
+        _musics[musicPlayed]->play();
+    }
 
 }
 
@@ -30,16 +35,37 @@ AudioConfiguration::~AudioConfiguration()
 void AudioConfiguration::initDefault(){
     _play = false;
     _folder="res/music/";
+    musicPlayed=-1;
     _volume=100;
     Console::out(L"La configuration audio a été réinitialisée");
 }
 
+
+
+
+vector<string> AudioConfiguration::getMusicList()
+{
+    return musicNames;
+}
+int AudioConfiguration::getMusicPlayingId()
+{
+    return musicPlayed;
+}
+
+
+
+
 void AudioConfiguration::addMusic(string file){
     _musics.push_back(new Music());
+    vector<string> fileE = explode(file, '/');
+    musicNames.push_back(fileE[fileE.size()-1]);
     if(!_musics[_musics.size()-1]->openFromFile(file.c_str()))
+    {
         _musics.pop_back();
+        musicNames.pop_back();
+    }
     else{
-        _musics[_musics.size()-1]->setLoop(false);
+        _musics[_musics.size()-1]->setLoop(true);
         _musics[_musics.size()-1]->setVolume(_volume);
     }
 
@@ -55,18 +81,19 @@ bool AudioConfiguration::saveConfigurationFile(){
      saveFile << "music_search_path:"<<_folder<<endl;
      saveFile << "play_music:"<<_play<<endl;
      saveFile << "volume:"<<_volume<<endl;
+     saveFile << "music_playing_id:"<<musicPlayed<<endl;
 
      saveFile.close();
 
      return true;
 }
 
-bool AudioConfiguration::loadFromFile(string file){
+bool AudioConfiguration::loadConfigFromFile(string file){
 
         ifstream saveFile(file.c_str(), ios::in);
 
-        bool folder,play,volume;
-        folder = play = volume = false;
+        bool folder,play,volume, musicid;
+        folder = play = volume = musicid = false;
 
         if(!saveFile)
             return false;
@@ -87,6 +114,10 @@ bool AudioConfiguration::loadFromFile(string file){
                 _play=string_to_int(words[1])!=0;
                 play = true;
             }
+            else if (words[0] == "music_playing_id"){
+                musicPlayed=string_to_int(words[1]);
+                musicid = true;
+            }
             else if(words[0] == "volume"){
                 _volume = string_to_float(words[1]);
                 volume = true;
@@ -100,8 +131,8 @@ bool AudioConfiguration::loadFromFile(string file){
 
         saveFile.close();
 
-        if(volume&&play&&folder)
-        return true;
+        if(volume&&play&&folder&&musicid)
+            return true;
 
         return false;
 }
@@ -112,7 +143,7 @@ void AudioConfiguration::loadFromFolder(string folder){
     int nbFiles = files.size();
 
     for(int i=0;i<nbFiles;++i){
-            if(regex_match(files[i],regex("(.*).ogg"))){
+            if(regex_match(files[i],regex("(.*).(ogg|wav|wave|flac|aiff|au)"))){
                 addMusic(folder+files[i]);
             }
     }
@@ -126,24 +157,22 @@ void AudioConfiguration::clearMusics(){
     for(int i=0;i<nbMusics;++i)
         delete _musics[i];
     _musics.clear();
+    musicPlayed = -1;
 }
 void AudioConfiguration::changeMusic(int i){
-    if(musicPlayed==i)
+    if(musicPlayed == i || i >= _musics.size() || i < 0)
         return;
-
-    if(musicPlayed>-1)
+    if (musicPlayed >= 0 && musicPlayed < _musics.size())
         _musics[musicPlayed]->stop();
     musicPlayed = i;
     _musics[musicPlayed]->play();
 }
 
 void AudioConfiguration::update(){
-    if(musicPlayed>-1)
+    if(musicPlayed>-1 && musicPlayed < _musics.size())
     {
         if(_musics[musicPlayed]->getStatus() != sf::Music::Status::Playing && _play){
-            changeMusic(rand_without(0,_musics.size()-1,musicPlayed));
             _musics[musicPlayed]->play();
-
         }
         else if(!_play)
             _musics[musicPlayed]->stop();
@@ -160,8 +189,7 @@ bool AudioConfiguration::getPlay(){
 }
 void AudioConfiguration::setVolume(float volume){
     _volume = volume;
-    int nbMusics = _musics.size();
-    for(int i=0;i<nbMusics;++i)
+    for(int i=0;i<_musics.size();++i)
         _musics[i]->setVolume(_volume);
 
     saveConfigurationFile();

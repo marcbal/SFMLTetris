@@ -41,6 +41,7 @@ class Bouton : public sf::Drawable
 
         Bouton(sf::Vector2f pos, sf::Vector2f taille,int taillePolice,char * _state,char action);
         Bouton(sf::Vector2f pos, sf::Vector2f taille,int taillePolice,char * _state);
+        Bouton();
         virtual ~Bouton();
 
         virtual void setPosition(sf::Vector2f pos);

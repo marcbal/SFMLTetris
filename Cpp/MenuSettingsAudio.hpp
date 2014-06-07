@@ -7,6 +7,7 @@
 #include "Application.hpp"
 #include "InputCheck.hpp"
 #include "InputRange.hpp"
+#include "InputSelect.hpp"
 
 
 class MenuSettingsAudio : public Menu{
@@ -17,6 +18,8 @@ private :
     sf::Text textPlay;
     InputRange _volume;
     sf::Text textVolume;
+    InputSelect _musicSelect;
+    sf::Text textSelect;
 public :
     MenuSettingsAudio(sf::Vector2i * window_size,char *state,AudioConfiguration * audio);
     virtual void onEvent(sf::Event & event);

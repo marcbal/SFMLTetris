@@ -274,8 +274,9 @@ void GameConfiguration::initDefault()
     _nickname = "Pseudo";
     _graphicsAntialiasing = 0;
     _graphicsFPS = FPS_MAX;
-    _BGSpeed = 0.3f;
+    _BGSpeed = 42;
     _BGParticules = 100;
+    _BGPartSize = 10;
     Console::out(L"La configuration du jeu a été réinitialisée");
 }
 

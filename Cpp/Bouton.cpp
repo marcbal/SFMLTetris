@@ -45,6 +45,9 @@ Bouton::Bouton(sf::Vector2f pos, sf::Vector2f taille,int taillePolice,char * sta
 Bouton::Bouton(sf::Vector2f pos, sf::Vector2f taille,int taillePolice,char * state):
     Bouton(pos,taille,taillePolice,state,0)
 {}
+Bouton::Bouton():
+    Bouton(sf::Vector2f(0, 0),sf::Vector2f(0, 0),20,nullptr,0)
+{}
 
 Bouton::~Bouton() {}
 
