@@ -207,7 +207,6 @@ void Game::onEvent(sf::Event & event)
             if (_AIActualPlaying)
             {
                 matrix.mouseIADisturb(event);
-                cout << "gne" << endl;
             }
             else if (_gameConfig->getUseMouse())
             {

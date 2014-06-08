@@ -1,10 +1,11 @@
 #include "Background.hpp"
 
-Background::Background(sf::Vector2i window_size, GameConfiguration * gameConfig):
+Background::Background(sf::Vector2i window_size, GameConfiguration * gameConfig, AudioConfiguration * audio):
     bordure(sf::Vector2f(window_size))
 {
     _window_size = window_size;
     _gameConfig = gameConfig;
+    _audio = audio;
     bordure.setPosition(0, 0);
     bordure.setFillColor(sf::Color::Transparent);
     bordure.setOutlineColor(sf::Color::Black);
@@ -27,13 +28,16 @@ void Background::update()
 {
     // ajout/suppression des particules
     while (_gameConfig->getBGParticules() > particules.size())
-        particules.push_back(Particule(_window_size, _gameConfig));
+        particules.push_back(Particule(_window_size, _gameConfig, _audio));
 
     while (_gameConfig->getBGParticules() < particules.size())
         particules.pop_back();
 
+
+    float speed_coeff = _audio->getAudioLevel();
+
     for (unsigned int i=0; i<particules.size(); i++)
-        particules[i].update();
+        particules[i].update(speed_coeff);
 }
 
 
@@ -55,12 +59,13 @@ void Background::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 
 
-Particule::Particule(sf::Vector2i window_size, GameConfiguration * gameConfig) :
+Particule::Particule(sf::Vector2i window_size, GameConfiguration * gameConfig, AudioConfiguration * audio) :
     shape(1, rand_int(3, 5))
 {
     _radius_base = rand_float(0.05, 0.3);
     _window_size = window_size;
     _gameConfig = gameConfig;
+    _audio = audio;
     speed = sf::Vector2f(rand_float(-0.5, 0.5),rand_float(-0.5, 0.1));
     shape.setPosition(sf::Vector2f(rand_float(0.0f, (float) (window_size.x)),rand_float(0.0f, (float) (window_size.y))));
     //shape.setPosition(sf::Vector2f(10,100));
@@ -69,11 +74,12 @@ Particule::Particule(sf::Vector2i window_size, GameConfiguration * gameConfig) :
 
 
 
-void Particule::update()
+void Particule::update(float speed_coeff)
 {
     float elapsed = _cl.restart().asSeconds();
-    shape.setRadius(_radius_base * _gameConfig->getBGPartSize());
-    sf::Vector2f pos = shape.getPosition() + speed * elapsed * _gameConfig->getBGSpeed();
+    shape.setRadius(_radius_base * _gameConfig->getBGPartSize() * (speed_coeff));
+    shape.setOrigin(shape.getRadius(), shape.getRadius());
+    sf::Vector2f pos = shape.getPosition() + speed * (elapsed * _gameConfig->getBGSpeed());
 
     if (pos.x > _window_size.x) // sors de l'écran par la droite
         pos.x -= _window_size.x + shape.getRadius()*2;

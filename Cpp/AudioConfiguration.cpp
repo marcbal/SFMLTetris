@@ -22,6 +22,7 @@ AudioConfiguration::AudioConfiguration()
     }
     else if (_play)
     {
+        _buff_actual_music.loadFromFile(_folder+musicNames[musicPlayed]);
         _musics[musicPlayed]->play();
     }
 
@@ -151,6 +152,36 @@ void AudioConfiguration::loadFromFolder(string folder){
 }
 
 
+float AudioConfiguration::getAudioLevel()
+{
+    if (!_play || _buff_actual_music.getSampleCount() == 0 || _musics.size() == 0 || musicPlayed < 0 || musicPlayed >= (int)_musics.size())
+        return 1.f;
+
+    sf::Time timeOffset = _musics[musicPlayed]->getPlayingOffset();
+    unsigned int sampleRate = _musics[musicPlayed]->getSampleRate();
+    unsigned int channelCount = _musics[musicPlayed]->getChannelCount();
+    if (sampleRate != _buff_actual_music.getSampleRate()
+        || channelCount != _buff_actual_music.getChannelCount())
+        return 1.f;
+
+    unsigned int samplePosition = sampleRate * channelCount * timeOffset.asSeconds();
+
+    uint32_t value = 0;
+    uint32_t value2 = 0;
+    for (unsigned int i = samplePosition; i<samplePosition+2000 && i<_buff_actual_music.getSampleCount(); i++)
+    {
+        value += abs(_buff_actual_music.getSamples()[i]);
+        if (abs(_buff_actual_music.getSamples()[i]) > value2)
+            value2 = abs(_buff_actual_music.getSamples()[i]);
+    }
+    float fval = (value / 2000.f) / 16384.f;
+    if (fval > 1)
+        fval = 1.f;
+
+    return sqrt(fval);
+}
+
+
 
 void AudioConfiguration::clearMusics(){
     int nbMusics = _musics.size();
@@ -165,7 +196,9 @@ void AudioConfiguration::changeMusic(int i){
     if (musicPlayed >= 0 && musicPlayed < (int)_musics.size())
         _musics[musicPlayed]->stop();
     musicPlayed = i;
-    _musics[musicPlayed]->play();
+    if (_play)
+        _musics[musicPlayed]->play();
+    _buff_actual_music.loadFromFile(_folder+musicNames[musicPlayed]);
 }
 
 void AudioConfiguration::update(){
@@ -177,12 +210,16 @@ void AudioConfiguration::update(){
         else if(!_play)
             _musics[musicPlayed]->stop();
     }
+    getAudioLevel();
 }
 
 
 void AudioConfiguration::setPlay(bool _state){
-     _play = _state;
-     saveConfigurationFile();
+    if (_play != _state)
+    {
+        _play = _state;
+        saveConfigurationFile();
+    }
 }
 bool AudioConfiguration::getPlay(){
     return _play;

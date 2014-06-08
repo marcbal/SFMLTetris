@@ -25,6 +25,8 @@ class AudioConfiguration
         vector<string> getMusicList();
         int getMusicPlayingId();
 
+        float getAudioLevel();
+
     protected:
         void loadFromFolder(std::string folder);
         void clearMusics();
@@ -35,6 +37,7 @@ class AudioConfiguration
 
     private:
         std::vector<sf::Music*> _musics;
+        sf::SoundBuffer _buff_actual_music;
         vector<string> musicNames;
         bool _play;
         float _volume;
