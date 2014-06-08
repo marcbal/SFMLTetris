@@ -18,7 +18,7 @@ void OpenGL_Manager::setTetrisBoard(uint8_t tetrisBoard[][BOARD_HEIGHT]){
 
 }
 
-void OpenGL_Manager::preDraw(){
+void OpenGL_Manager::preDraw(char mode, sf::Vector2f tetromino_pos){
 
         if(_tetrisBoard == NULL)
             return;
@@ -62,6 +62,14 @@ void OpenGL_Manager::preDraw(){
     for(int i=0;i<BOARD_WIDTH;++i){
             glTranslatef(100.f,0.f,0.f);
         for(int j=0;j<BOARD_HEIGHT;++j){
+                float coeff_visibility = 1.f;
+                if (mode == 1)
+                {
+                    float dist = sqrt((tetromino_pos.x-i)*(tetromino_pos.x-i)+(tetromino_pos.y-j)*(tetromino_pos.y-j));
+                    float champ_vision = 10.f;
+                    coeff_visibility = (dist > champ_vision)? 0.f : (champ_vision-dist)/champ_vision ;
+                }
+
              glTranslatef(0.f,-100.f,0.f);
                     color[0]=0.2;
                     color[1]=0.2;
@@ -72,7 +80,7 @@ void OpenGL_Manager::preDraw(){
                 color[0]= c.r/float(255);
                 color[1]= c.g/float(255);
                 color[2]= c.b/float(255);
-                color[3]= 64/float(255);
+                color[3]= 64*coeff_visibility/float(255);
                 drawShapeAlpha(i,j);
                 color[3]=1.0;
             }
@@ -81,14 +89,18 @@ void OpenGL_Manager::preDraw(){
                 color[0]= c.r/float(255);
                 color[1]= c.g/float(255);
                 color[2]= c.b/float(255);
-                drawShape();
+                color[3]= 255*coeff_visibility/float(255);
+                drawShapeAlpha(i,j);
+                color[3]=1.0;
             }
             else if(_tetrisBoard[i][j]>9 && _tetrisBoard[i][j]<17){
                 sf::Color c = Tetromino::couleurs[_tetrisBoard[i][j]-10];
                 color[0]= c.r/float(255)-0.2;
                 color[1]= c.g/float(255)-0.2;
                 color[2]= c.b/float(255)-0.2;
-                drawShape();
+                color[3]= 192*coeff_visibility/float(255);
+                drawShapeAlpha(i,j);
+                color[3]=1.0;
             }
 
         }

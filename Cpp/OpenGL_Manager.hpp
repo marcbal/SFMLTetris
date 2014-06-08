@@ -11,7 +11,7 @@ class OpenGL_Manager
     public:
         OpenGL_Manager(GameConfiguration* _gameConfig);
         void setTetrisBoard(uint8_t tetrisBoard[][BOARD_HEIGHT]);
-        void preDraw();
+        void preDraw(char mode, sf::Vector2f tetromino_pos);
         void drawShape();
         void drawShapeAlpha(int x, int y);
         void drawArretes();

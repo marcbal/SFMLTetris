@@ -9,6 +9,7 @@
 #include "InputCheck.hpp"
 #include "InputRange.hpp"
 #include "InputText.hpp"
+#include "InputSelect.hpp"
 #include "OpenGL_Manager.hpp"
 #include "Ressources.hpp"
 #include "Game.hpp"
@@ -26,6 +27,8 @@ private :
     sf::Text textOnlineScore;
 
     InputText _enterPseudo;
+
+    InputSelect _gameMode;
 public :
     MenuSettingsGame(sf::Vector2i * window_size,char *state,OpenGL_Manager * oGL, GameConfiguration* gameConfig);
     virtual void onEvent(sf::Event & event);

@@ -470,7 +470,9 @@ void Game::update()
     matrix.dessinePieceCourrante(_gameConfig->getDrawGhost() && !_AIActualPlaying);
 
     if(_gameConfig->get3DMode())
-        _oGL->preDraw();//Pré-dessinage de la scène 3D
+        _oGL->preDraw((_AIActualPlaying)?0:_gameConfig->getGameMode(), matrix.getPieceCourrante().getMidpoint());//Pré-dessinage de la scène 3D
+    else
+        matrix.updateGraphics((_AIActualPlaying)?0:_gameConfig->getGameMode());
 
 }
 

@@ -34,6 +34,7 @@ unsigned int GameConfiguration::getAntialiasing(){return _graphicsAntialiasing;}
 unsigned int GameConfiguration::getBGParticules(){return _BGParticules;}
 float GameConfiguration::getBGSpeed(){return _BGSpeed;}
 float GameConfiguration::getBGPartSize(){return _BGPartSize;}
+unsigned int GameConfiguration::getGameMode(){return _gameMode;}
 
 void GameConfiguration::setDrawExplosions(bool b){
     if (_drawExplosions != b)
@@ -136,6 +137,14 @@ void GameConfiguration::setBGPartSize(float f){
 }
 
 
+void GameConfiguration::setGameMode(unsigned int i){
+    if (_gameMode != i)
+    {
+        _gameMode = i;
+        saveConfigurationFile();
+    }
+}
+
 
 
 
@@ -145,8 +154,8 @@ bool GameConfiguration::loadFromFile()
 {
     ifstream saveFile(_config_file.c_str(), ios::in);
 
-    bool ghost, explosion, mode3d, autorotation, inclinaison, nickname, mouse, online, fps, antialias, bgpart, bgspeed, bgpsize;
-    ghost = explosion = mode3d = autorotation = inclinaison = nickname = mouse = online = fps = antialias = bgpart = bgspeed = bgpsize = false;
+    bool ghost, explosion, mode3d, autorotation, inclinaison, nickname, mouse, online, fps, antialias, bgpart, bgspeed, bgpsize, gm;
+    ghost = explosion = mode3d = autorotation = inclinaison = nickname = mouse = online = fps = antialias = bgpart = bgspeed = bgpsize = gm = false;
 
     if(!saveFile)
         return false;
@@ -193,6 +202,10 @@ bool GameConfiguration::loadFromFile()
             _graphicsAntialiasing=string_to_int(words[1]);
             antialias = true;
         }
+        else if(words[0]=="gamemode"){
+            _gameMode=string_to_int(words[1]);
+            gm = true;
+        }
         else if(words[0]=="graphics_FPS"){
             _graphicsFPS=string_to_int(words[1]);
             fps = true;
@@ -233,7 +246,9 @@ bool GameConfiguration::loadFromFile()
 
     saveFile.close();
 
-    if(ghost&&explosion&&mode3d&&autorotation&&inclinaison&&nickname&&mouse&&fps&&antialias&&bgspeed&&bgpart&&bgpsize)
+    if(ghost&&explosion&&mode3d&&autorotation&&inclinaison
+       &&nickname&&mouse&&fps&&antialias&&bgspeed&&bgpart
+       &&bgpsize&&gm)
     return true;
 
     return false;
@@ -257,6 +272,7 @@ bool GameConfiguration::saveConfigurationFile()
     saveFile << "BG_speed:"<<_BGSpeed<<endl;
     saveFile << "BG_particules:"<<_BGParticules<<endl;
     saveFile << "BG_particules_size:"<<_BGPartSize<<endl;
+    saveFile << "gamemode:"<<_gameMode<<endl;
 
     saveFile.close();
 
@@ -277,6 +293,7 @@ void GameConfiguration::initDefault()
     _BGSpeed = 42;
     _BGParticules = 100;
     _BGPartSize = 10;
+    _gameMode = 0;
     Console::out(L"La configuration du jeu a été réinitialisée");
 }
 

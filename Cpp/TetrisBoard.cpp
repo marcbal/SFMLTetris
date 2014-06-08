@@ -102,37 +102,66 @@ bool TetrisBoard::mouseLeftRight(sf::Event event)
 
 
 
-void TetrisBoard::setBoardData(int x, int y, int data)
+
+
+void TetrisBoard::updateGraphics(char mode)
 {
-    LogicalTetrisBoard::setBoardData(x, y, data);
+    for (int x=0; x<BOARD_WIDTH; x++)
+        for (int y=0; y<BOARD_HEIGHT; y++)
+        {
+            if (mode == 0)
+            {
+                if (area[x][y] >= 10 && area[x][y] < 17)
+                {
+                    sf::Color c = Tetromino::couleurs[area[x][y]-10];
+                    c.a = 192; // règle l'alpha de la couleur
+                    shapeMatrix[x*BOARD_HEIGHT+y].setFillColor(c);
+                }
+                else if (area[x][y] >= 20 && area[x][y] < 27)
+                {
+                    sf::Color c = Tetromino::couleurs[area[x][y]-20];
+                    shapeMatrix[x*BOARD_HEIGHT+y].setFillColor(c);
+                }
+                else if (area[x][y] >= 30 && area[x][y] < 37)
+                {
+                    sf::Color c = Tetromino::couleurs[area[x][y]-30];
+                    c.a = 64; // règle l'alpha de la couleur
+                    shapeMatrix[x*BOARD_HEIGHT+y].setFillColor(c);
+                }
+                else
+                    shapeMatrix[x*BOARD_HEIGHT+y].setFillColor(sf::Color::Transparent);
+            }
+            else if (mode == 1)
+            {   // Dark Tetris Mode
+                sf::Vector2f midpoint = pieceCourrante.getMidpoint();
+                float dist = sqrt((midpoint.x-x)*(midpoint.x-x)+(midpoint.y-y)*(midpoint.y-y));
+                float champ_vision = 10.f;
+                float coeff = (dist > champ_vision)? 0.f : (champ_vision-dist)/champ_vision ;
 
-    if (x<0 || x>=BOARD_WIDTH || y<0 || y>=BOARD_HEIGHT)
-        return;
+                if (area[x][y] >= 10 && area[x][y] < 17)
+                {
+                    sf::Color c = Tetromino::couleurs[area[x][y]-10];
+                    c.a = 192 * coeff; // règle l'alpha de la couleur
+                    shapeMatrix[x*BOARD_HEIGHT+y].setFillColor(c);
+                }
+                else if (area[x][y] >= 20 && area[x][y] < 27)
+                {
+                    sf::Color c = Tetromino::couleurs[area[x][y]-20];
+                    c.a = 255 * coeff;
+                    shapeMatrix[x*BOARD_HEIGHT+y].setFillColor(c);
+                }
+                else if (area[x][y] >= 30 && area[x][y] < 37)
+                {
+                    sf::Color c = Tetromino::couleurs[area[x][y]-30];
+                    c.a = 64 * coeff; // règle l'alpha de la couleur
+                    shapeMatrix[x*BOARD_HEIGHT+y].setFillColor(c);
+                }
+                else
+                    shapeMatrix[x*BOARD_HEIGHT+y].setFillColor(sf::Color::Transparent);
+            }
+        }
 
-    if (area[x][y] >= 10 && area[x][y] < 17)
-    {
-        sf::Color c = Tetromino::couleurs[area[x][y]-10];
-        c.a = 192; // règle l'alpha de la couleur
-        shapeMatrix[x*BOARD_HEIGHT+y].setFillColor(c);
-    }
-    else if (area[x][y] >= 20 && area[x][y] < 27)
-    {
-        sf::Color c = Tetromino::couleurs[area[x][y]-20];
-        shapeMatrix[x*BOARD_HEIGHT+y].setFillColor(c);
-    }
-    else if (area[x][y] >= 30 && area[x][y] < 37)
-    {
-        sf::Color c = Tetromino::couleurs[area[x][y]-30];
-        c.a = 64; // règle l'alpha de la couleur
-        shapeMatrix[x*BOARD_HEIGHT+y].setFillColor(c);
-    }
-    else
-        shapeMatrix[x*BOARD_HEIGHT+y].setFillColor(sf::Color::Transparent);
 }
-
-
-
-
 
 
 int TetrisBoard::fullLinesClear(ExplosionManager * explosions)

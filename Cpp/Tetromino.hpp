@@ -27,8 +27,9 @@ class Tetromino
         sf::Vector2i getPosition();
         void setPosition(sf::Vector2i pos);
 
-        // hauteur moyenne du tetromino par rapport au sol
+        // position moyenne du tetromino par rapport au sol
         float getVerticalMidpoint();
+        sf::Vector2f getMidpoint();
 
         sf::Color getColor();
         MatrixShape getMatrixShape();

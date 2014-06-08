@@ -87,6 +87,32 @@ float Tetromino::getVerticalMidpoint()
 }
 
 
+sf::Vector2f Tetromino::getMidpoint()
+{
+    MatrixShape shape = getMatrixShape();
+    int mini = -1, maxi = 0;
+    for (int i=0; i<4; i++)
+        for (int j=0; j<4; j++)
+            if (shape[i][j])
+            {
+                maxi = i;
+                if (mini == -1)
+                    mini = i;
+            }
+    int minj = -1, maxj = 0;
+    for (int j=0; j<4; j++)
+        for (int i=0; i<4; i++)
+            if (shape[i][j])
+            {
+                maxj = j;
+                if (minj == -1)
+                    minj = j;
+            }
+    return sf::Vector2f(position.x + (maxi - mini)/2.f, position.y + (maxj - minj)/2.f);
+
+}
+
+
 
 
 

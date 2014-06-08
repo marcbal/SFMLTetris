@@ -40,6 +40,8 @@ class GameConfiguration
         void setBGSpeed(float f);
         float getBGPartSize();
         void setBGPartSize(float f);
+        void setGameMode(unsigned int i);
+        unsigned int getGameMode();
 
 
         void applyGraphicsSettings(sf::RenderWindow & window, sf::Vector2i window_size);
@@ -69,6 +71,8 @@ class GameConfiguration
         unsigned int _BGParticules;
         float _BGSpeed;
         float _BGPartSize;
+
+        unsigned int _gameMode;
 
 
         static const string _config_file;

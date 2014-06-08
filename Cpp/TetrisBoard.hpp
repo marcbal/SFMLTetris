@@ -24,7 +24,7 @@ class TetrisBoard : public LogicalTetrisBoard, public sf::Drawable
 
         int fullLinesClear(ExplosionManager * explosions);
 
-        void setBoardData(int x, int y, int data);
+        void updateGraphics(char mode);
 
         void mouseIADisturb(sf::Event & event);
 

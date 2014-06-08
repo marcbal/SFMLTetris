@@ -20,7 +20,7 @@ AudioConfiguration::AudioConfiguration()
         musicPlayed = -1;
         saveConfigurationFile();
     }
-    else
+    else if (_play)
     {
         _musics[musicPlayed]->play();
     }
