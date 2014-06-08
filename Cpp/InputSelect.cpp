@@ -85,7 +85,7 @@ void InputSelect::onEvent(sf::Event & event)
     else if (_action == -3 && _valueFirtAff+_nbValAff < _boutonsValues.size())
         _valueFirtAff++;
     // select new val
-    else if (_action >= 0 && _action < _boutonsValues.size())
+    else if (_action >= 0 && _action < (int)_boutonsValues.size())
         _valSelected = (int) _action;
     if (_action != -1)
         updateGraphics();

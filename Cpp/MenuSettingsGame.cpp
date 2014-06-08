@@ -13,7 +13,7 @@ MenuSettingsGame::MenuSettingsGame(sf::Vector2i * window_size,char *state,OpenGL
     _onlineScore(Vector2f(50,220), Vector2f(20,20),gameConfig->getOnlineScore()),
     textOnlineScore(),
     _enterPseudo(Vector2f(50,260),Vector2f(405,30),gameConfig->getNickName()),
-    _gameMode(Vector2f(505, 115), Vector2f(405, 40), 8, {"Mode normal", "Mode Dark Tetris"}, _gameConfig->getGameMode())
+    _gameMode(Vector2f(505, 115), Vector2f(405, 40), 8, {"Mode normal", "Mode Dark Tetris"}, gameConfig->getGameMode())
 {
     _gameConfig = gameConfig;
     _oGL = oGL;

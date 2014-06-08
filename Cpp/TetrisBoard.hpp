@@ -28,6 +28,8 @@ class TetrisBoard : public LogicalTetrisBoard, public sf::Drawable
 
         void mouseIADisturb(sf::Event & event);
 
+        void clearBoard(ExplosionManager * explosions);
+
 
 
     private:

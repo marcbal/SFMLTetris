@@ -104,6 +104,32 @@ bool TetrisBoard::mouseLeftRight(sf::Event event)
 
 
 
+void TetrisBoard::clearBoard(ExplosionManager * explosions)
+{
+    if (explosions == nullptr)
+    {
+        LogicalTetrisBoard::clearBoard();
+        return;
+    }
+    for (int i=0; i<BOARD_WIDTH; i++)
+        for (int j=-2; j<BOARD_HEIGHT; j++)
+        {
+            if (getBoardData(i, j) >= 10)
+            {
+                sf::FloatRect r = shapeMatrix[i*BOARD_HEIGHT+j].getGlobalBounds();
+                sf::Color c = shapeMatrix[i*BOARD_HEIGHT+j].getFillColor();
+                explosions->addExplosion(RectangleExplosion(_window_size, r, 4, 6.0, c));
+            }
+        }
+    LogicalTetrisBoard::clearBoard();
+}
+
+
+
+
+
+
+
 void TetrisBoard::updateGraphics(char mode)
 {
     for (int x=0; x<BOARD_WIDTH; x++)

@@ -105,7 +105,7 @@ class Game : public Menu
         void setPause(bool p);
         bool getPause();
 
-        void restartGame();
+        void restartGame(bool init = false);
 
 
         // permet de prendre en compte le lag dans la descente de la pièce

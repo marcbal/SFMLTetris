@@ -15,7 +15,7 @@ AudioConfiguration::AudioConfiguration()
 
     musicPlayed = conf_music_played;
 
-    if(_musics.size()==0 || musicPlayed >= _musics.size() || musicPlayed < 0)
+    if(_musics.size()==0 || musicPlayed >= (int)_musics.size() || musicPlayed < 0)
     {
         musicPlayed = -1;
         saveConfigurationFile();
@@ -160,16 +160,16 @@ void AudioConfiguration::clearMusics(){
     musicPlayed = -1;
 }
 void AudioConfiguration::changeMusic(int i){
-    if(musicPlayed == i || i >= _musics.size() || i < 0)
+    if(musicPlayed == i || i >= (int)_musics.size() || i < 0)
         return;
-    if (musicPlayed >= 0 && musicPlayed < _musics.size())
+    if (musicPlayed >= 0 && musicPlayed < (int)_musics.size())
         _musics[musicPlayed]->stop();
     musicPlayed = i;
     _musics[musicPlayed]->play();
 }
 
 void AudioConfiguration::update(){
-    if(musicPlayed>-1 && musicPlayed < _musics.size())
+    if(musicPlayed>-1 && musicPlayed < (int)_musics.size())
     {
         if(_musics[musicPlayed]->getStatus() != sf::Music::Status::Playing && _play){
             _musics[musicPlayed]->play();
@@ -189,7 +189,7 @@ bool AudioConfiguration::getPlay(){
 }
 void AudioConfiguration::setVolume(float volume){
     _volume = volume;
-    for(int i=0;i<_musics.size();++i)
+    for(unsigned int i=0;i<_musics.size();++i)
         _musics[i]->setVolume(_volume);
 
     saveConfigurationFile();

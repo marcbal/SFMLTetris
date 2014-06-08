@@ -94,7 +94,7 @@ Game::Game(sf::Vector2i * window_size, char *state,Evenement * evenement, Scores
 
 
 
-    restartGame();
+    restartGame(true);
 
     setPause((*state != GAME));
 
@@ -202,13 +202,14 @@ void Game::onEvent(sf::Event & event)
                 initTimeoutOnMove();
         break;
         case sf::Event::MouseButtonPressed:
-            if (!_gameConfig->getUseMouse() || _gameConfig->get3DMode())
+            if (_gameConfig->get3DMode())
                 return;
             if (_AIActualPlaying)
             {
                 matrix.mouseIADisturb(event);
+                cout << "gne" << endl;
             }
-            else
+            else if (_gameConfig->getUseMouse())
             {
                 switch(event.mouseButton.button)
                 {
@@ -300,9 +301,9 @@ bool Game::getPause()
 
 
 
-void Game::restartGame()
+void Game::restartGame(bool init)
 {
-    matrix.clearBoard();
+    matrix.clearBoard((init || _gameConfig->get3DMode() || !_gameConfig->getDrawExplosions())?nullptr:&_explosions);
 
 
     tetrominoRand.regen();
