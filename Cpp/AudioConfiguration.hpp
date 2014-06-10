@@ -5,6 +5,7 @@
 #include "fileManager.hpp"
 #include "fn_random.hpp"
 #include "fn_string.hpp"
+#include "fn_audio.hpp"
 
 using namespace std;
 using namespace sf;
@@ -26,6 +27,7 @@ class AudioConfiguration
         int getMusicPlayingId();
 
         float getAudioLevel();
+        vector<float> getAudioSpectrum();
 
     protected:
         void loadFromFolder(std::string folder);

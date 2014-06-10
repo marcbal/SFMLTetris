@@ -183,6 +183,46 @@ float AudioConfiguration::getAudioLevel()
 
 
 
+
+vector<float> AudioConfiguration::getAudioSpectrum()
+{
+    if (!_play || _buff_actual_music.getSampleCount() == 0 || _musics.size() == 0 || musicPlayed < 0 || musicPlayed >= (int)_musics.size())
+        return vector<float>();
+
+    sf::Time timeOffset = _musics[musicPlayed]->getPlayingOffset();
+    unsigned int sampleRate = _musics[musicPlayed]->getSampleRate();
+    unsigned int channelCount = _musics[musicPlayed]->getChannelCount();
+    if (sampleRate != _buff_actual_music.getSampleRate()
+        || channelCount != _buff_actual_music.getChannelCount())
+        return vector<float>();
+
+    unsigned int samplePosition = sampleRate * channelCount * timeOffset.asSeconds();
+
+
+    complex<double> a[2048];
+    for (unsigned int i = samplePosition; i<samplePosition+4096 && i<_buff_actual_music.getSampleCount(); i+=2)
+    {
+        a[i-samplePosition].imag(0);
+        a[i-samplePosition].real(_buff_actual_music.getSamples()[i]);
+    }
+
+    complex<double> b[2048];
+
+    fft(a, b, 11);
+
+    vector<float> res;
+    for (int i=0; i<512; i++)
+    {
+        res.push_back(10*log10((b[i].real()*b[i].real()+b[i].imag()*b[i].imag())));
+    }
+
+    return res;
+}
+
+
+
+
+
 void AudioConfiguration::clearMusics(){
     int nbMusics = _musics.size();
     for(int i=0;i<nbMusics;++i)

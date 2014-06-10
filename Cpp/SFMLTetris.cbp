@@ -324,6 +324,12 @@
 		<Unit filename="fileManager.hpp">
 			<Option virtualFolder="Non-Class/" />
 		</Unit>
+		<Unit filename="fn_audio.cpp">
+			<Option virtualFolder="Non-Class/" />
+		</Unit>
+		<Unit filename="fn_audio.hpp">
+			<Option virtualFolder="Non-Class/" />
+		</Unit>
 		<Unit filename="fn_base64.cpp">
 			<Option virtualFolder="Non-Class/" />
 		</Unit>
