@@ -3,7 +3,8 @@
 using namespace std;
 using namespace sf;
 
-AudioConfiguration::AudioConfiguration()
+AudioConfiguration::AudioConfiguration():
+    _spectrum(1, vector<float>(512, 0.f))
 {
     makeDir("configuration");
     musicPlayed=-1;
@@ -20,17 +21,17 @@ AudioConfiguration::AudioConfiguration()
         musicPlayed = -1;
         saveConfigurationFile();
     }
-    else if (_play)
+    else if (_play && musicPlayed>=0 && musicPlayed < _musics.size())
     {
         _buff_actual_music.loadFromFile(_folder+musicNames[musicPlayed]);
         _musics[musicPlayed]->play();
     }
-
+    _level = 1.f;
 }
 
 AudioConfiguration::~AudioConfiguration()
 {
-    //dtor
+    clearMusics();
 }
 
 void AudioConfiguration::initDefault(){
@@ -151,8 +152,13 @@ void AudioConfiguration::loadFromFolder(string folder){
 
 }
 
-
 float AudioConfiguration::getAudioLevel()
+{
+    return _level;
+}
+
+
+float AudioConfiguration::_pGetAudioLevel()
 {
     if (!_play || _buff_actual_music.getSampleCount() == 0 || _musics.size() == 0 || musicPlayed < 0 || musicPlayed >= (int)_musics.size())
         return 1.f;
@@ -181,42 +187,64 @@ float AudioConfiguration::getAudioLevel()
     return sqrt(fval);
 }
 
+vector<vector<float> > AudioConfiguration::getAudioSpectrum()
+{
+    return _spectrum;
+}
 
 
-
-vector<float> AudioConfiguration::getAudioSpectrum()
+void AudioConfiguration::_pGetAudioSpectrum()
 {
     if (!_play || _buff_actual_music.getSampleCount() == 0 || _musics.size() == 0 || musicPlayed < 0 || musicPlayed >= (int)_musics.size())
-        return vector<float>();
+    {
+        _spectrum = vector<vector<float> >(1, vector<float>(512, 0.f));
+        return;
+    }
 
     sf::Time timeOffset = _musics[musicPlayed]->getPlayingOffset();
     unsigned int sampleRate = _musics[musicPlayed]->getSampleRate();
     unsigned int channelCount = _musics[musicPlayed]->getChannelCount();
     if (sampleRate != _buff_actual_music.getSampleRate()
         || channelCount != _buff_actual_music.getChannelCount())
-        return vector<float>();
+    {
+        _spectrum =  vector<vector<float> >(1, vector<float>(512, 0.f));
+        return;
+    }
 
     unsigned int samplePosition = sampleRate * channelCount * timeOffset.asSeconds();
 
-
-    complex<double> a[2048];
-    for (unsigned int i = samplePosition; i<samplePosition+4096 && i<_buff_actual_music.getSampleCount(); i+=2)
+    int log2n = 12;
+    int nbAnalysedSamplePerChannel = pow(2, log2n);
+    if (channelCount != _spectrum.size())
     {
-        a[i-samplePosition].imag(0);
-        a[i-samplePosition].real(_buff_actual_music.getSamples()[i]);
+        _spectrum.clear();
+        _spectrum = vector<vector<float> >(channelCount, vector<float>(512, 0.f));
+    }
+    complex<double> * a = new complex<double>[nbAnalysedSamplePerChannel];
+    complex<double> * b = new complex<double>[nbAnalysedSamplePerChannel];
+    for (unsigned int c=0; c<channelCount; c++)
+    {
+
+        unsigned int j = samplePosition + c;
+        for (unsigned int i = 0; i<nbAnalysedSamplePerChannel && j<_buff_actual_music.getSampleCount(); i++)
+        {
+            a[i].imag(0);
+            a[i].real(_buff_actual_music.getSamples()[j]);
+            j+=channelCount;
+        }
+        fft(a, b, log2n);
+        for (int i=0; i<_spectrum[c].size(); i++)
+        {
+            _spectrum[c][i] += /* 10*log10 */sqrt((b[i].real()*b[i].real()+b[i].imag()*b[i].imag()));
+            _spectrum[c][i] /= 2.f;
+        }
+
+
     }
 
-    complex<double> b[2048];
+    delete[] a;
+    delete[] b;
 
-    fft(a, b, 11);
-
-    vector<float> res;
-    for (int i=0; i<512; i++)
-    {
-        res.push_back(10*log10((b[i].real()*b[i].real()+b[i].imag()*b[i].imag())));
-    }
-
-    return res;
 }
 
 
@@ -226,7 +254,10 @@ vector<float> AudioConfiguration::getAudioSpectrum()
 void AudioConfiguration::clearMusics(){
     int nbMusics = _musics.size();
     for(int i=0;i<nbMusics;++i)
+    {
+        _musics[i]->stop();
         delete _musics[i];
+    }
     _musics.clear();
     musicPlayed = -1;
 }
@@ -236,9 +267,9 @@ void AudioConfiguration::changeMusic(int i){
     if (musicPlayed >= 0 && musicPlayed < (int)_musics.size())
         _musics[musicPlayed]->stop();
     musicPlayed = i;
+    _buff_actual_music.loadFromFile(_folder+musicNames[musicPlayed]);
     if (_play)
         _musics[musicPlayed]->play();
-    _buff_actual_music.loadFromFile(_folder+musicNames[musicPlayed]);
 }
 
 void AudioConfiguration::update(){
@@ -250,7 +281,8 @@ void AudioConfiguration::update(){
         else if(!_play)
             _musics[musicPlayed]->stop();
     }
-    getAudioLevel();
+    _level = _pGetAudioLevel();
+    _pGetAudioSpectrum();
 }
 
 
