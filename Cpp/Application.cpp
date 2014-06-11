@@ -216,7 +216,8 @@ void Application::update()
     _audio.update();
     _background.update();
     _screenElement[(int)_state]->update();
-    _screenDebug.update();
+    if (_showDebugScreen)
+        _screenDebug.update();
 }
 
 
