@@ -1,10 +1,12 @@
 #include "ScreenDebug.hpp"
 
 ScreenDebug::ScreenDebug(sf::Vector2i* window_size, GameConfiguration * gameConfig, AudioConfiguration * audio):
+    _audio_indicator(sf::Vector2f(100, 10)),
+    _audio_indicator_border(sf::Vector2f(100, 10)),
     _debug_info_background(sf::Vector2f(0, 0)),
     _console_text_background(sf::Vector2f(0, 0)),
-    _audio_indicator(sf::Vector2f(100, 10)),
-    _audio_indicator_border(sf::Vector2f(100, 10))
+    spectrum(128),
+    spectrum2(128)
 {
     _window_size = window_size;
     _audio = audio;
@@ -29,6 +31,21 @@ ScreenDebug::ScreenDebug(sf::Vector2i* window_size, GameConfiguration * gameConf
     _audio_indicator_border.setPosition(_window_size->x - 112, 12);
     _audio_indicator_border.setOutlineColor(sf::Color::White);
     _audio_indicator_border.setOutlineThickness(2);
+
+
+    for (unsigned int i=0; i<spectrum.size(); i++)
+    {
+        spectrum[i].setFillColor(sf::Color(255,0,0,64));
+        spectrum[i].setSize(sf::Vector2f(3, 1));
+        spectrum[i].setPosition(sf::Vector2f(2+i*5, _window_size->y - spectrum[i].getSize().y - 2));
+    }
+    for (unsigned int i=0; i<spectrum2.size(); i++)
+    {
+        spectrum2[i].setFillColor(sf::Color(0,0,255,64));
+        spectrum2[i].setSize(sf::Vector2f(3, 1));
+        spectrum2[i].setPosition(sf::Vector2f(2+i*5, _window_size->y - spectrum[i].getSize().y - 2));
+    }
+
 }
 
 ScreenDebug::~ScreenDebug() {}
@@ -45,8 +62,21 @@ void ScreenDebug::update()
     while (_console_lines.size()>DEBUG_NB_CHAR_HEIGHT)
         _console_lines.erase(_console_lines.begin());    // efface le premier élément et décale le reste (je viens d'apprendre ça)
 
+    vector<vector<float> > spectrum_data = _audio->getAudioSpectrum();
 
-
+    for (unsigned int i=0; i<spectrum.size() && i<spectrum_data[0].size(); i++)
+    {
+        float size_y = spectrum_data[0][i]/50000.f;
+        spectrum[i].setSize(sf::Vector2f(3, size_y));
+        spectrum[i].setPosition(sf::Vector2f(2+i*5, _window_size->y - size_y - 2));
+    }
+    if (spectrum_data.size() > 1)
+        for (unsigned int i=0; i<spectrum2.size() && i<spectrum_data[1].size(); i++)
+        {
+            float size_y = spectrum_data[1][i]/50000.f;
+            spectrum2[i].setSize(sf::Vector2f(3, size_y));
+            spectrum2[i].setPosition(sf::Vector2f(2+i*5, _window_size->y - size_y - 2));
+        }
 
 
     int framerate = 1 / _FPSclock.restart().asSeconds();
@@ -85,6 +115,10 @@ void ScreenDebug::update()
 
 void ScreenDebug::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
+    for (unsigned int i=0; i<spectrum.size(); i++)
+        target.draw(spectrum[i], states);
+    for (unsigned int i=0; i<spectrum2.size(); i++)
+        target.draw(spectrum2[i], states);
     target.draw(_debug_info_background, states);
     target.draw(_console_text_background, states);
     target.draw(_debug_info, states);

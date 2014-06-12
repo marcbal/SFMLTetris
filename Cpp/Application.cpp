@@ -213,10 +213,11 @@ void Application::onResize(sf::Event &event)
 
 void Application::update()
 {
+    _audio.update();
     _background.update();
     _screenElement[(int)_state]->update();
-    _audio.update();
-    _screenDebug.update();
+    if (_showDebugScreen)
+        _screenDebug.update();
 }
 
 

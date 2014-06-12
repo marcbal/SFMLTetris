@@ -34,6 +34,9 @@ class ScreenDebug : public ScreenElement
         sf::Text _console_text;
         sf::RectangleShape _console_text_background;
 
+        vector<sf::RectangleShape> spectrum;
+        vector<sf::RectangleShape> spectrum2;
+
         Game * _game;
         GameConfiguration * _gameConfig;
         AudioConfiguration * _audio;
