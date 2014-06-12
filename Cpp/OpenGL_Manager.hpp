@@ -3,13 +3,14 @@
 #include "headers.hpp"
 #include "Tetromino.hpp"
 #include "GameConfiguration.hpp"
+#include "AudioConfiguration.hpp"
 #include "fn_random.hpp"
 
 
 class OpenGL_Manager
 {
     public:
-        OpenGL_Manager(GameConfiguration* _gameConfig);
+        OpenGL_Manager(GameConfiguration* _gameConfig, AudioConfiguration * audio);
         void setTetrisBoard(uint8_t tetrisBoard[][BOARD_HEIGHT]);
         void preDraw(char mode, sf::Vector2f tetromino_pos);
         void drawShape();
@@ -31,6 +32,7 @@ class OpenGL_Manager
         sf::Vector2i lastMousePos;
         float color[4];
         GameConfiguration * _gameConfig;
+        AudioConfiguration * _audio;
 };
 
 #endif //_OPENGL_MANGER

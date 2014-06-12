@@ -215,6 +215,7 @@ void AudioConfiguration::_pGetAudioSpectrum()
 
     int log2n = 12;
     int nbAnalysedSamplePerChannel = pow(2, log2n);
+    int max_val_int16 = pow(2, 14);
     if (channelCount != _spectrum.size())
     {
         _spectrum.clear();
@@ -229,13 +230,13 @@ void AudioConfiguration::_pGetAudioSpectrum()
         for (unsigned int i = 0; i<nbAnalysedSamplePerChannel && j<_buff_actual_music.getSampleCount(); i++)
         {
             a[i].imag(0);
-            a[i].real(_buff_actual_music.getSamples()[j]);
+            a[i].real((double)_buff_actual_music.getSamples()[j]/max_val_int16);
             j+=channelCount;
         }
         fft(a, b, log2n);
         for (int i=0; i<_spectrum[c].size(); i++)
         {
-            _spectrum[c][i] += /* 10*log10 */sqrt((b[i].real()*b[i].real()+b[i].imag()*b[i].imag()));
+            _spectrum[c][i] += /* 10*log10 */sqrt((b[i].real()*b[i].real()+b[i].imag()*b[i].imag()))/(nbAnalysedSamplePerChannel/4);
             _spectrum[c][i] /= 2.f;
         }
 

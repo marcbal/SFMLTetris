@@ -1,12 +1,14 @@
 #include "TetrisBoard.hpp"
 
-TetrisBoard::TetrisBoard(sf::Vector2i * window_size,OpenGL_Manager * oGL) :
+TetrisBoard::TetrisBoard(sf::Vector2i * window_size,OpenGL_Manager * oGL, AudioConfiguration * audio) :
     LogicalTetrisBoard(),
     boardShape(),
     shapeMatrix(BOARD_WIDTH * BOARD_HEIGHT)
 {
     _oGL = oGL;
     _oGL->setTetrisBoard(area);
+
+    _audio = audio;
 
     _window_size = window_size;
 
@@ -135,29 +137,7 @@ void TetrisBoard::updateGraphics(char mode)
     for (int x=0; x<BOARD_WIDTH; x++)
         for (int y=0; y<BOARD_HEIGHT; y++)
         {
-            if (mode == 0)
-            {
-                if (area[x][y] >= 10 && area[x][y] < 17)
-                {
-                    sf::Color c = Tetromino::couleurs[area[x][y]-10];
-                    c.a = 192; // règle l'alpha de la couleur
-                    shapeMatrix[x*BOARD_HEIGHT+y].setFillColor(c);
-                }
-                else if (area[x][y] >= 20 && area[x][y] < 27)
-                {
-                    sf::Color c = Tetromino::couleurs[area[x][y]-20];
-                    shapeMatrix[x*BOARD_HEIGHT+y].setFillColor(c);
-                }
-                else if (area[x][y] >= 30 && area[x][y] < 37)
-                {
-                    sf::Color c = Tetromino::couleurs[area[x][y]-30];
-                    c.a = 64; // règle l'alpha de la couleur
-                    shapeMatrix[x*BOARD_HEIGHT+y].setFillColor(c);
-                }
-                else
-                    shapeMatrix[x*BOARD_HEIGHT+y].setFillColor(sf::Color::Transparent);
-            }
-            else if (mode == 1)
+            if (mode == 1)
             {   // Dark Tetris Mode
                 sf::Vector2f midpoint = pieceCourrante.getMidpoint();
                 float dist = sqrt((midpoint.x-x)*(midpoint.x-x)+(midpoint.y-y)*(midpoint.y-y));
@@ -180,6 +160,65 @@ void TetrisBoard::updateGraphics(char mode)
                 {
                     sf::Color c = Tetromino::couleurs[area[x][y]-30];
                     c.a = 64 * coeff; // règle l'alpha de la couleur
+                    shapeMatrix[x*BOARD_HEIGHT+y].setFillColor(c);
+                }
+                else
+                    shapeMatrix[x*BOARD_HEIGHT+y].setFillColor(sf::Color::Transparent);
+            }
+            else if (mode == 2)
+            {   // Mode Rythms in matrix
+                vector<vector<float> > audio_data = _audio->getAudioSpectrum();
+                float coeff = 0.f;
+                unsigned int spectrum_pos = (BOARD_HEIGHT-y-1)*BOARD_WIDTH+x;
+                for (unsigned int i=0; i<audio_data.size(); i++)
+                    if (spectrum_pos < audio_data[i].size())
+                        coeff += audio_data[i][spectrum_pos];
+                coeff += 0.2f;
+                if (coeff > 1.f)
+                    coeff = 1.f;
+
+                if (area[x][y] >= 10 && area[x][y] < 17)
+                {
+                    sf::Color c = Tetromino::couleurs[area[x][y]-10];
+                    c.a = 192 * coeff; // règle l'alpha de la couleur
+                    shapeMatrix[x*BOARD_HEIGHT+y].setFillColor(c);
+                }
+                else if (area[x][y] >= 20 && area[x][y] < 27)
+                {
+                    sf::Color c = Tetromino::couleurs[area[x][y]-20];
+                    c.a = 255 * coeff;
+                    shapeMatrix[x*BOARD_HEIGHT+y].setFillColor(c);
+                }
+                else if (area[x][y] >= 30 && area[x][y] < 37)
+                {
+                    sf::Color c = Tetromino::couleurs[area[x][y]-30];
+                    c.a = 64 * coeff; // règle l'alpha de la couleur
+                    shapeMatrix[x*BOARD_HEIGHT+y].setFillColor(c);
+                }
+                else
+                {
+                    sf::Color c(192,192,192);
+                    c.a = 128 * (coeff-0.2f);
+                    shapeMatrix[x*BOARD_HEIGHT+y].setFillColor(c);
+                }
+            }
+            else
+            {
+                if (area[x][y] >= 10 && area[x][y] < 17)
+                {
+                    sf::Color c = Tetromino::couleurs[area[x][y]-10];
+                    c.a = 192; // règle l'alpha de la couleur
+                    shapeMatrix[x*BOARD_HEIGHT+y].setFillColor(c);
+                }
+                else if (area[x][y] >= 20 && area[x][y] < 27)
+                {
+                    sf::Color c = Tetromino::couleurs[area[x][y]-20];
+                    shapeMatrix[x*BOARD_HEIGHT+y].setFillColor(c);
+                }
+                else if (area[x][y] >= 30 && area[x][y] < 37)
+                {
+                    sf::Color c = Tetromino::couleurs[area[x][y]-30];
+                    c.a = 64; // règle l'alpha de la couleur
                     shapeMatrix[x*BOARD_HEIGHT+y].setFillColor(c);
                 }
                 else

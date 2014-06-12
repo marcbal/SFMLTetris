@@ -66,14 +66,14 @@ void ScreenDebug::update()
 
     for (unsigned int i=0; i<spectrum.size() && i<spectrum_data[0].size(); i++)
     {
-        float size_y = spectrum_data[0][i]/50000.f;
+        float size_y = spectrum_data[0][i]*500;
         spectrum[i].setSize(sf::Vector2f(3, size_y));
         spectrum[i].setPosition(sf::Vector2f(2+i*5, _window_size->y - size_y - 2));
     }
     if (spectrum_data.size() > 1)
         for (unsigned int i=0; i<spectrum2.size() && i<spectrum_data[1].size(); i++)
         {
-            float size_y = spectrum_data[1][i]/50000.f;
+            float size_y = spectrum_data[1][i]*500;
             spectrum2[i].setSize(sf::Vector2f(3, size_y));
             spectrum2[i].setPosition(sf::Vector2f(2+i*5, _window_size->y - size_y - 2));
         }

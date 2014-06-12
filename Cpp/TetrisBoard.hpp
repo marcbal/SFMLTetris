@@ -8,6 +8,7 @@
 #include "Collision.hpp"
 #include "ExplosionManager.hpp"
 #include "OpenGL_Manager.hpp"
+#include "AudioConfiguration.hpp"
 #include "LogicalTetrisBoard.hpp"
 using namespace std;
 using namespace sf;
@@ -17,7 +18,7 @@ class TetrisBoard : public LogicalTetrisBoard, public sf::Drawable
 {
     public:
 
-        TetrisBoard(sf::Vector2i * window_size,OpenGL_Manager * oGL);
+        TetrisBoard(sf::Vector2i * window_size,OpenGL_Manager * oGL, AudioConfiguration * audio);
         virtual ~TetrisBoard();
 
         bool mouseLeftRight(sf::Event event);
@@ -39,6 +40,8 @@ class TetrisBoard : public LogicalTetrisBoard, public sf::Drawable
         vector<sf::RectangleShape> shapeMatrix; // les rectangles de chaque cases
 
         sf::Vector2i * _window_size;
+
+        AudioConfiguration * _audio;
 
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };

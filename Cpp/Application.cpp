@@ -13,14 +13,14 @@ Application::Application() :
     _background(_window_size, &_gameconfig, &_audio),
     _screenDebug(&_window_size, &_gameconfig, &_audio),
     _showDebugScreen(false),
-    _oGL(&_gameconfig),
+    _oGL(&_gameconfig,&_audio),
     _state(INDEX), // correspond à l'état d'affichage (ici, le menu au lancement du programme)
     _scores()
 {
 
     _resized_window_size = _window_size;
 
-    Game * screenGame = new Game(&_window_size,&_state,&_event,&_scores,&_oGL,&_gameconfig);
+    Game * screenGame = new Game(&_window_size,&_state,&_event,&_scores,&_oGL,&_gameconfig,&_audio);
 
     _screenElement[INDEX]= new MenuIndex(&_window_size,&_state);
     _screenElement[GAME]= screenGame;

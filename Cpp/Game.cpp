@@ -3,9 +3,9 @@
 
 
 
-Game::Game(sf::Vector2i * window_size, char *state,Evenement * evenement, Scores * scores, OpenGL_Manager * oGL, GameConfiguration* gameConfig) :
+Game::Game(sf::Vector2i * window_size, char *state,Evenement * evenement, Scores * scores, OpenGL_Manager * oGL, GameConfiguration* gameConfig, AudioConfiguration * audio) :
     Menu(window_size, state),
-    matrix(window_size,oGL),
+    matrix(window_size,oGL,audio),
     nextTetromino(),
     textTetrominoBoard(),
     holdedTetromino(sf::Vector2f(0, 0)),
@@ -31,6 +31,7 @@ Game::Game(sf::Vector2i * window_size, char *state,Evenement * evenement, Scores
     _window_size = window_size;
     _state = state;
     _oGL = oGL;
+    _audio = audio;
 
 
 

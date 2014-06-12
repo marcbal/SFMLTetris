@@ -20,6 +20,7 @@
 #include "ScoreWebSender.hpp"
 #include "OpenGL_Manager.hpp"
 #include "GameConfiguration.hpp"
+#include "AudioConfiguration.hpp"
 #include "TetrisAI.hpp"
 
 
@@ -81,6 +82,8 @@ class Game : public Menu
 
         GameConfiguration * _gameConfig;
 
+        AudioConfiguration * _audio;
+
         TetrominoRandomizer tetrominoRand;
 
 
@@ -91,7 +94,13 @@ class Game : public Menu
         // sf::Drawable
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     public:
-        Game(sf::Vector2i * window_size, char *state, Evenement * evenement, Scores * scores, OpenGL_Manager * oGL, GameConfiguration* gameConfig);
+        Game(sf::Vector2i * window_size,
+             char * state,
+             Evenement * evenement,
+             Scores * scores,
+             OpenGL_Manager * oGL,
+             GameConfiguration * gameConfig,
+             AudioConfiguration * audio);
         virtual ~Game();
 
 

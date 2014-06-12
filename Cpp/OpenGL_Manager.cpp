@@ -1,9 +1,10 @@
 #include "OpenGL_Manager.hpp"
 using namespace std;
-OpenGL_Manager::OpenGL_Manager(GameConfiguration* gameConfig){
+OpenGL_Manager::OpenGL_Manager(GameConfiguration* gameConfig, AudioConfiguration * audio){
     //_tetrisBoard = NULL;
 
     _gameConfig = gameConfig;
+    _audio = audio;
     _tetrisBoard = new uint8_t*[BOARD_WIDTH];
     orientation_vitesse = orientation_timeMax = Vector3f(0,0,0);
     orientation_progress = _gameConfig->get3DInclinaison();
