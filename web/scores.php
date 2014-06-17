@@ -34,9 +34,9 @@ if ($nb_result > 0)
 {
 	include_once('include/function_time.php');
 	?>
-		<h3>Affichage des 100 meilleures scores</h3>
+		<h3>Affichage des 1000 meilleures scores</h3>
 	<?php
-	$resultats=$bdd_connexion->query("SELECT player_name, score, time, lignes, nb_tetromino FROM " . $bdd_table . " WHERE checked = 1 ORDER BY score DESC LIMIT 0, 100");
+	$resultats=$bdd_connexion->query("SELECT player_name, score, time, lignes, nb_tetromino FROM " . $bdd_table . " WHERE checked = 1 ORDER BY score DESC LIMIT 0, 1000");
 	$resultats->setFetchMode(PDO::FETCH_OBJ);
 	
 	?>
