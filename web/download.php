@@ -5,9 +5,9 @@ include_once('include/_head.php');
 ?>
 
 <h3>Windows</h3>
-<p><a href="res/SFMLTetris_1.0.0_win32.zip">SFMLTetris_1.0.0_win32.zip</a> : décompressez puis lancez le fichier <b>SFMLTetris_win32.exe</b> .</p>
+<p><a href="res/SFMLTetris_1.0.0_win32.zip">SFMLTetris_1.0.0_win32.zip</a> : décompressez puis lancez l'exécutable <b>SFMLTetris_win32.exe</b> .</p>
 <h3>Linux</h3>
-<p>Bientôt</p>
+<p><a href="res/SFMLTetris_1.0.0_linux64.tar.gz">SFMLTetris_1.0.0_linux64.tar.gz</a> : décompressez puis lancez l'exécutable <b>SFMLTetris_linux64</b> .</p>
 <h3>Sources</h3>
 
 <h3>Impressions écrans</h3>
