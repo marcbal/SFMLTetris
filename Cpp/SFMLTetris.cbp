@@ -93,6 +93,7 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add option="-lglu32" />
 					<Add library="sfml-audio-s" />
 					<Add library="sfml-graphics-s" />
 					<Add library="sfml-window-s" />

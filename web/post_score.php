@@ -58,12 +58,14 @@ $output_data['history'] = Array();
 $datas = substr($datas, $sizeof_init_data+1);
 
 $nbLineDatas = unpack('NnbVal/ClineSize', substr($datas, 0, 5));
-$sizeof_data_row = $nbLineDatas['lineSize'] . "\n";
-$nbLineDatas = $nbLineDatas['nbVal'] . "\n";
+$sizeof_data_row = $nbLineDatas['lineSize'];
+$nbLineDatas = $nbLineDatas['nbVal'];
 
-if ($nbLineDatas != $output_data['tetrominoes'])
+if ($nbLineDatas != $output_data['tetrominoes'] AND $nbLineDatas != $output_data['tetrominoes']-1)
 	exit('error_data : number of data rows (' . $nbLineDatas . ') != dropped tetrominoes number (' . $output_data['tetrominoes'] . ')');
 
+if ($nbLineDatas == $output_data['tetrominoes']-1)
+	echo 'warning : number of data rows (' . $nbLineDatas . ') != dropped tetrominoes number (' . $output_data['tetrominoes'] . ') but this difference is acceptable due to software bug'."\n";
 
 $datas = substr($datas, 5);
 

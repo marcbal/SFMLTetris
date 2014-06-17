@@ -20,3 +20,5 @@ web/include/id_bdd.php
 Cpp/configuration/*
 *.res
 Cpp/save/upload.bin
+web/res/*.zip
+web/res/*.tar.gz

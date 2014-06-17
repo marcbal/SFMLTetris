@@ -415,7 +415,7 @@ if ($checking_line != $output_data['delLines'])
 	$data_valid = false;
 }
 
-if ($checking_tetromino != $output_data['tetrominoes'])
+if ($checking_tetromino != $output_data['tetrominoes'] AND $checking_tetromino != $output_data['tetrominoes']-1)
 {
 	echo 'error_checking : nb of tetromino diff in global data. simulated = ' . $checking_tetromino . ' and data = ' . $output_data['tetrominoes'] . "\n";
 	$data_valid = false;
