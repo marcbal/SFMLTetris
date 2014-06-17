@@ -9,6 +9,7 @@
 *.out
 *.app
 Cpp/bin/*
+CppEasy/bin/*
 
 # Specifique aux projets code blocks
 *.layout
