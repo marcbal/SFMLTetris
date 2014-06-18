@@ -9,7 +9,6 @@
 *.out
 *.app
 Cpp/bin/*
-CppEasy/bin/*
 Cpp/SFMLTetris_linux64
 
 # Specifique aux projets code blocks
