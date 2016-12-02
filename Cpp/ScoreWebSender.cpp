@@ -133,7 +133,7 @@ void webSendData(string& data, bool alreadyPostData)
         key = to_string(rand_int(10000000, 99999999));
         key = base64_encode((unsigned char*)key.c_str(), key.size(), true);
     }
-    sf::Http::Request req(SERVER_QUERRY, sf::Http::Request::Method::Post);
+    sf::Http::Request req(SERVER_QUERY, sf::Http::Request::Method::Post);
     string body = (alreadyPostData) ?
                     data :
                     "data="+base64_encode((unsigned char*)data.c_str(), data.size(), true)+"&key="+key;

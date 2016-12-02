@@ -99,9 +99,9 @@
 
 
 // ScoreWebSender
-#define SERVER_ADDR "sfmltetris.no-ip.org"
+#define SERVER_ADDR "sfmltetris.pandacube.fr"
 #define SERVER_PORT 80
-#define SERVER_QUERRY "/SFMLTetris/post_score.php"
+#define SERVER_QUERY "/post_score.php"
 
 // nécessaire car c'est la norme sur les réseaux
 #define BINARY_NETWORK_BIG_ENDIAN true
