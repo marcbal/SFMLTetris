@@ -1,9 +1,9 @@
 #include "ScreenDebug.hpp"
 
 ScreenDebug::ScreenDebug(sf::Vector2i* window_size, GameConfiguration * gameConfig, AudioConfiguration * audio):
+    _debug_info_background(sf::Vector2f(0, 0)),
     _audio_indicator(sf::Vector2f(100, 10)),
     _audio_indicator_border(sf::Vector2f(100, 10)),
-    _debug_info_background(sf::Vector2f(0, 0)),
     _console_text_background(sf::Vector2f(0, 0)),
     spectrum(128),
     spectrum2(128)
@@ -86,7 +86,7 @@ void ScreenDebug::update()
 
 
 
-    _debug_info.setString("SFML Tetris - Par Marc Baloup et Louis Behague - http://sfmltetris.no-ip.org/\nUptime : "+
+    _debug_info.setString("SFML Tetris - Par Marc Baloup et Louis Behague - http://sfmltetris.pandacube.fr/\nUptime : "+
                           uptime+
                           " - FPS : "+to_string(framerate) +
                           " - Particules : "+ to_string(ExplosionManager::_nbParticules) +

@@ -21,7 +21,7 @@ AudioConfiguration::AudioConfiguration():
         musicPlayed = -1;
         saveConfigurationFile();
     }
-    else if (_play && musicPlayed>=0 && musicPlayed < _musics.size())
+    else if (_play && musicPlayed>=0 && musicPlayed < (int)_musics.size())
     {
         _buff_actual_music.loadFromFile(_folder+musicNames[musicPlayed]);
         _musics[musicPlayed]->play();
@@ -214,7 +214,7 @@ void AudioConfiguration::_pGetAudioSpectrum()
     unsigned int samplePosition = sampleRate * channelCount * timeOffset.asSeconds();
 
     int log2n = 12;
-    int nbAnalysedSamplePerChannel = pow(2, log2n);
+    unsigned int nbAnalysedSamplePerChannel = pow(2, log2n);
     int max_val_int16 = pow(2, 14);
     if (channelCount != _spectrum.size())
     {
@@ -234,7 +234,7 @@ void AudioConfiguration::_pGetAudioSpectrum()
             j+=channelCount;
         }
         fft(a, b, log2n);
-        for (int i=0; i<_spectrum[c].size(); i++)
+        for (unsigned int i=0; i<_spectrum[c].size(); i++)
         {
             _spectrum[c][i] += /* 10*log10 */sqrt((b[i].real()*b[i].real()+b[i].imag()*b[i].imag()))/(nbAnalysedSamplePerChannel/4);
             _spectrum[c][i] /= 2.f;

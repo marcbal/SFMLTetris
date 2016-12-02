@@ -6,7 +6,7 @@
 ScreenScore::ScreenScore(sf::Vector2i * window_size, char *state, Scores * scores) :
     Menu(window_size, state),
     scoreTable(255/20+1),
-    lien(sf::Text(), "http://sfmltetris.no-ip.org/SFMLTetris/scores.php")
+    lien(sf::Text(), "http://sfmltetris.pandacube.fr/scores.php")
 {
     _scores = scores;
 

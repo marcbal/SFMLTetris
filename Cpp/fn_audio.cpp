@@ -25,7 +25,7 @@ void fft(complex<double>* a, complex<double>* b, int log2n)
     //typedef typename std::iterator_traits<Iter_T>::value_type complex;
     const complex<double> J(0, 1);
     int n = 1 << log2n;
-    for (unsigned int i=0; i < n; ++i) {
+    for (int i=0; i < n; ++i) {
        b[bitReverse(i, log2n)] = a[i];
     }
   for (int s = 1; s <= log2n; ++s) {
