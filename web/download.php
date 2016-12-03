@@ -5,10 +5,20 @@ include_once('include/_head.php');
 ?>
 
 <h3>Windows</h3>
-<p><a href="res/SFMLTetris_1.0.0_win32.zip">SFMLTetris_1.0.0_win32.zip</a> : décompressez puis lancez l'exécutable <b>SFMLTetris_win32.exe</b> .</p>
+<p><a href="res/SFMLTetris_1.0.1_win32.zip">SFMLTetris_1.0.1_win32.zip</a> : décompressez puis lancez l'exécutable <b>SFMLTetris_win32.exe</b>.</p>
 <h3>Linux</h3>
-<p><a href="res/SFMLTetris_1.0.0_linux64.tar.gz">SFMLTetris_1.0.0_linux64.tar.gz</a> : décompressez puis lancez l'exécutable <b>SFMLTetris_linux64</b> .</p>
-<h3>Sources</h3>
+<p><a href="res/SFMLTetris_1.0.0_linux64.tar.gz">SFMLTetris_1.0.0_linux64.tar.gz</a> : (la nouvelle version n'est pas encore en ligne) décompressez puis lancez l'exécutable <b>SFMLTetris_linux64</b>.</p>
+<h3>Changelog</h3>
+<p>
+	v1.0.0 -> v1.0.1 :
+</p>
+	<ul>
+		<li>Changement de l'adresse du site (la v1.0.0 ne peut plus envoyer les scores en ligne).
+		La raison pour laquelle l'adresse du site a changé est pour éviter de renouveler tous les
+		mois l'ancien nom de domaine. Le nouveau est, en principe, définitif.</li>
+		<li>Corrections de quelques fautes de français. Dans le menu de configuration des touches par exemple : clique -> clic</li>
+		<li>Le numéro de version est indiqué dans l'écran de débuggage (par défaut la touche F3)</li>
+	</ul>
 
 <h3>Impressions écrans</h3>
 <p id="gallerie">
