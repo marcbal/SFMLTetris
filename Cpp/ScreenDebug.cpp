@@ -86,7 +86,7 @@ void ScreenDebug::update()
 
 
 
-    _debug_info.setString("SFML Tetris - Par Marc Baloup et Louis Behague - http://sfmltetris.pandacube.fr/\nUptime : "+
+    _debug_info.setString("SFML Tetris "+string(VERSION)+" - Par Marc Baloup et Louis Behague - http://sfmltetris.pandacube.fr/\nUptime : "+
                           uptime+
                           " - FPS : "+to_string(framerate) +
                           " - Particules : "+ to_string(ExplosionManager::_nbParticules) +

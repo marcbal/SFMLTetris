@@ -43,6 +43,7 @@
 #define DEBUG_NB_CHAR_WIDTH 100
 #define DEBUG_NB_CHAR_HEIGHT 30
 #define DEBUG_CHAR_SIZE 13
+#define VERSION "v1.0.1"
 
 
 
