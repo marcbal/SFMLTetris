@@ -36,18 +36,19 @@ if ($nb_result > 0)
 	?>
 		<h3>Affichage des 1000 meilleures scores</h3>
 	<?php
-	$resultats=$bdd_connexion->query("SELECT player_name, score, time, lignes, nb_tetromino FROM " . $bdd_table . " WHERE checked = 1 ORDER BY score DESC LIMIT 0, 1000");
+	$resultats=$bdd_connexion->query("SELECT player_name, score, time, lignes, nb_tetromino, date FROM " . $bdd_table . " WHERE checked = 1 ORDER BY score DESC LIMIT 0, 1000");
 	$resultats->setFetchMode(PDO::FETCH_OBJ);
 	
 	?>
 	<table id="scores">
 		<tr>
 			<th>#</th>
-			<th>Nom&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+			<th>Nom&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
 			<th>Score</th>
 			<th>Lignes</th>
-			<th>Tetrominos</th>
-			<th>Durée</th>
+			<th>Pièces</th>
+			<th>Durée&nbsp;&nbsp;</th>
+			<th>Date</th>
 		</tr>
 		<?php
 			$i=1;
@@ -61,6 +62,7 @@ if ($nb_result > 0)
 					<td><?php echo $ligne->lignes; ?></td>
 					<td><?php echo $ligne->nb_tetromino; ?></td>
 					<td><?php echo time_duration($ligne->time); ?></td>
+					<td><?php echo ($ligne->date !== null) ? date('d/m/Y', $ligne->date) : 'Inconnu'; ?></td>
 				</tr>
 				<?php
 				$i++;

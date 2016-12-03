@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS `tetris_scores` (
   `nb_tetromino` int(11) NOT NULL,
   `check_data` longtext NOT NULL COMMENT 'serialised',
   `checked` tinyint(1) NOT NULL DEFAULT '0',
+  `date` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;

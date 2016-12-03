@@ -161,6 +161,7 @@ table#scores
 table#scores td, table#scores th
 {
 	padding: 5px;
+	text-align: left;
 }
 
 
