@@ -57,7 +57,7 @@ if ($nb_result > 0)
 				?>
 				<tr>
 					<td><?php echo $i; ?></td>
-					<td><?php echo $ligne->player_name; ?></td>
+					<td><?php echo htmlentities($ligne->player_name); ?></td>
 					<td><?php echo $ligne->score; ?></td>
 					<td><?php echo $ligne->lignes; ?></td>
 					<td><?php echo $ligne->nb_tetromino; ?></td>
