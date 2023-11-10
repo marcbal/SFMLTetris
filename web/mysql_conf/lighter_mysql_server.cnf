@@ -1,0 +1,13 @@
+[mysqld]
+innodb_buffer_pool_size = 5M
+innodb_log_buffer_size  = 256K
+thread_cache_size       = 1
+max_connections         = 10
+key_buffer_size         = 256K
+
+table_definition_cache  = 400
+table_open_cache        = 400
+
+mysqlx                  = off
+
+skip_ssl

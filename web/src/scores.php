@@ -33,10 +33,10 @@ echo '<p>Il y a '.$nb_result.' score'.(($nb_result>1)?'s':'').' à afficher</p>'
 if ($nb_result > 0)
 {
 	include_once('include/function_time.php');
-	?>
-		<h3>Affichage des 1000 meilleures scores</h3>
-	<?php
-	$resultats=$bdd_connexion->query("SELECT player_name, score, time, lignes, nb_tetromino, date FROM " . $bdd_table . " WHERE checked = 1 ORDER BY score DESC LIMIT 0, 1000");
+	if ($nb_result > 1000) {
+		?><p>Affichage des 1000 meilleurs scores :</p><?php
+	}
+	$resultats=$bdd_connexion->query("SELECT player_name, score, time, lignes, nb_tetromino, date FROM tetris_scores WHERE checked = 1 ORDER BY score DESC, time ASC LIMIT 1000 OFFSET 0");
 	$resultats->setFetchMode(PDO::FETCH_OBJ);
 	
 	?>
@@ -62,7 +62,7 @@ if ($nb_result > 0)
 					<td><?php echo $ligne->lignes; ?></td>
 					<td><?php echo $ligne->nb_tetromino; ?></td>
 					<td><?php echo time_duration($ligne->time); ?></td>
-					<td><?php echo ($ligne->date !== null) ? date('d/m/Y', $ligne->date) : 'Inconnu'; ?></td>
+					<td><?php echo ($ligne->date !== null) ? date('d/m/Y', $ligne->date) : '-'; ?></td>
 				</tr>
 				<?php
 				$i++;
