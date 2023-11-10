@@ -1,7 +1,7 @@
 <?php
 include_once('include/id_bdd.php');
 
-$bdd_querry_prepare = 'INSERT INTO '.$bdd_table.' VALUES ( null, :name , :score , :time , :lines , :nbtetro , :data , :valid, '.time().');';
+$bdd_querry_prepare = 'INSERT INTO tetris_scores VALUES ( null, :name , :score , :time , :lines , :nbtetro , :data , :valid, '.time().');';
 
 $min_score_to_saving = 1;
 

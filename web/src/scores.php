@@ -16,7 +16,7 @@ try {
 
 
 
-$resultats=$bdd_connexion->query("SELECT COUNT(*) as nbchecked FROM " . $bdd_table . " WHERE checked = 1");
+$resultats=$bdd_connexion->query("SELECT COUNT(*) as nbchecked FROM tetris_scores WHERE checked = 1");
 $resultats->setFetchMode(PDO::FETCH_OBJ);
 if(!($ligne = $resultats->fetch()))
 	exit('Erreur dans la base de données : la table des scores n\'existe pas.');

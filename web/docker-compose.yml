@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+
+  web:
+    image: marcbal/sfmltetris-web:latest
+    restart: always
+    environment:
+      - MYSQL_HOST=db # the name of the database service below
+      - MYSQL_PORT=3306 # the default mysql port
+      - MYSQL_USER=sfmltetris # same as below
+      - MYSQL_PASS=5FM1T3trls # same as below
+      - MYSQL_DB=sfmltetris # the db name in marcbal/sfmltetris-db image
+    ports:
+      - "0.0.0.0:7593:80"
+  
+  db:
+    image: marcbal/sfmltetris-db:latest
+    restart: always
+    volumes:
+      - ./db-data:/var/lib/mysql # myql data directory
+    environment:
+      - MYSQL_ROOT_PASSWORD=5FM1T3trls
+      - MYSQL_USER=sfmltetris
+      - MYSQL_PASSWORD=5FM1T3trls
