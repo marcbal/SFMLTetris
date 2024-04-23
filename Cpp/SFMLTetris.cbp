@@ -24,11 +24,11 @@
 				<Linker>
 					<Add option="-lGL" />
 					<Add option="-lGLU" />
-					<Add library="SFML-2.1-linux64\lib\libsfml-audio.so" />
-					<Add library="SFML-2.1-linux64\lib\libsfml-graphics.so" />
-					<Add library="SFML-2.1-linux64\lib\libsfml-window.so" />
-					<Add library="SFML-2.1-linux64\lib\libsfml-system.so" />
-					<Add library="SFML-2.1-linux64\lib\libsfml-network.so" />
+					<Add library="SFML-2.1-linux64/lib/libsfml-audio.so" />
+					<Add library="SFML-2.1-linux64/lib/libsfml-graphics.so" />
+					<Add library="SFML-2.1-linux64/lib/libsfml-window.so" />
+					<Add library="SFML-2.1-linux64/lib/libsfml-system.so" />
+					<Add library="SFML-2.1-linux64/lib/libsfml-network.so" />
 					<Add directory="SFML-2.1-linux64/lib" />
 				</Linker>
 			</Target>
@@ -39,7 +39,6 @@
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-O3" />
 					<Add option="-std=c++11" />
 					<Add directory="SFML-2.1-linux64/include" />
 				</Compiler>
@@ -47,11 +46,11 @@
 					<Add option="-s" />
 					<Add option="-lGL" />
 					<Add option="-lGLU" />
-					<Add library="SFML-2.1-linux64\lib\libsfml-audio.so" />
-					<Add library="SFML-2.1-linux64\lib\libsfml-graphics.so" />
-					<Add library="SFML-2.1-linux64\lib\libsfml-window.so" />
-					<Add library="SFML-2.1-linux64\lib\libsfml-system.so" />
-					<Add library="SFML-2.1-linux64\lib\libsfml-network.so" />
+					<Add library="SFML-2.1-linux64/lib/libsfml-audio.so" />
+					<Add library="SFML-2.1-linux64/lib/libsfml-graphics.so" />
+					<Add library="SFML-2.1-linux64/lib/libsfml-window.so" />
+					<Add library="SFML-2.1-linux64/lib/libsfml-system.so" />
+					<Add library="SFML-2.1-linux64/lib/libsfml-network.so" />
 					<Add directory="SFML-2.1-linux64/lib" />
 				</Linker>
 			</Target>
@@ -86,7 +85,6 @@
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-O3" />
 					<Add option="-std=c++11" />
 					<Add option="-DSFML_STATIC" />
 					<Add directory="./SFML-2.1/include" />
