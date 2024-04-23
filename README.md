@@ -1,50 +1,39 @@
-SFMLTetris
-==========
+# SFMLTetris
 
-Projet tutoré pour le semestre 2 en DUT Informatique à l'IUT de Lens, 2013-2014
+A Tetris game made in C++ with the [SFML library](https://www.sfml-dev.org/index.php).
+It was a project for an IT university course in 2014 (DUT Informatique, IUT de Lens, Université d’Artois).
 
-Site web : http://sfmltetris.pandacube.fr/
+Website : http://sfmltetris.pandacube.fr/
 
-Contributeurs
-------------
+## Contributors
 
-- Louis Behague (Babanar) : développeur
-- Marc Baloup (marcbal) : développeur, chef de projet
-- Mathieu Blanquin (Devil62) : maquettes, ancien chef de projet
+- Louis Behague (Babanar) : developer
+- Marc Baloup (marcbal) : developer, project manager
+- Mathieu Blanquin (Devil62) : mock-ups and old project manager
 
+## How to build
 
+### Windows
 
-Points important à faire (énoncée)
-----------------------------------
--> Effacer au fur et à mesure + mettre à jours les Issues sur GitHub
+As of april 2024, on Windows 10 22H2.
+Install CodeBlocks 16.01 with the included Mingw build environment (4.9.2 win32).
+Newer build environment does not yet work for this project.
+This projet is not yet set up for 64 bits compilation on Windows.
 
-#### Base : Terminé
+### Linux
 
-#### Option 1 : IHM : Terminé
-
-#### Option 2 : Tetris Explosif : Terminé
-Effets spéciaux d'explosion
-
-
-Choses à faire (hors énoncée) et idées
---------------
-
-Voir la partie Issues sur le dépot GitHub
+As of april 2024, it only works on Ubuntu 14.04 (more recent OS are shipped with not old enough compiler/libraries).
+Install `apt install codeblocks g++ libglu1-mesa-dev libopenal-dev`.
+The g++ version should be 4.8.x.
+Newer build environment does not yet work for this project.
+On linux, the project is only compiled for 64 bits architecture (not 32 like on Windows).
 
 
+## Useful links while making the game
 
-Lien utiles pour le développement
------------------------------
+A Wiki giving guideling for making a standard tetris game: http://tetris.wikia.com/wiki/Tetris_Guideline
 
-Énoncé du projet tutoré (login nécessaire)
-http://foad.univ-artois.fr/moodle2013/mod/forum/discuss.php?d=972
+Tutorial to make a simple tetris game in C (fr): http://tfeysal.wordpress.com/2011/01/10/programmer-un-tetris-en-c-partie-1/
+(there is no part 2)
 
-Wiki reprenant les points importants d'un jeu tetris standard (en)
-http://tetris.wikia.com/wiki/Tetris_Guideline
-
-Tuto ayant servi à développer en partie le moteur de jeu (fr)
-http://tfeysal.wordpress.com/2011/01/10/programmer-un-tetris-en-c-partie-1/
-(il n'y a pas de partie 2)
-
-Et bien évidemment : la page Wikipedia sur Tetris (fr)
-http://fr.wikipedia.org/wiki/Tetris
+The Tetris wikipedia article (fr): http://fr.wikipedia.org/wiki/Tetris
