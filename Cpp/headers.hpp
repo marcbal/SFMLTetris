@@ -43,7 +43,7 @@
 #define DEBUG_NB_CHAR_WIDTH 100
 #define DEBUG_NB_CHAR_HEIGHT 30
 #define DEBUG_CHAR_SIZE 13
-#define VERSION "v1.0.1"
+#define VERSION "v1.0.2"
 
 
 
@@ -100,7 +100,7 @@
 
 
 // ScoreWebSender
-#define SERVER_ADDR "sfmltetris.pandacube.fr"
+#define SERVER_ADDR "sfmltetris.mbaloup.fr"
 #define SERVER_PORT 80
 #define SERVER_QUERY "/post_score.php"
 

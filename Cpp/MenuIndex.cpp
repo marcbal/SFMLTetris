@@ -5,7 +5,7 @@ using namespace sf;
 
 MenuIndex::MenuIndex(sf::Vector2i * window_size,char * state) :
     Menu(window_size,state),
-    lien(sf::Text(), "http://sfmltetris.pandacube.fr/")
+    lien(sf::Text(), "http://sfmltetris.mbaloup.fr/")
 {
 
     // tecture et sprite sont pour l'image du jeu
