@@ -1,25 +1,2 @@
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
-
-# Executables
-*.exe
-*.out
-*.app
-Cpp/bin/*
-Cpp/SFMLTetris_linux64
-
-# Specifique aux projets code blocks
-*.layout
-*.depend
-
-Cpp/save/*
-Cpp/logs/*
-web/include/id_bdd.php
-Cpp/configuration/*
-*.res
-Cpp/save/upload.bin
-web/res/*.zip
-web/res/*.tar.gz
+/Cpp/bin
+/Cpp/obj

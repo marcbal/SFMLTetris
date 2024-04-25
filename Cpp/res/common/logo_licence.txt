@@ -1,5 +1,2 @@
 Le logo du jeu est sous licence LGPL
 http://www.gnu.org/licenses/lgpl.html
-
-Les musiques
-(Voir le fichier README.md dans le dossier res/music/ )
