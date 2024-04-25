@@ -5,10 +5,18 @@ include_once('include/_head.php');
 ?>
 
 <h3>Windows</h3>
-<p><a href="https://github.com/marcbal/SFMLTetris/releases/download/v1.0.1/SFMLTetris_1.0.1_win32.zip">SFMLTetris_1.0.1_win32.zip</a> : décompressez puis lancez l'exécutable <b>SFMLTetris_win32.exe</b>.</p>
+<p><a href="https://github.com/marcbal/SFMLTetris/releases/download/v1.0.2/SFMLTetris_1.0.2_win32.zip">SFMLTetris_1.0.2_win32.zip</a> : décompressez puis lancez l'exécutable <b>SFMLTetris_win32.exe</b>.</p>
 <h3>Linux</h3>
-<p><a href="https://github.com/marcbal/SFMLTetris/releases/download/v1.0.0/SFMLTetris_1.0.0_linux64.tar.gz">SFMLTetris_1.0.0_linux64.tar.gz</a> : (la nouvelle version n'est pas encore en ligne) décompressez puis lancez l'exécutable <b>SFMLTetris_linux64</b>.</p>
+<p><a href="https://github.com/marcbal/SFMLTetris/releases/download/v1.0.2/SFMLTetris_1.0.2_linux64.tar.gz">SFMLTetris_1.0.2_linux64.tar.gz</a> : décompressez puis lancez l'exécutable <b>SFMLTetris_linux64</b>.</p>
 <h3>Changelog</h3>
+<p>
+	v1.0.1 -> v1.0.2 :
+</p>
+	<ul>
+		<li>Changement (encore) de l'adresse du site (la v1.0.1 ne peut plus non plus envoyer les scores en ligne).
+		La nouvelle adresse devrait être encore plus définitif.</li>
+		<li>Correction d’un plantage lors de la tentative d’envoi du score (corrigé en désactivant l’optimisation <code>-O3</code> à la compilation)</li>
+	</ul>
 <p>
 	v1.0.0 -> v1.0.1 :
 </p>
