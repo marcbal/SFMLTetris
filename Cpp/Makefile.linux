@@ -59,6 +59,7 @@ debug: before_debug $(CXX_OBJ_DEBUG)
 	cp -r res/linux/* $(BINDIR_DEBUG)/
 	cp -r res/common/* $(BINDIR_DEBUG)/res/
 	cp -r SFML-2.1-linux64/lib/* $(BINDIR_DEBUG)/lib/
+	chmod +x $(BINDIR_DEBUG)/run.sh
 
 
 $(OBJDIR_DEBUG)/%.cpp.o: %.cpp
@@ -79,6 +80,7 @@ release: before_release $(CXX_OBJ_RELEASE)
 	cp -r res/linux/* $(BINDIR_RELEASE)/
 	cp -r res/common/* $(BINDIR_RELEASE)/res/
 	cp -r SFML-2.1-linux64/lib/* $(BINDIR_RELEASE)/lib/
+	chmod +x $(BINDIR_RELEASE)/run.sh
 
 $(OBJDIR_RELEASE)/%.cpp.o: %.cpp
 	$(CXX) $(CFLAGS_RELEASE) $(INC) -c $< -o $@
