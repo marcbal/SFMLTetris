@@ -14,7 +14,7 @@ LD = g++
 INC = -ISFML-2.1-linux64/include
 CFLAGS = -std=c++11
 LIBDIR = -LSFML-2.1-linux64/lib
-LIB = -lGL -lGLU -lSFML-2.1-linux64/lib/libsfml-audio.so -lSFML-2.1-linux64/lib/libsfml-graphics.so -lSFML-2.1-linux64/lib/libsfml-window.so -lSFML-2.1-linux64/lib/libsfml-system.so -lSFML-2.1-linux64/lib/libsfml-network.so
+LIB = -lGL -lGLU SFML-2.1-linux64/lib/libsfml-audio.so SFML-2.1-linux64/lib/libsfml-graphics.so SFML-2.1-linux64/lib/libsfml-window.so SFML-2.1-linux64/lib/libsfml-system.so SFML-2.1-linux64/lib/libsfml-network.so
 LDFLAGS =
 
 CXX_SRC = $(wildcard *.cpp)
@@ -53,9 +53,12 @@ before_debug:
 
 debug: before_debug $(CXX_OBJ_DEBUG)
 	$(LD) $(LDFLAGS_DEBUG) $(LIBDIR) -o $(BIN_DEBUG) $(CXX_OBJ_DEBUG) $(LIB)
-	cp res/icone.ico $(BINDIR_DEBUG)/
 	mkdir -p $(BINDIR_DEBUG)/res
-	cp -r res/common/* $(BINDIR_DEBUG)/res
+	mkdir -p $(BINDIR_DEBUG)/lib
+	cp res/icone.ico $(BINDIR_DEBUG)/
+	cp -r res/linux/* $(BINDIR_DEBUG)/
+	cp -r res/common/* $(BINDIR_DEBUG)/res/
+	cp -r SFML-2.1-linux64/lib/* $(BINDIR_DEBUG)/lib/
 
 
 $(OBJDIR_DEBUG)/%.cpp.o: %.cpp
@@ -68,11 +71,14 @@ before_release:
 	mkdir -p $(BINDIR_RELEASE)
 	mkdir -p $(OBJDIR_RELEASE)
 
-release: before_release $(OBJ_RELEASE)
+release: before_release $(CXX_OBJ_RELEASE)
 	$(LD) $(LDFLAGS_RELEASE) $(LIBDIR) -o $(BIN_RELEASE) $(CXX_OBJ_RELEASE) $(LIB)
-	cp res/icone.ico $(BINDIR_DEBUG)/
-	mkdir -p $(BINDIR_DEBUG)/res
-	cp -r res/common/* $(BINDIR_DEBUG)/res
+	mkdir -p $(BINDIR_RELEASE)/res
+	mkdir -p $(BINDIR_RELEASE)/lib
+	cp res/icone.ico $(BINDIR_RELEASE)/
+	cp -r res/linux/* $(BINDIR_RELEASE)/
+	cp -r res/common/* $(BINDIR_RELEASE)/res/
+	cp -r SFML-2.1-linux64/lib/* $(BINDIR_RELEASE)/lib/
 
 $(OBJDIR_RELEASE)/%.cpp.o: %.cpp
 	$(CXX) $(CFLAGS_RELEASE) $(INC) -c $< -o $@
