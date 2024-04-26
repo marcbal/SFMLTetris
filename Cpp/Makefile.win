@@ -12,10 +12,10 @@ WINDRES = windres
 
 
 
-INC = -I./SFML-2.2-win32/include
+INC = -I./SFML-2.3.2-win32/include
 CFLAGS = -std=c++11 -DSFML_STATIC
-LIBDIR = -L./SFML-2.2-win32/lib
-LIB = -lglew -lglu32 -lopengl32 -lfreetype -ljpeg -lwinmm -lgdi32 -lsndfile -lopenal32 -lws2_32
+LIBDIR = -L./SFML-2.3.2-win32/lib
+LIB = -lglu32 -lfreetype -ljpeg -lopengl32 -lgdi32 -lopenal32 -lflac -lvorbisenc -lvorbisfile -lvorbis -logg -lws2_32 -lwinmm
 LDFLAGS =
 
 CXX_SRC = $(wildcard *.cpp)
