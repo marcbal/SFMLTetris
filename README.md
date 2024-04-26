@@ -3,7 +3,7 @@
 A Tetris game made in C++ with the [SFML library](https://www.sfml-dev.org/index.php).
 It was a project for an IT university course in 2014 (DUT Informatique, IUT de Lens, Université d’Artois).
 
-Website : http://sfmltetris.mbaloup.fr/
+Website : https://sfmltetris.mbaloup.fr/
 
 ## Contributors
 
