@@ -161,9 +161,9 @@ bool ExplosionParticle::update()
 {
     sf::FloatRect win_rect(sf::Vector2f(0, 0), sf::Vector2f(*_window_size));
     sf::Time elapsed = _cl.restart();
-    _speed.x += _gravity.x * (1.0/FPS_MAX);
-    _speed.y += _gravity.y * (1.0/FPS_MAX); // je sais que les opérateurs * et += sont surchargés pour les Vector2f, mais ça marche pas ici
-    _shape.setPosition(_shape.getPosition() + sf::Vector2f(_speed.x*(1.0/FPS_MAX), _speed.y*(1.0/FPS_MAX)));
+    _speed.x += _gravity.x * elapsed.asSeconds();
+    _speed.y += _gravity.y * elapsed.asSeconds();
+    _shape.setPosition(_shape.getPosition() + sf::Vector2f(_speed.x*elapsed.asSeconds(), _speed.y*elapsed.asSeconds()));
     _shape.setRadius(_shape.getRadius() - elapsed.asSeconds());
     if (_shape.getRadius() <= 0 ||
         !win_rect.contains(_shape.getPosition()))
