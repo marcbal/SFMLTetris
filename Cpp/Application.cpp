@@ -33,11 +33,11 @@ Application::Application() :
 
     _screenDebug.setGamePtr(screenGame);
 
-	_window.setFramerateLimit(_gameconfig.getFPS());
 	_window.setKeyRepeatEnabled(false);
 	_window_setting.depthBits = 24;
     _window_setting.antialiasingLevel = 4;
     _window.create(VideoMode(_window_size.x, _window_size.y), L"SFML Tetris", Style::Close | Style::Titlebar | Style::Resize, _window_setting);
+	_window.setFramerateLimit(_gameconfig.getFPS());
 
     sf::Image * logo = Ressources::getLogoMin();
     _window.setIcon(logo->getSize().x, logo->getSize().y, logo->getPixelsPtr());
@@ -116,7 +116,7 @@ void Application::processEvents()
                 onResize(event);
             break;
             default:
-                // gestion du redimentionnement dela fenêtre
+                // gestion du redimentionnement de la fenêtre
                 if (event.type == sf::Event::MouseWheelMoved)
                 {
                     event.mouseWheel.x = _window.mapPixelToCoords(sf::Vector2i(event.mouseWheel.x, event.mouseWheel.y)).x;
