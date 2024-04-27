@@ -27,8 +27,8 @@ This projet is not yet set up for 64 bits compilation on Windows.
 
 ### Linux
 
-As of april 2024, it only works on Ubuntu 16.04 (more recent OS are shipped with not old enough compiler/libraries).
-Install the necessary packages: `sudo apt install make g++-5 libglu1-mesa-dev libopenal-dev`.
+Works on Ubuntu 18.04 (more recent OS are shipped with not old enough compiler/libraries).
+Install the necessary packages: `sudo apt install make g++-6 libglu1-mesa-dev libopenal-dev libsfml-dev`.
 Newer build environment does not yet work for this project.
 On linux, 32 bit is not supported.
 
