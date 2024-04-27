@@ -23,8 +23,8 @@ This projet is not yet set up for 64 bits compilation on Windows.
 ### Linux
 
 As of april 2024, it only works on Ubuntu 14.04 (more recent OS are shipped with not old enough compiler/libraries).
-Install `apt install codeblocks g++ libglu1-mesa-dev libopenal-dev`.
-The g++ version should be 4.8.x.
+Install the necessary packages: `sudo apt install g++-4.9 libglu1-mesa-dev libopenal-dev`.
+The g++ version should be 4.9.x.
 Newer build environment does not yet work for this project.
 On linux, the project is only compiled for 64 bits architecture (not 32 like on Windows).
 

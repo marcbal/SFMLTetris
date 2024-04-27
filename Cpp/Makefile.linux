@@ -5,8 +5,8 @@
 
 WORKDIR = $PWD
 
-CXX = g++
-LD = g++
+CXX = g++-4.9
+LD = g++-4.9
 
 
 
