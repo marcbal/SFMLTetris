@@ -95,17 +95,17 @@ void BoutonLink::updateGraphics()
 {
     if (_mouseClick)
     {
-        texte.setColor(sf::Color(187, 187, 187));
+        texte.setFillColor(sf::Color(187, 187, 187));
         texte.setStyle(sf::Text::Regular);
     }
     else if (_mouseHover)
     {
-        texte.setColor(sf::Color(187, 187, 187));
+        texte.setFillColor(sf::Color(187, 187, 187));
         texte.setStyle(sf::Text::Underlined);
     }
     else
     {
-        texte.setColor(sf::Color::White);
+        texte.setFillColor(sf::Color::White);
         texte.setStyle(sf::Text::Underlined);
     }
 }

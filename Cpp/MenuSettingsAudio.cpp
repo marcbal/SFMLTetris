@@ -23,19 +23,19 @@ MenuSettingsAudio::MenuSettingsAudio(Vector2i * window_size,char *state,AudioCon
 
 
     textPlay.setCharacterSize(20);
-    textPlay.setColor(sf::Color::White);
+    textPlay.setFillColor(sf::Color::White);
     textPlay.setFont(*Ressources::getDefaultFont());
     textPlay.setPosition(85, 76);
     textPlay.setString("Activer la musique");
 
     textVolume.setCharacterSize(20);
-    textVolume.setColor(sf::Color::White);
+    textVolume.setFillColor(sf::Color::White);
     textVolume.setFont(*Ressources::getDefaultFont());
     textVolume.setPosition(50, 120);
     textVolume.setString("Volume de la musique : "+to_string((int) _audio->getVolume())+"%");
 
     textSelect.setCharacterSize(20);
-    textSelect.setColor(sf::Color::White);
+    textSelect.setFillColor(sf::Color::White);
     textSelect.setFont(*Ressources::getDefaultFont());
     textSelect.setPosition(50, 240);
     textSelect.setString("Choix de la musique :");

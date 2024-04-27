@@ -23,15 +23,6 @@ int string_to_int( const string & Str)
     return Dest;
 }
 
-#ifdef _WIN32
-string to_string( int Value )
-{
-    std::ostringstream oss;
-    oss << Value;
-    return oss.str();
-}
-#endif
-
 string to_string( int Value, unsigned int nb_car )
 {
     std::ostringstream oss;
@@ -68,20 +59,6 @@ string to_string( int Value, string separateur_millier )
 }
 
 
-
-string to_string( long long Value )
-{
-    std::ostringstream oss;
-    oss << Value;
-    return oss.str();
-}
-
-string to_string( double Value )
-{
-    std::ostringstream oss;
-    oss << Value;
-    return oss.str();
-}
 
 
 string to_string( bool Value )

@@ -5,16 +5,16 @@
 
 WORKDIR = $PWD
 
-CXX = g++-4.9
-LD = g++-4.9
+CXX = g++-5
+LD = g++-5
 
 
 
 
-INC = -ISFML-2.3.2-linux64/include
+INC =
 CFLAGS = -std=c++11
-LIBDIR = -LSFML-2.3.2-linux64/lib
-LIB = -lGL -lGLU SFML-2.3.2-linux64/lib/libsfml-audio.so SFML-2.3.2-linux64/lib/libsfml-graphics.so SFML-2.3.2-linux64/lib/libsfml-window.so SFML-2.3.2-linux64/lib/libsfml-system.so SFML-2.3.2-linux64/lib/libsfml-network.so
+LIBDIR =
+LIB = -lGL -lGLU -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system -lsfml-network
 LDFLAGS =
 
 CXX_SRC = $(wildcard *.cpp)
@@ -58,7 +58,7 @@ debug: before_debug $(CXX_OBJ_DEBUG)
 	cp res/icone.ico $(BINDIR_DEBUG)/
 	cp -r res/linux/* $(BINDIR_DEBUG)/
 	cp -r res/common/* $(BINDIR_DEBUG)/res/
-	cp -r SFML-2.3.2-linux64/lib/* $(BINDIR_DEBUG)/lib/
+	cp -rL /usr/lib/x86_64-linux-gnu/libsfml* $(BINDIR_DEBUG)/lib/
 	chmod +x $(BINDIR_DEBUG)/run.sh
 
 
@@ -79,7 +79,7 @@ release: before_release $(CXX_OBJ_RELEASE)
 	cp res/icone.ico $(BINDIR_RELEASE)/
 	cp -r res/linux/* $(BINDIR_RELEASE)/
 	cp -r res/common/* $(BINDIR_RELEASE)/res/
-	cp -r SFML-2.3.2-linux64/lib/* $(BINDIR_RELEASE)/lib/
+	cp -rL /usr/lib/x86_64-linux-gnu/libsfml* $(BINDIR_RELEASE)/lib/
 	chmod +x $(BINDIR_RELEASE)/run.sh
 
 $(OBJDIR_RELEASE)/%.cpp.o: %.cpp

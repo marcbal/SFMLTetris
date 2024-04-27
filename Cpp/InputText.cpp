@@ -20,7 +20,7 @@ InputText::InputText(sf::Vector2f pos, sf::Vector2f taille,sf::String val){
     textCursor.setSize(Vector2f(1,20));
 
     _text.setCharacterSize(20);
-    _text.setColor(sf::Color::White);
+    _text.setFillColor(sf::Color::White);
     _text.setFont(*Ressources::getDefaultFont());
     _text.setPosition(_pos);
     _text.setString(_val);

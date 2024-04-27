@@ -33,7 +33,7 @@ MenuSettingsGame::MenuSettingsGame(sf::Vector2i * window_size,char *state,OpenGL
 
 
     textActivateGhost.setCharacterSize(16);
-    textActivateGhost.setColor(sf::Color::White);
+    textActivateGhost.setFillColor(sf::Color::White);
     textActivateGhost.setFont(*Ressources::getDefaultFont());
     textActivateGhost.setPosition(85, 140);
     textActivateGhost.setString(L"Afficher le fantôme du tetromino");
@@ -42,14 +42,14 @@ MenuSettingsGame::MenuSettingsGame(sf::Vector2i * window_size,char *state,OpenGL
 
 
     textActivateAutorotation.setCharacterSize(16);
-    textActivateAutorotation.setColor(sf::Color::White);
+    textActivateAutorotation.setFillColor(sf::Color::White);
     textActivateAutorotation.setFont(*Ressources::getDefaultFont());
     textActivateAutorotation.setPosition(85, 180);
     textActivateAutorotation.setString("Rotation automatique de la matrice 3D");
 
 
     textOnlineScore.setCharacterSize(16);
-    textOnlineScore.setColor(sf::Color::White);
+    textOnlineScore.setFillColor(sf::Color::White);
     textOnlineScore.setFont(*Ressources::getDefaultFont());
     textOnlineScore.setPosition(85, 220);
     textOnlineScore.setString("Publier le score en ligne");

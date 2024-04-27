@@ -37,7 +37,7 @@ ScreenScore::ScreenScore(sf::Vector2i * window_size, char *state, Scores * score
             sf::Text t;
             t.setCharacterSize(15);
             t.setFont(*Ressources::getDefaultFont());
-            t.setColor(sf::Color::White);
+            t.setFillColor(sf::Color::White);
             t.setString("");
             t.setPosition(20, j * (window_size->y -150) / nbScorePerPage + 70);
             scoreTable[i].push_back(t);

@@ -43,7 +43,7 @@ void InputKey::onEvent(Event & event){
     updateGraphic();
 }
 
-void InputKey::onMouseDown(Event & event){
+void InputKey::onMouseDown(Event & /* event */){
 
 }
 void InputKey::onKeyUp(Event & event){
@@ -72,12 +72,12 @@ void InputKey::onMouseMove(Event & event){
 void InputKey::updateGraphic(){
     if(_isActive){
         _fond.setFillColor(Color(160, 160, 160));
-        _text.setColor(Color::Black);
+        _text.setFillColor(Color::Black);
         _text.setString("Appuyez sur une touche");
     }
     else{
         _fond.setFillColor((_mouseHover)?Color(128, 128, 128):Color(0, 0, 0, 192));
-        _text.setColor(Color::White);
+        _text.setFillColor(Color::White);
         _text.setString(_eventName + " : " + Evenement::keyToString(_event->getEventKey(_eventName)));
     }
 

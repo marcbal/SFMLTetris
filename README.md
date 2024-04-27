@@ -15,18 +15,22 @@ Website : https://sfmltetris.mbaloup.fr/
 
 ### Windows
 
-As of april 2024, on Windows 10 22H2.
-Install CodeBlocks 16.01 with the included Mingw build environment (4.9.2 win32).
-Newer build environment does not yet work for this project.
+Install [Mingw GCC 6.1.0 (32 bits)](https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/6.1.0/threads-posix/dwarf/i686-6.1.0-release-posix-dwarf-rt_v5-rev0.7z/download).
+From here, you have 2 options:
+
+* Add the `<mingw-install-dir>/bin` directory in your PATH environment variable,
+* Or put the absolute path of the compiler in the file `Cpp/Makefile.win`.
+
+Finally, go to the `Cpp` folder and compile with `make -f Makefile.win release`. You can find the build project in `bin/release_w/`
+
 This projet is not yet set up for 64 bits compilation on Windows.
 
 ### Linux
 
-As of april 2024, it only works on Ubuntu 14.04 (more recent OS are shipped with not old enough compiler/libraries).
-Install the necessary packages: `sudo apt install g++-4.9 libglu1-mesa-dev libopenal-dev`.
-The g++ version should be 4.9.x.
+As of april 2024, it only works on Ubuntu 16.04 (more recent OS are shipped with not old enough compiler/libraries).
+Install the necessary packages: `sudo apt install make g++-5 libglu1-mesa-dev libopenal-dev`.
 Newer build environment does not yet work for this project.
-On linux, the project is only compiled for 64 bits architecture (not 32 like on Windows).
+On linux, 32 bit is not supported.
 
 
 ## Useful links while making the game

@@ -36,27 +36,27 @@ MenuSettingsGraphics::MenuSettingsGraphics(sf::Vector2i * window_size,char * sta
     menuElements[2].setText(L"Appliquer");
 
     textAntialias.setCharacterSize(20);
-    textAntialias.setColor(sf::Color::White);
+    textAntialias.setFillColor(sf::Color::White);
     textAntialias.setFont(*Ressources::getDefaultFont());
     textAntialias.setPosition(50, 120);
 
     textFPS.setCharacterSize(20);
-    textFPS.setColor(sf::Color::White);
+    textFPS.setFillColor(sf::Color::White);
     textFPS.setFont(*Ressources::getDefaultFont());
     textFPS.setPosition(50, 200);
 
     textBGPart.setCharacterSize(20);
-    textBGPart.setColor(sf::Color::White);
+    textBGPart.setFillColor(sf::Color::White);
     textBGPart.setFont(*Ressources::getDefaultFont());
     textBGPart.setPosition(505, 80);
 
     textBGSpeed.setCharacterSize(20);
-    textBGSpeed.setColor(sf::Color::White);
+    textBGSpeed.setFillColor(sf::Color::White);
     textBGSpeed.setFont(*Ressources::getDefaultFont());
     textBGSpeed.setPosition(505, 160);
 
     textBGPSize.setCharacterSize(20);
-    textBGPSize.setColor(sf::Color::White);
+    textBGPSize.setFillColor(sf::Color::White);
     textBGPSize.setFont(*Ressources::getDefaultFont());
     textBGPSize.setPosition(505, 240);
 
@@ -65,14 +65,14 @@ MenuSettingsGraphics::MenuSettingsGraphics(sf::Vector2i * window_size,char * sta
 
 
     textActivateExplosions.setCharacterSize(16);
-    textActivateExplosions.setColor(sf::Color::White);
+    textActivateExplosions.setFillColor(sf::Color::White);
     textActivateExplosions.setFont(*Ressources::getDefaultFont());
     textActivateExplosions.setPosition(85, 400);
     textActivateExplosions.setString("Effets d'explosion (mode 2D seulement)");
 
 
     textActivate3D.setCharacterSize(16);
-    textActivate3D.setColor(sf::Color::White);
+    textActivate3D.setFillColor(sf::Color::White);
     textActivate3D.setFont(*Ressources::getDefaultFont());
     textActivate3D.setPosition(540, 400);
     textActivate3D.setString("Activer la matrice 3D");

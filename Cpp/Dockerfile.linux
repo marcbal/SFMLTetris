@@ -1,0 +1,17 @@
+# Creates a docker images that provides an environmenet to build the linux executable
+
+FROM ubuntu:18.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && \
+    apt-get install -y make g++-5 libglu1-mesa-dev libopenal-dev libsfml-dev && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /data
+
+COPY res/ ./res/
+COPY *.?pp Makefile.linux ./
+
+RUN make -f Makefile.linux release
+

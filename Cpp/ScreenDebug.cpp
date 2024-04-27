@@ -12,7 +12,7 @@ ScreenDebug::ScreenDebug(sf::Vector2i* window_size, GameConfiguration * gameConf
     _audio = audio;
     _gameConfig = gameConfig;
     _debug_info.setCharacterSize(DEBUG_CHAR_SIZE);
-    _debug_info.setColor(sf::Color::White);
+    _debug_info.setFillColor(sf::Color::White);
     _debug_info.setFont(*Ressources::getDefaultFont());
     _debug_info.setPosition(10, 10);
 
@@ -20,7 +20,7 @@ ScreenDebug::ScreenDebug(sf::Vector2i* window_size, GameConfiguration * gameConf
     _debug_info_background.setPosition(5, 5);
 
     _console_text.setCharacterSize(DEBUG_CHAR_SIZE);
-    _console_text.setColor(sf::Color::White);
+    _console_text.setFillColor(sf::Color::White);
     _console_text.setFont(*Ressources::getDefaultFont());
 
     _console_text_background.setFillColor(sf::Color(0, 0, 0, 192));

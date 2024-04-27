@@ -11,17 +11,9 @@ float string_to_float( const string & Str);
 
 int string_to_int( const string & Str);
 
-#ifdef _WIN32
-string to_string( int Value );
-#endif
-
 string to_string( int Value, unsigned int nb_car );
 
 string to_string( int Value, string separateur_millier );
-
-string to_string( long long Value );
-
-string to_string( double Value );
 
 string to_string( bool Value );
 

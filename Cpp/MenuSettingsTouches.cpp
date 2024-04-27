@@ -41,7 +41,7 @@ MenuSettingsTouches::MenuSettingsTouches(sf::Vector2i * window_size,char * state
 
 
     _textMouse.setCharacterSize(18);
-    _textMouse.setColor(sf::Color::White);
+    _textMouse.setFillColor(sf::Color::White);
     _textMouse.setFont(*Ressources::getDefaultFont());
     _textMouse.setPosition(115, 75);
     _textMouse.setString(L"Utiliser la souris (Mode 2D)\nClic gauche :\n     rotation gauche\nClic droit :\n     rotation droite\nClic du milieu :\n     descente rapide\nMouvement souris :\n     Déplacer tétromino");

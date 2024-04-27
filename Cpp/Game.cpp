@@ -41,7 +41,7 @@ Game::Game(sf::Vector2i * window_size, char *state,Evenement * evenement, Scores
     holdedTetromino = *(new NextTetrominoBoard(sf::Vector2f(window_size->x - (whiteSpaceBorder + 4*CEIL_SIZE), whiteSpaceBorder + 30)));
     sf::Text t1;
     t1.setCharacterSize(15);
-    t1.setColor(sf::Color::White);
+    t1.setFillColor(sf::Color::White);
     t1.setFont(*Ressources::getDefaultFont());
     t1.setString("Hold :");
     t1.setPosition(window_size->x - (whiteSpaceBorder + 4*CEIL_SIZE), whiteSpaceBorder);
@@ -54,7 +54,7 @@ Game::Game(sf::Vector2i * window_size, char *state,Evenement * evenement, Scores
         nextTetromino.push_back(nextTB);
         sf::Text t;
         t.setCharacterSize(15);
-        t.setColor(sf::Color::White);
+        t.setFillColor(sf::Color::White);
         t.setFont(*Ressources::getDefaultFont());
         t.setString("Next " + to_string(i+1) + " :");
         t.setPosition(window_size->x - (whiteSpaceBorder + 4*CEIL_SIZE), next_tetromino_top + (2 * CEIL_SIZE + 30 + 2 * whiteSpaceBorder) * i);

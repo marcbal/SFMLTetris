@@ -15,7 +15,7 @@ Menu::Menu(sf::Vector2i * window_size,char * state) :
     titre.setCharacterSize(30);
     titre.setPosition(50, 20);
     titre.setFont(*Ressources::getDefaultFont());
-    titre.setColor(sf::Color::White);
+    titre.setFillColor(sf::Color::White);
     titre.setString("");
 }
 

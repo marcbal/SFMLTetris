@@ -20,7 +20,7 @@ Bouton::Bouton(sf::Vector2f pos, sf::Vector2f taille,int taillePolice,char * sta
 
 
     // format du texte
-    texte.setColor(sf::Color::White);
+    texte.setFillColor(sf::Color::White);
 
 
     texte.setFont(*Ressources::getDefaultFont());
