@@ -16,9 +16,10 @@ CFLAGS = -std=c++14 -Wextra -Wall -pedantic
 LIBDIR =
 LIB = -lGL -lGLU -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system -lsfml-network
 LDFLAGS =
+SRCDIR = src
 
-CXX_SRC = $(wildcard *.cpp)
-CXX_OBJ = $(patsubst %.cpp, %.cpp.o, $(CXX_SRC))
+CXX_SRC = $(wildcard $(SRCDIR)/*.cpp)
+CXX_OBJ = $(patsubst $(SRCDIR)/%.cpp, %.cpp.o, $(CXX_SRC))
 
 
 
@@ -61,7 +62,7 @@ debug: before_debug $(CXX_OBJ_DEBUG)
 	chmod +x $(BINDIR_DEBUG)/run.sh
 
 
-$(OBJDIR_DEBUG)/%.cpp.o: %.cpp
+$(OBJDIR_DEBUG)/%.cpp.o: $(SRCDIR)/%.cpp
 	$(CXX) $(CFLAGS_DEBUG) $(INC) -c $< -o $@
 
 
@@ -80,7 +81,7 @@ release: before_release $(CXX_OBJ_RELEASE)
 	cp -rL /usr/lib/x86_64-linux-gnu/libsfml* $(BINDIR_RELEASE)/lib/
 	chmod +x $(BINDIR_RELEASE)/run.sh
 
-$(OBJDIR_RELEASE)/%.cpp.o: %.cpp
+$(OBJDIR_RELEASE)/%.cpp.o: $(SRCDIR)/%.cpp
 	$(CXX) $(CFLAGS_RELEASE) $(INC) -c $< -o $@
 
 

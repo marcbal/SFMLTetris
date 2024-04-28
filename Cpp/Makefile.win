@@ -17,12 +17,13 @@ CFLAGS = -std=c++14 -DSFML_STATIC -Wextra -Wall -pedantic
 LIBDIR = -LSFML-2.5.1-win32/lib
 LIB = -lglu32 -lfreetype -lopengl32 -lgdi32 -lopenal32 -lflac -lvorbisenc -lvorbisfile -lvorbis -logg -lws2_32 -lwinmm
 LDFLAGS =
+SRCDIR = src
 
-CXX_SRC = $(wildcard *.cpp)
-CXX_OBJ = $(patsubst %.cpp, %.cpp.o, $(CXX_SRC)) # keep cpp extension in obj filename to avoid conflict with rc object file
+CXX_SRC = $(wildcard $(SRCDIR)/*.cpp)
+CXX_OBJ = $(patsubst $(SRCDIR)/%.cpp, %.cpp.o, $(CXX_SRC)) # keep cpp extension in obj filename to avoid conflict with rc object file
 
-RC_SRC = $(wildcard *.rc)
-RC_OBJ = $(patsubst %.rc, %.rc.o, $(RC_SRC))
+RC_SRC = $(wildcard $(SRCDIR)/*.rc)
+RC_OBJ = $(patsubst $(SRCDIR)/%.rc, %.rc.o, $(RC_SRC))
 
 
 
@@ -65,9 +66,9 @@ debug: before_debug $(CXX_OBJ_DEBUG) $(RC_OBJ_DEBUG)
 	mkdir -p $(BINDIR_DEBUG)/res
 	cp -r res/common/* $(BINDIR_DEBUG)/res
 
-$(OBJDIR_DEBUG)/%.cpp.o: %.cpp
+$(OBJDIR_DEBUG)/%.cpp.o: $(SRCDIR)/%.cpp
 	$(CXX) $(CFLAGS_DEBUG) $(INC) -c $< -o $@
-$(OBJDIR_DEBUG)/%.rc.o: %.rc
+$(OBJDIR_DEBUG)/%.rc.o: $(SRCDIR)/%.rc
 	$(WINDRES) -i $< -o $@ -O coff
 
 
@@ -83,9 +84,9 @@ release: before_release $(CXX_OBJ_RELEASE) $(RC_OBJ_RELEASE)
 	mkdir -p $(BINDIR_RELEASE)/res
 	cp -r res/common/* $(BINDIR_RELEASE)/res
 
-$(OBJDIR_RELEASE)/%.cpp.o: %.cpp
+$(OBJDIR_RELEASE)/%.cpp.o: $(SRCDIR)/%.cpp
 	$(CXX) $(CFLAGS_RELEASE) $(INC) -c $< -o $@
-$(OBJDIR_RELEASE)/%.rc.o: %.rc
+$(OBJDIR_RELEASE)/%.rc.o: $(SRCDIR)/%.rc
 	$(WINDRES) -i $< -o $@ -O coff
 
 

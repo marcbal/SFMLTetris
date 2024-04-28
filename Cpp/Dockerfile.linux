@@ -10,8 +10,9 @@ RUN apt-get update && \
 
 WORKDIR /data
 
+COPY Makefile.linux ./
 COPY res/ ./res/
-COPY *.?pp Makefile.linux ./
+COPY src/ ./src/
 
 ARG TARGET=release
 
