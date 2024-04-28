@@ -15,25 +15,33 @@ Website : https://sfmltetris.mbaloup.fr/
 
 ### Windows
 
-Install [Mingw GCC 6.1.0 (32 bits)](https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/6.1.0/threads-posix/dwarf/i686-6.1.0-release-posix-dwarf-rt_v5-rev0.7z/download).
-From here, you have 2 options:
-
-* Add the `<mingw-install-dir>/bin` directory in your PATH environment variable,
-* Or put the absolute path of the compiler in the file `Cpp/Makefile.win`.
-
-Finally, go to the `Cpp` folder and compile with `make -f Makefile.win release`. You can find the build project in `bin/release_w/`
-
 This projet is not yet set up for 64 bits compilation on Windows.
+
+* Install [Mingw GCC 7.3.0 (32-bit)](https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/7.3.0/threads-posix/dwarf/i686-7.3.0-release-posix-dwarf-rt_v5-rev0.7z/download). Here, you have 2 options:
+  * Add the `<mingw-install-dir>/bin` directory in your PATH environment variable,
+  * Or put the absolute path of the compiler in the file `Cpp/Makefile.win`.
+
+* Go to the `Cpp` folder and compile with `mingw32-make -f Makefile.win release`.
+* You can find the build project in `bin/win32-release`.
 
 ### Linux
 
-Works on Ubuntu 18.04 (more recent OS are shipped with not old enough compiler/libraries).
-Install the necessary packages: `sudo apt install make g++-7 libglu1-mesa-dev libopenal-dev libsfml-dev`.
-Newer build environment does not yet work for this project.
-On linux, 32 bit is not supported.
+Works on Ubuntu 20.04 LTS (GCC 7 and SFML 2.5.1 are not available in the apt repository of Ubuntu 22.04 and later).
+* Install the necessary packages: `sudo apt install make g++-7 libglu1-mesa-dev libopenal-dev libsfml-dev`.
+* Go to the `Cpp` folder and compile with `make -f Makefile.linux release`.
+* You can find the build project in `bin/linux64-release`.
+
+### Linux via Docker
+
+You can build the Linux version from any OS supporting Docker.
+You need to have Docker installed and running (Docker Desktop on Windows).
+On Windows, you also need Git-Bash, to run the provided Bash script.
+
+* Go to the `Cpp` folder and run `./make-linux64-with-docker.sh release`.
+You can find the build project in `bin/linux64-release`.
 
 
-## Useful links while making the game
+## Resources we used to make the game
 
 A Wiki giving guideling for making a standard tetris game: http://tetris.wikia.com/wiki/Tetris_Guideline
 
