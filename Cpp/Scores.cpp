@@ -71,14 +71,14 @@ vector<RecordLine> Scores::getScores()
 
 void Scores::addScore(RecordLine rec)
 {
-    if (rec.points == 0)
+    if (rec.d.points == 0)
         return;
 
     scoreTable.push_back(rec);
 
     for (unsigned int i=scoreTable.size()-1; i>0; i--)
     {
-        if (scoreTable[i].points > scoreTable[i-1].points)
+        if (scoreTable[i].d.points > scoreTable[i-1].d.points)
             swap(scoreTable[i], scoreTable[i-1]);
         else
             break;
@@ -141,11 +141,11 @@ void Scores::loadFromFile()
     {
         RecordLine l;
         file.read((char*)&l.b, sizeEnregistrement);
-        l.lines_u = convert_endianness(l.lines_u, BINARY_FILE_BIG_ENDIAN);
-        l.points_u = convert_endianness(l.points_u, BINARY_FILE_BIG_ENDIAN);
-        l.tetrominos_u = convert_endianness(l.tetrominos_u, BINARY_FILE_BIG_ENDIAN);
-        l.time_u = convert_endianness(l.time_u, BINARY_FILE_BIG_ENDIAN);
-        sumControlCheck.i += l.lines + l.points + l.tetrominos + l.time;
+        l.u.lines = convert_endianness(l.u.lines, BINARY_FILE_BIG_ENDIAN);
+        l.u.points = convert_endianness(l.u.points, BINARY_FILE_BIG_ENDIAN);
+        l.u.tetrominos = convert_endianness(l.u.tetrominos, BINARY_FILE_BIG_ENDIAN);
+        l.u.time = convert_endianness(l.u.time, BINARY_FILE_BIG_ENDIAN);
+        sumControlCheck.i += l.d.lines + l.d.points + l.d.tetrominos + l.d.time;
         r.push_back(l);
     }
     _4bytes sumControlFile;
@@ -181,12 +181,12 @@ void Scores::saveToFile()
     for (unsigned int i=0; i<scoreTable.size(); i++)
     {
         RecordLine l = scoreTable[i];
-        l.lines_u = convert_endianness(l.lines_u, BINARY_FILE_BIG_ENDIAN);
-        l.points_u = convert_endianness(l.points_u, BINARY_FILE_BIG_ENDIAN);
-        l.tetrominos_u = convert_endianness(l.tetrominos_u, BINARY_FILE_BIG_ENDIAN);
-        l.time_u = convert_endianness(l.time_u, BINARY_FILE_BIG_ENDIAN);
+        l.u.lines = convert_endianness(l.u.lines, BINARY_FILE_BIG_ENDIAN);
+        l.u.points = convert_endianness(l.u.points, BINARY_FILE_BIG_ENDIAN);
+        l.u.tetrominos = convert_endianness(l.u.tetrominos, BINARY_FILE_BIG_ENDIAN);
+        l.u.time = convert_endianness(l.u.time, BINARY_FILE_BIG_ENDIAN);
         file.write((char*)&l.b, sizeof(RecordLine));
-        checkSum.i += l.lines + l.points + l.tetrominos + l.time;
+        checkSum.i += l.d.lines + l.d.points + l.d.tetrominos + l.d.time;
     }
     checkSum = convert_endianness(checkSum, BINARY_FILE_BIG_ENDIAN);
     file.write((char*)&checkSum.b, sizeof(_4bytes));

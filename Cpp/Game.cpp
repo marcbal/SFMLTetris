@@ -327,12 +327,12 @@ void Game::restartGame(bool init)
     RecordLine record;
     string name = _gameConfig->getNickName();
     for (unsigned int i=0; i<29 && i<name.size(); i++)
-        record.name[i] = name[i];
-    record.name[(name.size()<29)?name.size():29] = '\0';
-    record.points = _score;
-    record.lines = _nb_line;
-    record.tetrominos = _nb_tetromino;
-    record.time = lrint(getGameTime().asSeconds());
+        record.d.name[i] = name[i];
+    record.d.name[(name.size()<29)?name.size():29] = '\0';
+    record.d.points = _score;
+    record.d.lines = _nb_line;
+    record.d.tetrominos = _nb_tetromino;
+    record.d.time = lrint(getGameTime().asSeconds());
     _scores->addScore(record);
     if (_gameConfig->getOnlineScore() && _score > 0 && !_AIActualPlaying)
         _scoreSender.addDataToFinishGame(record);

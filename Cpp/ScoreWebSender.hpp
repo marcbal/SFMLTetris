@@ -28,13 +28,13 @@ union ScoreWebSenderDataSample
         uint32_t nbDelLinesDiff;
         uint32_t nbManualDown;
 
-            // 4 bits de poids fort : le type           : 0x0- à 0x6-
-            // 4 bits de poids faible : l'orientation   : 0x-0 à 0x-3
+            // 4 bits de poids fort : le type           : 0x0- ï¿½ 0x6-
+            // 4 bits de poids faible : l'orientation   : 0x-0 ï¿½ 0x-3
         byte tetrominoTypeAndOrientation;
 
         int8_t tetrominoPositionX;
         int8_t tetrominoPositionY;
-    };
+    } d;
 
     struct
     {
@@ -69,16 +69,16 @@ class ScoreWebSender
         ScoreWebSender();
         virtual ~ScoreWebSender();
 
-        // appelé après chaque pose d'une pièce dans le tetris board
-        // c'est à dire au moment ou elle est fixée
+        // appelï¿½ aprï¿½s chaque pose d'une piï¿½ce dans le tetris board
+        // c'est ï¿½ dire au moment ou elle est fixï¿½e
         void addDataInfoNextPiece(int score,                // nouveau score obtenu
-                                  int scoreDiff,            // différence avec l'ancien score
-                                  int nbTetromino,          // nombre de tetromino posé
+                                  int scoreDiff,            // diffï¿½rence avec l'ancien score
+                                  int nbTetromino,          // nombre de tetromino posï¿½
                                   sf::Time time,            // horloge actuelle
-                                  int delLines,             // nombre de lignes détruites depuis le début
-                                  int newDelLines,          // nombre de ligne détruite à ce moment
-                                  int nbManualDown,         // compteur d'accélération de descente
-                                  Tetromino tetrominoPlace);// le tétromino tout juste posé (avec son type/orientation/position)
+                                  int delLines,             // nombre de lignes dï¿½truites depuis le dï¿½but
+                                  int newDelLines,          // nombre de ligne dï¿½truite ï¿½ ce moment
+                                  int nbManualDown,         // compteur d'accï¿½lï¿½ration de descente
+                                  Tetromino tetrominoPlace);// le tï¿½tromino tout juste posï¿½ (avec son type/orientation/position)
 
         void addDataToFinishGame(RecordLine rL);
 

@@ -12,7 +12,7 @@ LD = g++-7
 
 
 INC =
-CFLAGS = -std=c++11 -Wextra -Wall
+CFLAGS = -std=c++14 -Wextra -Wall -pedantic
 LIBDIR =
 LIB = -lGL -lGLU -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system -lsfml-network
 LDFLAGS =

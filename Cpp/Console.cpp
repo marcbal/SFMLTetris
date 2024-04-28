@@ -49,7 +49,7 @@ void Console::add_message(sf::String message, char out)
     else if (out == 'e')
         init_out += "[error] ";
 
-    vector<sf::String> lines = explode(wordwrap(message, DEBUG_NB_CHAR_WIDTH - init_out.getSize()), L'\n');
+    vector<sf::String> lines = explode(wordwrap(message, DEBUG_NB_CHAR_WIDTH - init_out.getSize()), U'\n');
     _threadLock.lock(); /* cette fonction pouvant être appelé par plusieurs threads, on met des protection
             pour éviter que les lignes des messages se mélangent */
     for (unsigned int i=0; i<lines.size(); i++)

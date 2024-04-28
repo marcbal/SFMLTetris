@@ -45,7 +45,6 @@ _8bytes convert_endianness(_8bytes var, bool external_endianness_big_endian);
 union RecordLine
 {
     byte b[48];
-    char c[48];
     struct
     {
         char name[30];
@@ -53,15 +52,15 @@ union RecordLine
         uint32_t lines;
         uint32_t tetrominos;
         uint32_t time;
-    };
+    } d;
     struct
     {
-        byte name_u[30];
-        _4bytes points_u;
-        _4bytes lines_u;
-        _4bytes tetrominos_u;
-        _4bytes time_u;
-    };
+        byte name[30];
+        _4bytes points;
+        _4bytes lines;
+        _4bytes tetrominos;
+        _4bytes time;
+    } u;
 };
 
 class Scores

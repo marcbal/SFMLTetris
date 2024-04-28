@@ -91,11 +91,11 @@ void ScreenScore::update()
         if (i+_page*nbScorePerPage<scoreData.size())
         {
             RecordLine l = scoreData[i+_page*nbScorePerPage];
-            Time t = sf::seconds(l.time);
-            scoreTable[_page][i].setString(to_string((int) (i+1+_page*nbScorePerPage))+" : "+(string)l.name+" - "+
-                                    to_string((int)l.points)+" points - "+
-                                    to_string((int)l.tetrominos)+" tetrominos - "+
-                                    to_string((int)l.lines)+" ligne"+((l.lines>1)?"s":"")+" - "+
+            Time t = sf::seconds(l.d.time);
+            scoreTable[_page][i].setString(to_string((int) (i+1+_page*nbScorePerPage))+" : "+(string)l.d.name+" - "+
+                                    to_string((int)l.d.points)+" points - "+
+                                    to_string((int)l.d.tetrominos)+" tetrominos - "+
+                                    to_string((int)l.d.lines)+" ligne"+((l.d.lines>1)?"s":"")+" - "+
                                     formattedDuration(t));
         }
         else if (i+_page*nbScorePerPage < 255)

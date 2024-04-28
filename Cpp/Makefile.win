@@ -13,7 +13,7 @@ WINDRES = windres
 
 
 INC = -ISFML-2.5.1-win32/include
-CFLAGS = -std=c++11 -DSFML_STATIC -Wextra -Wall
+CFLAGS = -std=c++14 -DSFML_STATIC -Wextra -Wall -pedantic
 LIBDIR = -LSFML-2.5.1-win32/lib
 LIB = -lglu32 -lfreetype -lopengl32 -lgdi32 -lopenal32 -lflac -lvorbisenc -lvorbisfile -lvorbis -logg -lws2_32 -lwinmm
 LDFLAGS =

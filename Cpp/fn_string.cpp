@@ -168,7 +168,7 @@ string wordwrap(string str, unsigned int width)
 }
 
 
-vector<sf::String> explode(const sf::String& str, wchar_t ch)
+vector<sf::String> explode(const sf::String& str, char32_t ch)
 {
     sf::String suivant;
     vector<sf::String> result;
@@ -201,7 +201,7 @@ sf::String wordwrap(sf::String str, unsigned int width)
         return str;
 
 
-    vector<sf::String> lines = explode(str, (wchar_t) L'\n');
+    vector<sf::String> lines = explode(str, U'\n');
     sf::String result = "";
     for (unsigned int i=0; i<lines.size(); i++)
     {

@@ -25,7 +25,7 @@ vector<string> explode(const string& str, const char& ch);
 
 string wordwrap(string str, unsigned int width);
 
-vector<sf::String> explode(const sf::String& str, wchar_t ch);
+vector<sf::String> explode(const sf::String& str, char32_t ch);
 
 sf::String wordwrap(sf::String str, unsigned int width);
 

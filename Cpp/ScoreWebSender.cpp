@@ -18,19 +18,19 @@ void ScoreWebSender::addDataInfoNextPiece(int score,        // nouveau score obt
                                   Tetromino tetrominoPlace)
 {
     ScoreWebSenderDataSample line;
-    line.score = score;
-    line.scoreDiff = scoreDiff;
-    line.nbTetromino = nbTetromino;
-    line.timeMilliseconds = (int) (time.asSeconds()*1000);
-    line.nbDelLines = delLines;
-    line.nbDelLinesDiff = newDelLines;
-    line.nbManualDown = nbManualDown;
+    line.d.score = score;
+    line.d.scoreDiff = scoreDiff;
+    line.d.nbTetromino = nbTetromino;
+    line.d.timeMilliseconds = (int) (time.asSeconds()*1000);
+    line.d.nbDelLines = delLines;
+    line.d.nbDelLinesDiff = newDelLines;
+    line.d.nbManualDown = nbManualDown;
 
-    line.tetrominoTypeAndOrientation =
+    line.d.tetrominoTypeAndOrientation =
                 ((byte) tetrominoPlace.getTypePiece() << 4) |
                 ((byte) tetrominoPlace.getOrientation() & 0x0F);
-    line.tetrominoPositionX = tetrominoPlace.getPosition().x;
-    line.tetrominoPositionY = tetrominoPlace.getPosition().y;
+    line.d.tetrominoPositionX = tetrominoPlace.getPosition().x;
+    line.d.tetrominoPositionY = tetrominoPlace.getPosition().y;
 
 
     gameDatas.push_back(line);
@@ -39,7 +39,7 @@ void ScoreWebSender::addDataInfoNextPiece(int score,        // nouveau score obt
 
 void ScoreWebSender::addDataToFinishGame(RecordLine rL)
 {
-    if (rL.points == 0)
+    if (rL.d.points == 0)
     {
         clearData();
         return;
@@ -52,10 +52,10 @@ void ScoreWebSender::addDataToFinishGame(RecordLine rL)
     // << données initiales : x octets
 
 
-    rL.lines_u = convert_endianness(rL.lines_u, BINARY_NETWORK_BIG_ENDIAN);
-    rL.points_u = convert_endianness(rL.points_u, BINARY_NETWORK_BIG_ENDIAN);
-    rL.tetrominos_u = convert_endianness(rL.tetrominos_u, BINARY_NETWORK_BIG_ENDIAN);
-    rL.time_u = convert_endianness(rL.time_u, BINARY_NETWORK_BIG_ENDIAN);
+    rL.u.lines = convert_endianness(rL.u.lines, BINARY_NETWORK_BIG_ENDIAN);
+    rL.u.points = convert_endianness(rL.u.points, BINARY_NETWORK_BIG_ENDIAN);
+    rL.u.tetrominos = convert_endianness(rL.u.tetrominos, BINARY_NETWORK_BIG_ENDIAN);
+    rL.u.time = convert_endianness(rL.u.time, BINARY_NETWORK_BIG_ENDIAN);
 
     for (size_t i=0; i<sizeof(RecordLine); i++)
         oss << (char) rL.b[i];
@@ -89,8 +89,8 @@ void ScoreWebSender::addDataToFinishGame(RecordLine rL)
 
 
     string g = oss.str();
-    rL.points_u = convert_endianness(rL.points_u, BINARY_NETWORK_BIG_ENDIAN);
-    Console::out("Envoi du record de " + to_string((int) rL.points) + " points au serveur de score ...");
+    rL.u.points = convert_endianness(rL.u.points, BINARY_NETWORK_BIG_ENDIAN);
+    Console::out("Envoi du record de " + to_string((int) rL.d.points) + " points au serveur de score ...");
     sf::Thread * th = new sf::Thread(&webSendNewData, g);
     ScoreWebSender::_uploadThreads.push_back(th);
     ScoreWebSender::_uploadData.push_back("");
