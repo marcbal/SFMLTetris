@@ -91,4 +91,11 @@ $(OBJDIR_RELEASE)/%.rc.o: %.rc
 
 
 
+archive: release
+	rm -f bin/SFMLTetris-win32.zip
+	cd $(BINDIR_RELEASE); zip -r ../SFMLTetris-win32.zip *
+
+
+
+
 .PHONY: release
