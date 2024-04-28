@@ -5,7 +5,7 @@
 
 
 
-1 ICON "res/icone.ico"
+1 ICON "res/common/icone.ico"
 
 
 
@@ -22,7 +22,7 @@ BEGIN
             VALUE "FileDescription",  "SFML Tetris"
             VALUE "FileVersion",      VER_VERSION_STR
 //          VALUE "LegalCopyright",   ""
-            VALUE "OriginalFilename", "SFMLTetris_win32.exe"
+            VALUE "OriginalFilename", "SFMLTetris.exe"
             VALUE "ProductName",      "https://github.com/marcbal/SFMLTetris"
             VALUE "ProductVersion",   VER_VERSION_STR
         END

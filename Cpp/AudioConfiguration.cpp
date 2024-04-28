@@ -177,7 +177,7 @@ float AudioConfiguration::_pGetAudioLevel()
     for (unsigned int i = samplePosition; i<samplePosition+2000 && i<_buff_actual_music.getSampleCount(); i++)
     {
         value += abs(_buff_actual_music.getSamples()[i]);
-        if (abs(_buff_actual_music.getSamples()[i]) > value2)
+        if (((unsigned int) abs(_buff_actual_music.getSamples()[i])) > value2)
             value2 = abs(_buff_actual_music.getSamples()[i]);
     }
     float fval = (value / 2000.f) / 16384.f;

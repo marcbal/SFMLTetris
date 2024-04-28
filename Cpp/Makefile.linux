@@ -5,14 +5,14 @@
 
 WORKDIR = $PWD
 
-CXX = g++-6
-LD = g++-6
+CXX = g++-7
+LD = g++-7
 
 
 
 
 INC =
-CFLAGS = -std=c++11
+CFLAGS = -std=c++11 -Wextra -Wall
 LIBDIR =
 LIB = -lGL -lGLU -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system -lsfml-network
 LDFLAGS =
@@ -23,18 +23,18 @@ CXX_OBJ = $(patsubst %.cpp, %.cpp.o, $(CXX_SRC))
 
 
 
-CFLAGS_DEBUG = $(CFLAGS) -Wextra -Wall -g
+CFLAGS_DEBUG = $(CFLAGS) -g
 LDFLAGS_DEBUG = $(LDFLAGS)
-OBJDIR_DEBUG = obj/debug_l
-BINDIR_DEBUG = bin/debug_l
-BIN_DEBUG = $(BINDIR_DEBUG)/SFMLTetris_linux64
+OBJDIR_DEBUG = obj/linux64-debug
+BINDIR_DEBUG = bin/linux64-debug
+BIN_DEBUG = $(BINDIR_DEBUG)/SFMLTetris
 CXX_OBJ_DEBUG = $(addprefix $(OBJDIR_DEBUG)/,$(CXX_OBJ))
 
 CFLAGS_RELEASE = $(CFLAGS)
 LDFLAGS_RELEASE = $(LDFLAGS) -s
-OBJDIR_RELEASE = obj/release_l
-BINDIR_RELEASE = bin/release_l
-BIN_RELEASE = $(BINDIR_RELEASE)/SFMLTetris_linux64
+OBJDIR_RELEASE = obj/linux64-release
+BINDIR_RELEASE = bin/linux64-release
+BIN_RELEASE = $(BINDIR_RELEASE)/SFMLTetris
 CXX_OBJ_RELEASE = $(addprefix $(OBJDIR_RELEASE)/,$(CXX_OBJ))
 
 
@@ -48,14 +48,13 @@ clean:
 
 
 before_debug: 
-	mkdir -p $(BINDIR_DEBUG)
 	mkdir -p $(OBJDIR_DEBUG)
 
 debug: before_debug $(CXX_OBJ_DEBUG)
+	mkdir -p $(BINDIR_DEBUG)
 	$(LD) $(LDFLAGS_DEBUG) $(LIBDIR) -o $(BIN_DEBUG) $(CXX_OBJ_DEBUG) $(LIB)
 	mkdir -p $(BINDIR_DEBUG)/res
 	mkdir -p $(BINDIR_DEBUG)/lib
-	cp res/icone.ico $(BINDIR_DEBUG)/
 	cp -r res/linux/* $(BINDIR_DEBUG)/
 	cp -r res/common/* $(BINDIR_DEBUG)/res/
 	cp -rL /usr/lib/x86_64-linux-gnu/libsfml* $(BINDIR_DEBUG)/lib/
@@ -69,14 +68,13 @@ $(OBJDIR_DEBUG)/%.cpp.o: %.cpp
 
 
 before_release: 
-	mkdir -p $(BINDIR_RELEASE)
 	mkdir -p $(OBJDIR_RELEASE)
 
 release: before_release $(CXX_OBJ_RELEASE)
+	mkdir -p $(BINDIR_RELEASE)
 	$(LD) $(LDFLAGS_RELEASE) $(LIBDIR) -o $(BIN_RELEASE) $(CXX_OBJ_RELEASE) $(LIB)
 	mkdir -p $(BINDIR_RELEASE)/res
 	mkdir -p $(BINDIR_RELEASE)/lib
-	cp res/icone.ico $(BINDIR_RELEASE)/
 	cp -r res/linux/* $(BINDIR_RELEASE)/
 	cp -r res/common/* $(BINDIR_RELEASE)/res/
 	cp -rL /usr/lib/x86_64-linux-gnu/libsfml* $(BINDIR_RELEASE)/lib/
