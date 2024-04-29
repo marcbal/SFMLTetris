@@ -12,9 +12,9 @@ WINDRES = windres
 
 
 
-INC = -ISFML-2.5.1-win32/include
-CFLAGS = -std=c++14 -DSFML_STATIC -Wextra -Wall -pedantic
-LIBDIR = -LSFML-2.5.1-win32/lib
+INC = -ISFML-2.6.1-win32/include
+CFLAGS = -std=c++17 -DSFML_STATIC -Wextra -Wall -pedantic
+LIBDIR = -LSFML-2.6.1-win32/lib
 LIB = -lglu32 -lfreetype -lopengl32 -lgdi32 -lopenal32 -lflac -lvorbisenc -lvorbisfile -lvorbis -logg -lws2_32 -lwinmm
 LDFLAGS =
 SRCDIR = src
@@ -92,7 +92,7 @@ $(OBJDIR_RELEASE)/%.rc.o: $(SRCDIR)/%.rc
 
 
 
-archive: release
+archive: clean release
 	rm -f bin/SFMLTetris-win32.zip
 	cd $(BINDIR_RELEASE); zip -r ../SFMLTetris-win32.zip *
 

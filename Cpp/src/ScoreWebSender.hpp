@@ -17,7 +17,7 @@ void webSendData(string& data, bool alreadyPostData);
 
 union ScoreWebSenderDataSample
 {
-    byte b[31];
+    uint8_t b[31];
     struct
     {
         uint32_t score;
@@ -30,7 +30,7 @@ union ScoreWebSenderDataSample
 
             // 4 bits de poids fort : le type           : 0x0- � 0x6-
             // 4 bits de poids faible : l'orientation   : 0x-0 � 0x-3
-        byte tetrominoTypeAndOrientation;
+        uint8_t tetrominoTypeAndOrientation;
 
         int8_t tetrominoPositionX;
         int8_t tetrominoPositionY;
@@ -45,7 +45,7 @@ union ScoreWebSenderDataSample
         _4bytes nbDelLines;
         _4bytes nbDelLinesDiff;
         _4bytes nbManualDown;
-        byte tetrominoTypeAndOrientation;
+        uint8_t tetrominoTypeAndOrientation;
         int8_t tetrominoPositionX;
         int8_t tetrominoPositionY;
     } u;

@@ -5,14 +5,14 @@
 
 WORKDIR = $PWD
 
-CXX = g++-7
-LD = g++-7
+CXX = g++-13
+LD = g++-13
 
 
 
 
 INC =
-CFLAGS = -std=c++14 -Wextra -Wall -pedantic
+CFLAGS = -std=c++17 -Wextra -Wall -pedantic
 LIBDIR =
 LIB = -lGL -lGLU -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system -lsfml-network
 LDFLAGS =

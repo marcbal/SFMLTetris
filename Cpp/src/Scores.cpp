@@ -4,7 +4,7 @@ bool os_arch_is_big_endian()
 {
     union {
         uint32_t i;
-        byte b[4];
+        uint8_t b[4];
     } bint = {0x01020304};
     return bint.b[0] == 1;
 }
@@ -115,13 +115,13 @@ void Scores::loadFromFile()
         return;
     }
 
-    byte nbEnregistrement = 0;
-    byte sizeEnregistrement = 0;
+    uint8_t nbEnregistrement = 0;
+    uint8_t sizeEnregistrement = 0;
     _4bytes sumControlCheck;
     sumControlCheck.i = 0;
 
-    file.read((char*)&nbEnregistrement, sizeof(byte));
-    file.read((char*)&sizeEnregistrement, sizeof(byte));
+    file.read((char*)&nbEnregistrement, sizeof(uint8_t));
+    file.read((char*)&sizeEnregistrement, sizeof(uint8_t));
 
     if (sizeEnregistrement != sizeof(RecordLine))
     {
@@ -173,11 +173,11 @@ void Scores::saveToFile()
     }
 
 
-    byte nbEnregistrement = scoreTable.size();
-    byte sizeEnregistrement = sizeof(RecordLine);
+    uint8_t nbEnregistrement = scoreTable.size();
+    uint8_t sizeEnregistrement = sizeof(RecordLine);
     _4bytes checkSum = {0x00000000};
-    file.write((char*)&nbEnregistrement, sizeof(byte));
-    file.write((char*)&sizeEnregistrement, sizeof(byte));
+    file.write((char*)&nbEnregistrement, sizeof(uint8_t));
+    file.write((char*)&sizeEnregistrement, sizeof(uint8_t));
     for (unsigned int i=0; i<scoreTable.size(); i++)
     {
         RecordLine l = scoreTable[i];

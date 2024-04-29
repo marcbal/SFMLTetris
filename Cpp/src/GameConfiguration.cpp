@@ -72,7 +72,7 @@ void GameConfiguration::set3DInclinaison(sf::Vector3f f){
     }
 }
 void GameConfiguration::setNickName(string s){
-    if (s == "") s == " ";
+    if (s == "") s = "?";
     if (_nickname != s)
     {
         _nickname = s;

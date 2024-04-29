@@ -17,19 +17,19 @@ Website : https://sfmltetris.mbaloup.fr/
 
 This projet is not yet set up for 64 bits compilation on Windows.
 
-* Install [Mingw GCC 7.3.0 (32-bit)](https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/7.3.0/threads-posix/dwarf/i686-7.3.0-release-posix-dwarf-rt_v5-rev0.7z/download). Here, you have 2 options:
+* Install [Mingw-w64 (winlibs) GCC 13.1.0 (32-bit)](https://github.com/brechtsanders/winlibs_mingw/releases/download/13.1.0-16.0.5-11.0.0-msvcrt-r5/winlibs-i686-posix-dwarf-gcc-13.1.0-mingw-w64msvcrt-11.0.0-r5.7z). Here, you have 2 options:
   * Add the `<mingw-install-dir>/bin` directory in your PATH environment variable,
   * Or put the absolute path of the compiler in the file `Cpp/Makefile.win`.
 
 * Go to the `Cpp` folder and compile with `mingw32-make -f Makefile.win release`.
-* You can find the build project in `bin/win32-release`.
+* You can find the built project in `bin/win32-release`.
 
 ### Linux
 
-Works on Ubuntu 20.04 LTS (GCC 7 and SFML 2.5.1 are not available in the apt repository of Ubuntu 22.04 and later).
-* Install the necessary packages: `sudo apt install make g++-7 libglu1-mesa-dev libopenal-dev libsfml-dev`.
+Works on Ubuntu 24.04 LTS (with GCC 13 and SFML 2.6.1 in the apt repository).
+* Install the necessary packages: `sudo apt install make g++-13 libglu1-mesa-dev libopenal-dev libsfml-dev`.
 * Go to the `Cpp` folder and compile with `make -f Makefile.linux release`.
-* You can find the build project in `bin/linux64-release`.
+* You can find the built project in `bin/linux64-release`.
 
 ### Linux via Docker
 
@@ -38,7 +38,7 @@ You need to have Docker installed and running (Docker Desktop on Windows).
 On Windows, you also need Git-Bash, to run the provided Bash script.
 
 * Go to the `Cpp` folder and run `./make-linux64-with-docker.sh release`.
-You can find the build project in `bin/linux64-release`.
+* You can find the built project in `bin/linux64-release`.
 
 
 ## Resources we used to make the game

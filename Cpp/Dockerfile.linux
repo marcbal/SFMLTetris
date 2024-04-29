@@ -1,11 +1,11 @@
 # Creates a docker images that provides an environmenet to build the linux executable
 
-FROM ubuntu:20.04
+FROM ubuntu:24.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
-    apt-get install -y make g++-7 libglu1-mesa-dev libopenal-dev libsfml-dev && \
+    apt-get install -y make g++-13 libglu1-mesa-dev libopenal-dev libsfml-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /data

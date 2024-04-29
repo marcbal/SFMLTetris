@@ -27,8 +27,8 @@ void ScoreWebSender::addDataInfoNextPiece(int score,        // nouveau score obt
     line.d.nbManualDown = nbManualDown;
 
     line.d.tetrominoTypeAndOrientation =
-                ((byte) tetrominoPlace.getTypePiece() << 4) |
-                ((byte) tetrominoPlace.getOrientation() & 0x0F);
+                ((uint8_t) tetrominoPlace.getTypePiece() << 4) |
+                ((uint8_t) tetrominoPlace.getOrientation() & 0x0F);
     line.d.tetrominoPositionX = tetrominoPlace.getPosition().x;
     line.d.tetrominoPositionY = tetrominoPlace.getPosition().y;
 

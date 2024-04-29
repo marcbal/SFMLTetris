@@ -6,24 +6,22 @@
 
 using namespace std;
 
-using byte = uint8_t;
-
 union _8bytes
 {
     uint64_t i;
-    byte b[8];
+    uint8_t b[8];
 };
 
 union _4bytes
 {
     uint32_t i;
-    byte b[4];
+    uint8_t b[4];
 };
 
 union _2bytes
 {
     uint16_t i;
-    byte b[2];
+    uint8_t b[2];
 };
 
 
@@ -44,7 +42,7 @@ _8bytes convert_endianness(_8bytes var, bool external_endianness_big_endian);
 
 union RecordLine
 {
-    byte b[48];
+    uint8_t b[48];
     struct
     {
         char name[30];
@@ -55,7 +53,7 @@ union RecordLine
     } d;
     struct
     {
-        byte name[30];
+        uint8_t name[30];
         _4bytes points;
         _4bytes lines;
         _4bytes tetrominos;
