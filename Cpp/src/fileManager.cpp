@@ -1,25 +1,20 @@
 #include "fileManager.hpp"
 
+#include <filesystem>
+
 vector<string> listOfFiles(string dir){
     vector<string> files;
-    DIR* rep = NULL;
-    rep = opendir(dir.c_str());
-    if(rep==NULL)
+    if (!filesystem::is_directory(dir)) {
         return files;
-    struct dirent* fichierLu = NULL;
-    while ((fichierLu = readdir(rep)) != NULL)
-        files.push_back(fichierLu->d_name);
+    }
+    for (const auto & entry : filesystem::directory_iterator(dir)) {
+        files.push_back(entry.path().filename().string());
+    }
     return files;
 }
 
 
 void makeDir(string dir)
 {
-    #if defined(_WIN32)
-        mkdir(dir.c_str());
-    #elif defined(__linux__)
-        mkdir(dir.c_str(), 0777);
-    #else
-        cerr << "makeDir() not implemented for this environment.";
-    #endif
+    filesystem::create_directories(dir);
 }

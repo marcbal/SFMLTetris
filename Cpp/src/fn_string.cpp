@@ -61,60 +61,11 @@ string to_string( int Value, string separateur_millier )
 
 
 
-string to_string( bool Value )
+string to_string( bool value )
 {
-    string r;
-    if (Value)
-		r = "true";
-	else
-		r = "false";
-
-	return r;
+    return value ? "true" : "false";
 }
 
-
-
-
-int nombre_car_mot(string mot, char l)
-{
-	int max = mot.size();
-	int count = 0;
-	for (int i=0; i<max; i++)
-	{
-		count += (mot[i] == l);
-	}
-	return count;
-}
-
-
-
-
-
-bool sont_anagramme(string mot1, string mot2)
-{
-	if (mot1.size() != mot2.size())
-		return false;
-	for (unsigned int i=0;i<mot1.size();i++){mot1[i]=toupper(mot1[i]);}
-	for (unsigned int i=0;i<mot2.size();i++){mot2[i]=toupper(mot2[i]);}
-	// 2 méthodes
-	// -------------------
-	// lettre par lettre (A, B, ...), on compte leurs ittération dans les 2 mots et on compare, puis on continue si ==
-	//*
-	string car = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	bool anagramme = true;
-	int i = 0;
-	while (i<26 && anagramme)
-	{
-		if (!(nombre_car_mot(mot1, car[i]) == nombre_car_mot(mot2, car[i])))
-			return false;
-		i++;
-	}
-	// -------------------- */
-	// on compare la taille des 2 mots (.size()). Si ==, on trie les lettres des 2 mots et on compare.
-
-
-	return anagramme;
-}
 
 
 
@@ -144,28 +95,6 @@ vector<string> explode(const string& str, const char& ch)
     return result;
 }
 
-
-
-string wordwrap(string str, unsigned int width)
-{
-    if (width == 0)
-        return str;
-
-
-    vector<string> lines = explode(str, '\n');
-    string result = "";
-    for (unsigned int i=0; i<lines.size(); i++)
-    {
-        while (lines[i].size()>width)
-        {
-            result += lines[i].substr(0, width) + "\n";
-            lines[i] = lines[i].substr(width, lines[i].size()-width);
-        }
-        result += lines[i]+"\n";
-    }
-
-    return result.substr(0, result.size()-1); // on retire le dernier \n
-}
 
 
 vector<sf::String> explode(const sf::String& str, char32_t ch)
@@ -244,97 +173,3 @@ sf::String implode(vector<sf::String> & tabstr, sf::String ch)
 	}
 	return out;
 }
-
-
-
-int nombre_mot(string & chaine)
-{
-	vector<string> mots = explode(chaine, ' ');
-	return mots.size();
-}
-
-
-
-
-bool sont_palindrome(string mot)
-{
-	int max=mot.size()/2;
-	int i=0;
-	do
-	{
-		if (mot[i] != mot[mot.size()-1-i])
-			return false;
-		i++;
-	} while (i<max);
-	return true;
-}
-
-
-
-// compte le nombre d'occurence se pattern dans chaine
-int substr_count(string chaine, string pattern)
-{
-	if (chaine.size() == 0 || pattern.size() == 0 || chaine.size() < pattern.size())
-		return 0;
-
-	int max = chaine.size()-pattern.size(), count = 0;
-
-	for (int i = 0; i<= max; i++)
-	{
-		bool match = true;
-		int j = 0;
-		int i2 = i;
-		int max2 = pattern.size();
-		while (j<max2 && match)
-		{
-			if (chaine[i2+j] != pattern[j])
-				match = false;
-			j++;
-
-		}
-		if (match)
-			count++;
-	}
-	return count;
-}
-
-
-
-
-
-
-
-map<string, int> iterration_mots(string texte)
-{
-	map<string, int> it_mots;
-
-	vector<string> lignes = explode(texte, '\n');
-
-	for (unsigned int l=0; l<lignes.size(); l++)
-	{
-		string ligne = lignes[l];
-		vector<string> mots_ligne = explode(ligne, ' ');
-		for (unsigned int i=0; i<mots_ligne.size(); i++)
-		{
-			if (it_mots.find(mots_ligne[i]) != it_mots.end()) // le mot est déjà dans le map
-				it_mots[mots_ligne[i]]++;
-			else
-				it_mots[mots_ligne[i]] = 1;
-
-		}
-
-	}
-
-
-	return it_mots;
-}
-
-
-string str_replace_car(char match, char replaced, string str)
-{
-    for (unsigned int i=0; i<str.size(); i++)
-        if (str[i]==match)
-            str[i]=replaced;
-    return str;
-}
-

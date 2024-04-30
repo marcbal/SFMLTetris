@@ -27,7 +27,7 @@
 */
 
 #include "fn_base64.hpp"
-#include <iostream>
+#include <algorithm>
 
 static const std::string base64_chars =
              "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -81,8 +81,8 @@ std::string base64_encode(unsigned char const* bytes_to_encode, unsigned int in_
     // not from the original file
   if (for_url)
   {
-      ret = str_replace_car('+', '-', ret);
-      ret = str_replace_car('/', '_', ret);
+    replace(ret.begin(), ret.end(), '+', '-');
+    replace(ret.begin(), ret.end(), '/', '_');
   }
     // ---
 
@@ -93,8 +93,8 @@ std::string base64_encode(unsigned char const* bytes_to_encode, unsigned int in_
 std::string base64_decode(std::string/* const& */ encoded_string) {
 
     // not from the original file
-    encoded_string = str_replace_car('-', '+', encoded_string);
-    encoded_string = str_replace_car('_', '/', encoded_string);
+    replace(encoded_string.begin(), encoded_string.end(), '-', '+');
+    replace(encoded_string.begin(), encoded_string.end(), '_', '/');
     // ---
 
   int in_len = encoded_string.size();

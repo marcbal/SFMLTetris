@@ -4,7 +4,6 @@
 #include "headers.hpp"
 
 using namespace std;
-//using namespace std;
 
 vector<string> listOfFiles(string dir);
 

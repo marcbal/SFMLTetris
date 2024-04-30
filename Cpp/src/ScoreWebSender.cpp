@@ -1,5 +1,7 @@
 #include "ScoreWebSender.hpp"
 
+#include <SFML/Network.hpp>
+
 ScoreWebSender::ScoreWebSender() : gameDatas() {
     initSavedDataUpload();
 }

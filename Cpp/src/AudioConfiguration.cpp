@@ -1,5 +1,7 @@
 #include "AudioConfiguration.hpp"
 
+#include <regex>
+
 using namespace std;
 using namespace sf;
 

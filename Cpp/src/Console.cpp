@@ -1,5 +1,7 @@
 #include "Console.hpp"
 
+#include "fileManager.hpp"
+
 
 vector<sf::String> Console::buffer_to_debugger;
 sf::Clock Console::_clock;

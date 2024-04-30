@@ -7,6 +7,8 @@
 #include "fn_string.hpp"
 #include "fn_audio.hpp"
 
+#include <SFML/Audio.hpp>
+
 using namespace std;
 using namespace sf;
 

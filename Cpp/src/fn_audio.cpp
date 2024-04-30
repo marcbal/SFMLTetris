@@ -26,22 +26,22 @@ void fft(complex<double>* a, complex<double>* b, int log2n)
     const complex<double> J(0, 1);
     int n = 1 << log2n;
     for (int i=0; i < n; ++i) {
-       b[bitReverse(i, log2n)] = a[i];
+        b[bitReverse(i, log2n)] = a[i];
     }
-  for (int s = 1; s <= log2n; ++s) {
-      int m = 1 << s;
-      int m2 = m >> 1;
-      complex<double> w(1, 0);
-      complex<double> wm = exp(-J * (PI / m2));
-      for (int j=0; j < m2; ++j) {
-         for (int k=j; k < n; k += m) {
-             complex<double> t = w * b[k + m2];
-             complex<double> u = b[k];
-             b[k] = u + t;
-             b[k + m2] = u - t;
-         }
-         w *= wm;
-      }
-  }
+    for (int s = 1; s <= log2n; ++s) {
+        int m = 1 << s;
+        int m2 = m >> 1;
+        complex<double> w(1, 0);
+        complex<double> wm = exp(-J * (PI / m2));
+        for (int j=0; j < m2; ++j) {
+            for (int k=j; k < n; k += m) {
+                complex<double> t = w * b[k + m2];
+                complex<double> u = b[k];
+                b[k] = u + t;
+                b[k + m2] = u - t;
+            }
+            w *= wm;
+        }
+    }
 }
 
