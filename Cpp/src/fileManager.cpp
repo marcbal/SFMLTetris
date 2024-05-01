@@ -2,6 +2,11 @@
 
 #include <filesystem>
 
+#ifdef __unix__
+    #include <pwd.h>
+    #include <unistd.h>
+#endif
+
 vector<string> listOfFiles(string dir){
     vector<string> files;
     if (!filesystem::is_directory(dir)) {
@@ -17,4 +22,24 @@ vector<string> listOfFiles(string dir){
 void makeDir(string dir)
 {
     filesystem::create_directories(dir);
+}
+
+
+
+string getDataDir() {
+    string dir;
+    #ifdef __unix__
+        char *homedir;
+        if ((homedir = getenv("HOME")) == nullptr) {
+            homedir = getpwuid(getuid())->pw_dir;
+        }
+        dir = string(homedir);
+    #elif defined(_WIN32) || defined(WIN32)
+        char *appdata = getenv("APPDATA");
+        if (appdata == nullptr) {
+            Console::err("Unable to read environment variable APPDATA.");
+        }
+        dir = string(appdata);
+    #endif
+    return dir;
 }

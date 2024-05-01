@@ -9,4 +9,6 @@ vector<string> listOfFiles(string dir);
 
 void makeDir(string dir);
 
+string getDataDir();
+
 #endif
