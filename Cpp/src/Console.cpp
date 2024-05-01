@@ -26,46 +26,47 @@ void Console::initLogFile()
 
 void Console::out(sf::String message)
 {
-    add_message(message, 'o');
+    add_message(message, false);
 }
 void Console::err(sf::String message)
 {
-    add_message(message, 'e');
+    add_message(message, true);
 }
 
 
 void Console::err(sf::String message, string file, int line)
 {
-    add_message(message, 'e');
-    add_message("-> in \"" + file + "\" line " + to_string(line), 'e');
+    add_message(message, true);
+    add_message("-> in \"" + file + "\" line " + to_string(line), true);
 }
 
 
 
-void Console::add_message(sf::String message, char out)
+void Console::add_message(sf::String message, bool error)
 {
 
-    sf::String init_out = "[" + to_string((int) (_clock.getElapsedTime().asSeconds())) + "] ";
-    if (out == 'o')
-        init_out += "[info] ";
-    else if (out == 'e')
-        init_out += "[error] ";
+    sf::String fullMessage = "[" + to_string(_clock.getElapsedTime().asMilliseconds() / 1000.0f) + "] ";
+    if (error)
+        fullMessage += "[error] ";
+    else
+        fullMessage += "[info] ";
 
-    vector<sf::String> lines = explode(wordwrap(message, DEBUG_NB_CHAR_WIDTH - init_out.getSize()), U'\n');
-    _threadLock.lock(); /* cette fonction pouvant être appelé par plusieurs threads, on met des protection
+    fullMessage += message;
+
+    vector<sf::String> splittedLines = explode(wordwrap(fullMessage, DEBUG_NB_CHAR_WIDTH), U'\n');
+
+    _threadLock.lock(); /* cette fonction pouvant être appelé par plusieurs threads, on met des protections
             pour éviter que les lignes des messages se mélangent */
-    for (unsigned int i=0; i<lines.size(); i++)
-    {
-        buffer_to_debugger.push_back(init_out + lines[i]);
-        if (out == 'o')
-        {
-            cout << init_out.toAnsiString() << lines[i].toAnsiString() << endl;
-        }
-        else if (out == 'e')
-            cerr << init_out.toAnsiString() << lines[i].toAnsiString() << endl;
+            
+    // output to console
+    (error ? cerr : cout) << fullMessage.toAnsiString() << endl;
+    
 
-        if (_logfile != nullptr && _logfile->is_open())
-            (*_logfile) << init_out.toAnsiString() << lines[i].toAnsiString() << endl;
+    if (_logfile != nullptr && _logfile->is_open())
+        (*_logfile) << fullMessage.toAnsiString() << endl;
+    
+    for (unsigned int i=0; i<splittedLines.size(); i++) {
+        buffer_to_debugger.push_back(splittedLines[i]);
     }
 
     _threadLock.unlock();
@@ -80,5 +81,4 @@ vector<sf::String> Console::getLogMessages()
     buffer_to_debugger.clear();
     _threadLock.unlock();
     return r;
-
 }

@@ -19,7 +19,7 @@ class Console
 
         static ofstream * _logfile;
 
-        static void add_message(sf::String message, char out);
+        static void add_message(sf::String message, bool error);
     public :
 
         static void out(sf::String message);
