@@ -87,7 +87,7 @@ $(OBJDIR_RELEASE)/%.cpp.o: $(SRCDIR)/%.cpp
 
 
 
-archive: release
+archive: clean release
 	rm -f bin/SFMLTetris-win32.tar.gz
 	cd $(BINDIR_RELEASE); tar -czf ../SFMLTetris-linux64.tar.gz *
 
