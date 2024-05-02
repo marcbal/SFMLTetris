@@ -194,7 +194,7 @@ void ScoreWebSender::saveFailedUpload()
         _uploadThreads[i]->terminate();
     }
 
-    ofstream file("save/upload.bin", ios::out | ios::trunc);
+    ofstream file(getGameDataPath("upload.bin"), ios::out | ios::trunc);
 
     if (!file.is_open())
     {
@@ -220,7 +220,7 @@ void ScoreWebSender::saveFailedUpload()
 
 void ScoreWebSender::initSavedDataUpload()
 {
-    ifstream file("save/upload.bin", ios::in);
+    ifstream file(getGameDataPath("upload.bin"), ios::in);
 
     if(!file.is_open())
         return;
@@ -242,7 +242,7 @@ void ScoreWebSender::initSavedDataUpload()
     file.close();
 
     // effacement du fichier
-    ofstream fileerase("save/upload.bin", ios::out | ios::trunc);
+    ofstream fileerase(getGameDataPath("upload.bin"), ios::out | ios::trunc);
     fileerase.close();
 
 }

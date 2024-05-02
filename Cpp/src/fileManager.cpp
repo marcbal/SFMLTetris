@@ -7,7 +7,7 @@
     #include <unistd.h>
 #endif
 
-vector<string> listOfFiles(string dir){
+vector<string> listOfFiles(string dir) {
     vector<string> files;
     if (!filesystem::is_directory(dir)) {
         return files;
@@ -19,14 +19,13 @@ vector<string> listOfFiles(string dir){
 }
 
 
-void makeDir(string dir)
-{
+void makeDir(string dir) {
     filesystem::create_directories(dir);
 }
 
 
 
-string getDataDir() {
+string getUserDataPath() {
     string dir;
     #ifdef __unix__
         char *homedir;
@@ -42,4 +41,13 @@ string getDataDir() {
         dir = string(appdata);
     #endif
     return dir;
+}
+
+
+string getGameDataPath() {
+    return (filesystem::path(getUserDataPath()) / DATA_DIR).string();
+}
+
+string getGameDataPath(string relativePath) {
+    return (filesystem::path(getGameDataPath()) / relativePath).string();
 }

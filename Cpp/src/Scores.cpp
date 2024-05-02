@@ -44,14 +44,14 @@ _8bytes convert_endianness(_8bytes var, bool external_endianness_big_endian)
 
 
 
-const string Scores::scoreFile = "save/score.bin";
+const string Scores::scoreFile = getGameDataPath("score.bin");
 
 
 
 Scores::Scores() :
     scoreTable()
 {
-    makeDir("save");
+    makeDir(getGameDataPath());
     loadFromFile();
 }
 

@@ -1,17 +1,15 @@
 #include "GameConfiguration.hpp"
 
-const string GameConfiguration::_config_file("configuration/game.cfg");
+const string GameConfiguration::_config_file(getGameDataPath("game.cfg"));
 
 
 GameConfiguration::GameConfiguration()
 {
     changeAntialias = false;
     changeFPS = false;
-    makeDir("configuration");
+    makeDir(getGameDataPath());
     if (!loadFromFile())
         initDefault();
-
-
     saveConfigurationFile();
 }
 

@@ -101,5 +101,10 @@
 
 
 
+// nom du dossier de sauvegarde dans appdata/homedir
+#define DATA_DIR ".sfmltetris"
+
+
+
 
 #endif // HEADERS_HPP

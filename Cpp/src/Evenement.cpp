@@ -19,11 +19,11 @@ const std::string Evenement::KeyName[] = {"A", "B", "C", "D", "E", "F", "G", "H"
 								 "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12", "F13", "F14", "F15", "Pause"};
 
 Evenement::Evenement(){
-    makeDir("configuration");
+    makeDir(getGameDataPath());
     initDefault();
     /* on charge d'abord la configuration par défaut avant de l'écraser par celle présente
     dans le fichier (évite les problèmes de touches non configurés à cause du fichier modifié à la main) */
-    if(!loadFromFile("configuration/keyboard.cfg"))
+    if(!loadFromFile(getGameDataPath("keyboard.cfg")))
     {
         Console::err("Erreur de chargement du fichier de configuration des touches.");
         Console::out("La configuration des touches a été réinitialisée.");
@@ -73,7 +73,7 @@ bool Evenement::loadFromFile(string file){
 }
 
 bool Evenement::saveConfigurationFile(){
-     ofstream saveFile("configuration/keyboard.cfg", ios::out | ios::trunc);
+     ofstream saveFile(getGameDataPath("keyboard.cfg"), ios::out | ios::trunc);
 
      if(!saveFile)
         return false;

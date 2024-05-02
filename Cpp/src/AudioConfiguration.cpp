@@ -8,9 +8,9 @@ using namespace sf;
 AudioConfiguration::AudioConfiguration():
     _spectrum(1, vector<float>(512, 0.f))
 {
-    makeDir("configuration");
+    makeDir(getGameDataPath());
     musicPlayed=-1;
-    if(!loadConfigFromFile("configuration/audio.cfg")){
+    if(!loadConfigFromFile(getGameDataPath("audio.cfg"))){
         initDefault();
     }
     int conf_music_played = musicPlayed; // musicPlayed est réinitialisé dans loadFromFolder()
@@ -78,7 +78,7 @@ void AudioConfiguration::addMusic(string file){
 }
 
 bool AudioConfiguration::saveConfigurationFile(){
-     ofstream saveFile("configuration/audio.cfg", ios::out | ios::trunc);
+     ofstream saveFile(getGameDataPath("audio.cfg"), ios::out | ios::trunc);
      if(!saveFile)
         return false;
 

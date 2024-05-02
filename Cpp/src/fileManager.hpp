@@ -9,6 +9,10 @@ vector<string> listOfFiles(string dir);
 
 void makeDir(string dir);
 
-string getDataDir();
+string getUserDataPath();
+
+string getGameDataPath();
+
+string getGameDataPath(string relativePath);
 
 #endif

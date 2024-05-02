@@ -12,10 +12,10 @@ ofstream * Console::_logfile = nullptr;
 
 void Console::initLogFile()
 {
-    makeDir("logs");
+    makeDir(getGameDataPath("logs"));
     if (_logfile == nullptr)
     {
-        _logfile = new ofstream(("logs/"+to_string((int)time(NULL))+".log").c_str(), ios::out | ios::trunc);
+        _logfile = new ofstream((getGameDataPath("logs/"+to_string((int)time(NULL))+".log")).c_str(), ios::out | ios::trunc);
         if (!_logfile->is_open())
             Console::err(L"Impossible d'accéder au fichier log pour écriture.");
     }
