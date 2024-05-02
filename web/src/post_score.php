@@ -113,7 +113,7 @@ $req->execute(Array(
 	'lines' => $output_data['delLines'],
 	'nbtetro' => $output_data['tetrominoes'],
 	'data' => serialize($output_data['history']),
-	'valid' => $data_valid
+	'valid' => ($data_valid ? 1 : 0)
 ));
 
 	

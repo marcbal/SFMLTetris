@@ -5,10 +5,17 @@ include_once('include/_head.php');
 ?>
 
 <h3>Windows</h3>
-<p><a href="https://github.com/marcbal/SFMLTetris/releases/download/v1.0.2/SFMLTetris_1.0.2_win32.zip">SFMLTetris_1.0.2_win32.zip</a> : décompressez puis lancez l'exécutable <b>SFMLTetris_win32.exe</b>.</p>
+<p><a href="https://github.com/marcbal/SFMLTetris/releases/download/v1.0.3/SFMLTetris-1.0.3-win32.zip">SFMLTetris-1.0.3-win32.zip</a> : décompressez puis lancez l'exécutable <b>SFMLTetris.exe</b>.</p>
 <h3>Linux</h3>
-<p><a href="https://github.com/marcbal/SFMLTetris/releases/download/v1.0.2/SFMLTetris_1.0.2_linux64.tar.gz">SFMLTetris_1.0.2_linux64.tar.gz</a> : décompressez puis lancez l'exécutable <b>SFMLTetris_linux64</b>.</p>
+<p><a href="https://github.com/marcbal/SFMLTetris/releases/download/v1.0.3/SFMLTetris-1.0.3-linux64.tar.gz">SFMLTetris-1.0.3-linux64.tar.gz</a> : décompressez puis lancez le script <b>run.sh</b>.</p>
 <h3>Changelog</h3>
+<p>
+	v1.0.2 -> v1.0.3 :
+</p>
+	<ul>
+		<li>Les données sont maintenant sauvegardés à un endroit précis dans l’ordinateur.</li>
+		<li>Mise à jour techniques diverses.</li>
+	</ul>
 <p>
 	v1.0.1 -> v1.0.2 :
 </p>
