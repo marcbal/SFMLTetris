@@ -10,4 +10,4 @@ table_open_cache        = 400
 
 mysqlx                  = off
 
-skip_ssl
+tls_version             = ''
